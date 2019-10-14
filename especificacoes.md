@@ -66,3 +66,68 @@
 9.2. Continua para o 10
 
 
+## Download
+
+**Descrição:** O user faz download da sua media
+
+**Cenários:** O Cândido Faíscas faz download de uma lista de músicas que deu upload anteriormente
+
+**Pré-condição:** O user fez upload de media e o sistema está ativo
+
+**Pós-condição:** O user fez download e tem acesso à media offline
+
+**Fluxo normal:** 
+1. O user fornece email e password
+1. O media center valida a conta
+1. O user acede à sua media
+1. O user indica qual da sua media quer fazer download
+1. O sistema pede confirmação se realmente quer fazer download dos arquivos
+1. O user responde que sim
+1. O media center fornece os arquivos e o user tem acesso aos mesmos offline
+1. O user faz logout
+
+**Fluxo alternativo 1:** [user não possui conta]
+
+1.1. O user fornece email e password 
+
+1.2. O media center recusa o login e mostra o aviso a dizer conta errada ou inexistente
+
+**Fluxo alternativo 2:** [user certifica-se que a sua conta existe]
+
+2.1. O media center valida a conta
+
+2.2. O user faz logout
+
+**Fluxo alternativo 3:** [user não confirma o download]
+
+6.1. O user responde que não
+
+6.2. Regressa ao 3
+
+**Fluxo alternativo 4:** [user tenta fazer download de media dos outros]
+
+3.1. O user acede à media dos outros users
+
+3.2 O user indica qual da media quer fazer download
+
+3.3. O media center recusa o pedido de download
+
+3.4. Regressa ao 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
