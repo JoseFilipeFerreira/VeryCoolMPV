@@ -3,8 +3,11 @@
 ## Upload
 
 **Descrição:** O user faz upload de media.
+
 **Cenários:** O Fernando Fósforos faz upload de uma lista de músicas
+
 **Pré-condição:** O user tem conta e o sistema está ativo
+
 **Pós-condição:** O user fez upload e o media center tem a media no sistema
 
 **Fluxo normal:**
