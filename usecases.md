@@ -7,4 +7,8 @@
 * Criar bibliotecas
 * Login
 * Logout
+* Criar conta
+* Media control
+* Escolha de media
+* Criar conta
 * Media control 
