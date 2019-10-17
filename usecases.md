@@ -11,3 +11,4 @@
 * Media control
 * Escolha de media
 * Criar conta
+* Media control 
