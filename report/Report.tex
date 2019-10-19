@@ -4,7 +4,7 @@
 \usepackage{hyperref}
 \usepackage{a4wide}
 \hypersetup{pdftitle={Trabalho 1},
-pdfauthor={João Teixeira, José Ferreira, Miguel Solino},
+pdfauthor={João Teixeira, José Ferreira, Maria Silva, Miguel Solino},
 colorlinks=true,
 urlcolor=blue,
 linkcolor=black}
@@ -49,39 +49,44 @@ linkcolor=black}
 
 \chapter{Introdução}
 
-Este relatório tem como objetivo apresentar o que foi realizado para esta fase
-inicial do projeto da Unidade Curricular de Desenvolvimento de Sistemas de
-Software. Ao longo do que é apresentado no documento procuramos justificar
-todas as considerações realizadas na formulação e elaboração dos modelos e
-diagramas: Modelo de Domínio, Use Cases, Diagrama de Use Cases, Especificações
-dos mesmos e mockups.
+Este relatório tem como objetivo apresentar a fase inicial do projeto da Unidade
+Curricular de Desenvolvimento de Sistemas de Software.\\
+Ao longo deste relatório apresentamos as considerações tidas em conta pelo grupo
+ao longo da elaboração e formulação dos vário modelos e diagramas propostos:
+\begin{enumerate}
+    \item Modelo de Domínio, modelo conceptual que contém os
+        comportamentos e dados;
+    \item Use Cases, ;
+    \item Diagrama de Use Cases
+    \item Especificações dos mesmos.
+\end{enumerate}
+Por fim irá ser apresentado um \textit{mockup} do produto final.
 
 \chapter{Modelo de Domínio}
 
 O sistema a implementar deve suportar a gestão de media e utilização da mesma
-para uma residência onde esteja instalado.
-
+para uma residência onde esteja instalado.\\
 Neste capítulo são apresentados os requisitos do problema e uma proposta de 
 Modelo de Domínio.
 
 \section{Descrição do Modelo de Domínio}
 
-O problema que nos foi atribuído é desenvolver um sistema de gestão e streaming
-de media. Depois de uma análise do que era necessário para a realização deste,
-chegamos à conclusão que era necessário a existência dos seguintes conceitos, a
-incluir na modelação do problema: Utilizador, Media (música e vídeo),
-Biblioteca de media, Caterização (da media que for adicionada ao sistema por
-um utilizador), Download/Upload de media, Conta, Conexões (de amizades entre utilizadores, ou seja, uma lista de Amigos).
-
+O problema em questão consiste em desenvolver um sistema de gestão e streaming
+de media.\\
+Após analisar o enunciado disponibilizado, concluímos que era necessário a
+existência de vários conceitos a incluir na modelação do problema: Utilizador,
+Media (música e vídeo), Biblioteca de media, Caracterização (do media que for
+adicionada ao sistema por um utilizador), Download/Upload de media, Conta,
+Conexões (de amizades entre utilizadores, ou seja, uma lista de Amigos).\\
 Com isto, foram definidas as relações entre os conceitos referidos em cima:
 \begin{itemize}
-    \item cada Utilizador só pode ter uma conta, só pode fazer download da
-        media da qual fez upload e só pode classificar a media e bibliotecas
+    \item cada Utilizador só pode ter uma conta, só pode fazer download do
+        media que fez upload e só pode classificar o media e bibliotecas
         que lhe pertencem;
     \item cada media/biblioteca de media pode ter uma ou mais classificações;
     \item cada conta tem só um email, nome e password associados;
     \item conta não é obrigatório para utilizar o sistema mas fica limitado 
-        a só usufruir da media;
+        a só usufruir de media;
 \end{itemize}
 Os utilizadores não devem ter a permissão de criar contas, logo para um
 utilizador ter uma conta precisa que algum outro com permissões de
@@ -95,23 +100,25 @@ das contas a definam.
 O Diagrama de Use Cases representa os atores do sistema e as tarefas de cada um
 deles. No nosso caso existem 3 atores:
 \begin{itemize}
-    \item \textbf{Utilizador}: Todos os outros referidos abaixo são atores deste tipo.
-        Logo, a este ator estará relacionado as ações que todos podem fazer
-    \item \textbf{Utilizador sem password}: É um utilizador que após ter pedido a um
-        administrador para lhe criar uma conta dando o email e nome, pode definir a 
-        sua password para passar a ser um utilizador com password
-    \item \textbf{Utilizador com password}: Ter password significa que já tem uma conta 
-        "completa", ou seja, tem acesso à totalidade de ações que um user sem permissões
-        de administrador pode ter
+    \item \textbf{Utilizador}: Todos os outros referidos abaixo são atores deste
+        tipo. Logo, a este ator estará relacionado as ações que todos podem
+        fazer
+    \item \textbf{Utilizador sem password}: É um utilizador que após ter pedido
+        a um administrador para lhe criar uma conta dando o email e nome, pode
+        definir a sua password para passar a ser um utilizador com password
+    \item \textbf{Utilizador com password}: Ter password significa que já tem
+        uma conta "completa", ou seja, tem acesso à totalidade de ações que um
+        user sem permissões de administrador pode ter
     \item \textbf{Utilizador com permissões de administrador}: A diferença deste 
-        utilizador para os restantes é que este é o único que pode criar uma conta 
-        e assim ser o responsável pela existência dos restantes.
+        utilizador para os restantes é que este é o único que pode criar uma
+        conta e assim ser o responsável pela existência dos restantes.
 \end{itemize}
 
 \section{Especificações dos Use Cases}
 
 Nesta parte optamos por ordenar os use cases por permissões, ou seja, começamos
-por apresentar os de um utilizador normal, seguido de um utilizador sem password, utilizador com password e utilizador com permissões de administrador.
+por apresentar os de um utilizador normal, seguido de um utilizador sem
+password, utilizador com password e utilizador com permissões de administrador.
 
 \subsection{Entrar como convidado}
 
@@ -137,7 +144,7 @@ por apresentar os de um utilizador normal, seguido de um utilizador sem password
 
 \chapter{Mockups}
 
-Mockups é o nome dado aos protótipos de interface e como o próprio nome indica
-é uma demonstração de como a aplicação final vai ser.
+\textit{Mockups} é o nome dado aos protótipos de interface e como o próprio nome
+indica é uma demonstração de como a aplicação final vai ser.
 
 \end{document}
