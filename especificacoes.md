@@ -1,4 +1,4 @@
- Especificações dos Use Cases
+# Especificações dos Use Cases
 
 ## Upload
 
@@ -345,10 +345,3 @@
 1. O media center pede confirmação se quer redifinir a password
 1. O user responde que sim
 1. A password é alterada
-
-
-
-
-
-
-
