@@ -80,7 +80,7 @@ ao longo da elaboração e formulação dos vário modelos e diagramas propostos
 \begin{enumerate}
     \item Modelo de Domínio, modelo conceptual que contém os
         comportamentos e dados;
-    \item Use Cases;
+    \item Use Cases, apresentar os atores do sistema e as suas tarefas;
     \item Diagrama de Use Cases;
     \item Especificações dos mesmos.
 \end{enumerate}
@@ -89,7 +89,7 @@ Por fim irá ser apresentado um \textit{mockup} do produto final.
 \chapter{Modelo de Domínio}
 
 O sistema a implementar deve suportar a gestão de media e utilização da mesma
-para uma residência onde esteja instalado.\\
+numa residência onde esteja instalado.\\
 Neste capítulo são apresentados os requisitos do problema e uma proposta de 
 Modelo de Domínio.
 
@@ -113,9 +113,9 @@ Com isto, foram definidas as relações entre os conceitos referidos em cima:
         a só usufruir de media;
 \end{itemize}
 Os utilizadores não devem ter a permissão de criar contas, logo para um
-utilizador ter uma conta precisa que algum outro com permissões de
-administrador crie a conta sem password para mais tarde os utilizadores
-das contas a definam.
+utilizador ter uma conta precisa que outro com permissões de administrador crie
+uma conta sem password para mais tarde o utilizador da conta em questão a
+defina.
 
 \section{Modelo de Domínio}
 
@@ -133,13 +133,13 @@ deles. No nosso caso existem 4 atores:
 \begin{itemize}
     \item \textbf{Utilizador}: Todos os outros referidos abaixo são atores deste
         tipo. Logo, a este ator estará relacionado as ações que todos podem
-        fazer
+        fazer;
     \item \textbf{Utilizador sem password}: É um utilizador que após ter pedido
-        a um administrador para lhe criar uma conta dando o email e nome, pode
-        definir a sua password para passar a ser um utilizador com password
+        a um administrador para criar uma conta dando o email e nome. Este pode
+        definir a sua password para passar a ser um utilizador com password;
     \item \textbf{Utilizador com password}: Ter password significa que já tem
         uma conta "completa", ou seja, tem acesso à totalidade de ações que um
-        user sem permissões de administrador pode ter
+        user sem permissões de administrador pode ter;
     \item \textbf{Utilizador com permissões de administrador}: A diferença deste 
         utilizador para os restantes é que este é o único que pode criar uma
         conta e assim ser o responsável pela existência dos restantes.
@@ -151,7 +151,7 @@ deles. No nosso caso existem 4 atores:
     \caption{Diagrama de Use Cases}
 \end{figure}
 
-
+\pagebreak
 
 \section{Especificações dos Use Cases}
 
@@ -289,9 +289,16 @@ password, utilizador com password e utilizador com permissões de administrador.
 
 \chapter{Mockups}
 
-\textit{Mockups} é o nome dado aos protótipos de interface e como o próprio nome
-indica é uma demonstração de como a aplicação final vai ser. O nosso foco enquanto 
-se desenhava os protótipos foi a intuitividade mas mantendo uma aparência agradável
+\textit{Mockups} é o nome dado aos protótipos de interface.\\
+Como o próprio nome indica é uma demonstração de como a aplicação final vai
+ser.\\
+O principal foco da equipa foi desenvolver um \textit{design} moderno e
+intuitivo mantendo uma aparência simples e visualmente apelativa.\\
+A fim de explorar as linhas de design modernas, decidimos criar um
+\textit{design} mais escuro, normalmente denominado de \textit{darkmode}. Para
+além de ter um aspeto mais moderno e futurista, o \textit{darkmode} permite uma
+menor fadiga ocular, e caso o ecrã onde o conteúdo esteja a ser visualizado seja
+OLED ou AMOLED, um menor consumo de energia.
 
 \section{Sem sessão iniciada}
 
