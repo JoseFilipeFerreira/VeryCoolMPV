@@ -13,6 +13,7 @@ public class Musica implements Media {
 
     public void play() {
         ProcessBuilder a = new ProcessBuilder("mpv", "-");
+        //Next level debug printing
         a.redirectOutput(ProcessBuilder.Redirect.to(new File("hello")));
         try {
             Process p = a.start();
