@@ -1,10 +1,10 @@
 public class Administrador extends Utilizador{
 
     private Administrador(String email) {
-        super(email);
+        super(email, "heelo");
     }
 
-    Utilizador createUser(String userName) {
-        return new Utilizador(userName);
+    Utilizador createUser(String userName, String name) {
+        return new Utilizador(userName, name);
     }
 }

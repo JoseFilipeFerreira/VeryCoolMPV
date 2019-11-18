@@ -1,25 +1,27 @@
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Musica implements Media {
-    Utilizador owner;
-    byte[] content;
+    List<Utilizador> owner;
+    String nome;
+    Path path;
+    Categoria cat;
 
-    Musica (Utilizador owner, byte[] content) {
-        this.content = content;
-        this.owner = owner;
+    Musica (Utilizador owner, Path path) {
+        this.path = path;
+        this.owner = new ArrayList<>();
+        this.owner.add(owner);
     }
 
     public void play() {
-        ProcessBuilder a = new ProcessBuilder("mpv", "-");
+        ProcessBuilder a = new ProcessBuilder("mpv", this.path.toString());
         //Next level debug printing
         a.redirectOutput(ProcessBuilder.Redirect.to(new File("hello")));
         try {
             Process p = a.start();
-            OutputStream o = p.getOutputStream();
-            o.write(this.content);
-            o.flush();
             p.waitFor();
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
@@ -27,5 +29,6 @@ public class Musica implements Media {
     }
 
     public void download() {
+        throw new UnsupportedOperationException();
     }
 }

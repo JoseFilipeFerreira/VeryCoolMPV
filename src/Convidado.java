@@ -3,6 +3,6 @@ public class Convidado extends Utilizador {
     private boolean loggedId;
 
     Convidado() {
-        super("guest".concat(String.valueOf(guestId++)));
+        super("guest".concat(String.valueOf(guestId++)), "Guest");
     }
 }
