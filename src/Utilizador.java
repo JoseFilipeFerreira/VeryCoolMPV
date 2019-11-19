@@ -11,11 +11,14 @@ public class Utilizador {
     private Biblioteca userMedia;
     private String email;
     private String passwd;
+    private boolean isLogged;
     private List<Utilizador> friends;
 
     Utilizador(String email, String name) {
         this.name = name;
         this.email = email;
+
+        this.isLogged = false;
 
         //Null passwd to force user to set it on first login
         //Better alternatives are welcome
@@ -24,11 +27,27 @@ public class Utilizador {
         this.friends = new ArrayList<>();
     }
 
+    String getEmail() {
+        return email;
+    }
+
+    boolean checkPasswd(String passwd) {
+        return this.passwd.equals(passwd);
+    }
+
+    boolean alreadyLoggedIn() {
+        return this.isLogged;
+    }
+
+    void login() {
+        this.isLogged = true;
+    }
+
     void setPasswd(String passwd) {
         this.passwd = passwd;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -41,15 +60,11 @@ public class Utilizador {
         }
         Path file = Files.copy(old, newer.resolve(old.getFileName()));
         Media newMedia = new Musica(this, file);
+        this.userMedia.addMedia(newMedia);
         return newMedia;
     }
 
-    public static void main(String[] args) {
-        Utilizador a = new Utilizador("aa", "Manuel");
-        try {
-            a.uploadMedia("/home/hitler/output-18_11_2019_11_09.mp4").play();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    Biblioteca getUserMedia() {
+        return userMedia;
     }
 }
