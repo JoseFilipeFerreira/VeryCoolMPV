@@ -14,6 +14,8 @@ public class Musica implements Media {
         this.path = path;
         this.owner = new ArrayList<>();
         this.owner.add(owner);
+        this.nome = path.getFileName().toString();
+        System.out.println(this.nome);
     }
 
     public void play() {
@@ -30,5 +32,9 @@ public class Musica implements Media {
 
     public void download() {
         throw new UnsupportedOperationException();
+    }
+
+    public String getName() {
+        return this.nome;
     }
 }
