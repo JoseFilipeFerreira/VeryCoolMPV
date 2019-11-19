@@ -1,3 +1,7 @@
+import Exceptions.AlreadyLoggedInException;
+import Exceptions.InvalidPasswordException;
+import Exceptions.NonSettedPasswdException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,16 +35,22 @@ public class Utilizador {
         return email;
     }
 
-    boolean checkPasswd(String passwd) {
-        return this.passwd.equals(passwd);
+    void checkPasswd(String passwd)
+            throws InvalidPasswordException, NonSettedPasswdException {
+        if(this.passwd == null)
+            throw new NonSettedPasswdException();
+        if(!this.passwd.equals(passwd))
+            throw new InvalidPasswordException();
     }
 
-    boolean alreadyLoggedIn() {
-        return this.isLogged;
-    }
-
-    void login() {
+    void login() throws AlreadyLoggedInException {
+        if(this.isLogged)
+            throw new AlreadyLoggedInException();
         this.isLogged = true;
+    }
+
+    void logoff() {
+        this.isLogged = false;
     }
 
     void setPasswd(String passwd) {
