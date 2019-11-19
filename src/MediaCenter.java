@@ -1,3 +1,5 @@
+import Exceptions.*;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +16,11 @@ public class MediaCenter {
     }
 
     //This needs to be better managed
-    Utilizador createUser(Utilizador user, String email, String name) throws PermissionDeniedException {
+    Utilizador createUser(Utilizador user, String email, String name)
+            throws PermissionDeniedException, UserExistsException {
         if(user instanceof Administrador) {
+            if(this.registedUsers.containsKey(email))
+                throw new UserExistsException();
             Utilizador novo = new Utilizador(email, name);
             this.registedUsers.put(email, novo);
             this.mainLibrary.put(email, novo.getUserMedia());
@@ -24,17 +29,44 @@ public class MediaCenter {
         throw new PermissionDeniedException();
     }
 
-    //Maybe throw some exceptions to know whats going on
-    //Or allow multiple logins, but I don't think that's a good idea
-    Optional<Utilizador> login(String user, String passwd) {
+    void passwd(Utilizador u, String old_passwd, String new_passwd)
+            throws NonSettedPasswdException, InvalidPasswordException {
+        u.checkPasswd(old_passwd);
+        u.setPasswd(new_passwd);
+    }
+
+    void chName(Utilizador u, String new_name) {
+        u.setName(new_name);
+    }
+
+    void rmUser(Utilizador admin, Utilizador to_rm)
+            throws PermissionDeniedException {
+        if(! (admin instanceof Administrador))
+            throw new PermissionDeniedException();
+        this.mainLibrary.remove(to_rm.getEmail());
+        this.registedUsers.remove(to_rm.getEmail());
+    }
+
+    void rmUser(Utilizador admin, String to_rm)
+            throws PermissionDeniedException {
+        if(! (admin instanceof Administrador))
+            throw new PermissionDeniedException();
+        this.mainLibrary.remove(to_rm);
+        this.registedUsers.remove(to_rm);
+    }
+
+    //Allow multiple logins, but I don't think that's a good idea
+    Utilizador login(String user, String passwd)
+            throws NonExistentUserException, InvalidPasswordException,
+            AlreadyLoggedInException, NonSettedPasswdException
+    {
         if(!this.registedUsers.containsKey(user)) {
-            return Optional.empty();
+            throw new NonExistentUserException();
         }
         Utilizador log = this.registedUsers.get(user);
-        if(!log.checkPasswd(passwd) || log.alreadyLoggedIn())
-            return Optional.empty();
+        log.checkPasswd(passwd);
         log.login();
-        return Optional.of(log);
+        return log;
     }
 
     void uploadMedia(Utilizador user, String path) {
@@ -43,7 +75,8 @@ public class MediaCenter {
         } catch (IOException ignored) {}
     }
 
-    //We can implement partial searching in the future
+    //TODO We can implement partial searching in the future
+    //It would be nice for the gui guys
     //I even think we can use the youtube api to play search videos
     Optional<Media> searchByName(String name) {
         return this.mainLibrary.values()
@@ -53,20 +86,16 @@ public class MediaCenter {
                 .findFirst();
     }
 
-    Biblioteca userLibrary(Utilizador user) {
-        return this.mainLibrary.get(user.getEmail());
-    }
-
     public static void main(String[] args) {
         MediaCenter mdia = new MediaCenter();
         Administrador admin = new Administrador("abc", "def");
         try {
             Utilizador user = mdia.createUser(admin, "adeus", "ola");
+
+            //Pls remove this before the due date
             mdia.uploadMedia(user, "/home/hitler/Downloads/ola.mp3");
             Optional<Media> media = mdia.searchByName("ola.mp3");
             media.orElseThrow().play();
-        } catch (PermissionDeniedException e) {
-            e.printStackTrace();
-        }
+        } catch (PermissionDeniedException | UserExistsException ignored) {}
     }
 }
