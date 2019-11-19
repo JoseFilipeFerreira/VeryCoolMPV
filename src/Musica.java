@@ -15,13 +15,10 @@ public class Musica implements Media {
         this.owner = new ArrayList<>();
         this.owner.add(owner);
         this.nome = path.getFileName().toString();
-        System.out.println(this.nome);
     }
 
     public void play() {
         ProcessBuilder a = new ProcessBuilder("mpv", this.path.toString());
-        //Next level debug printing
-        a.redirectOutput(ProcessBuilder.Redirect.to(new File("hello")));
         try {
             Process p = a.start();
             p.waitFor();
