@@ -1,6 +1,8 @@
+package business;
+
 public class Administrador extends Utilizador {
 
-    Administrador(String email, String name) {
+    public Administrador(String email, String name) {
         super(email, name);
     }
 

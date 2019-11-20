@@ -1,8 +1,9 @@
+package business;
+
 import Exceptions.AlreadyLoggedInException;
 import Exceptions.InvalidPasswordException;
 import Exceptions.NonSettedPasswdException;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

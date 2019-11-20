@@ -1,3 +1,5 @@
+package business;
+
 import java.nio.file.Path;
 
 public interface Media {
