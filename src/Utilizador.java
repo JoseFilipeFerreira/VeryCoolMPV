@@ -68,7 +68,9 @@ public class Utilizador {
         if(Files.notExists(newer)) {
             Files.createDirectory(newer);
         }
-        Path file = Files.copy(old, newer.resolve(old.getFileName()));
+        Path file = newer.resolve(old.getFileName());
+        if(Files.notExists(newer.resolve(old.getFileName())))
+            Files.copy(old, newer.resolve(old.getFileName()));
         Media newMedia = new Musica(this, file);
         this.userMedia.addMedia(newMedia);
         return newMedia;
