@@ -1,3 +1,5 @@
+import Exceptions.InvalidGenreException;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -9,11 +11,19 @@ public class Musica implements Media {
     Path path;
     Categoria cat;
 
-    Musica (Utilizador owner, Path path) {
+    Musica (Utilizador owner, Path path, String cat)
+            throws InvalidGenreException {
         this.path = path;
         this.owner = new ArrayList<>();
         this.owner.add(owner);
         this.nome = path.getFileName().toString();
+        this.cat = new Categoria(cat);
+    }
+
+    //Maybe do this with a setter
+    void updateCat(String new_cat)
+            throws InvalidGenreException {
+        this.cat = new Categoria(new_cat);
     }
 
     public void play() {
