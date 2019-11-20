@@ -20,6 +20,15 @@ public class Musica implements Media {
         this.cat = new Categoria(cat);
     }
 
+    Musica (Utilizador owner, Path path) {
+        this.path = path;
+        this.owner = new ArrayList<>();
+        this.owner.add(owner);
+        this.nome = path.getFileName().toString();
+        this.cat = new Categoria();
+    }
+
+
     //Maybe do this with a setter
     void updateCat(String new_cat)
             throws InvalidGenreException {
@@ -42,5 +51,13 @@ public class Musica implements Media {
 
     public String getName() {
         return this.nome;
+    }
+
+    public int getCat() {
+         return this.cat.getPos();
+    }
+
+    public Path getPath() {
+        return this.path;
     }
 }

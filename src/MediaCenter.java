@@ -2,8 +2,10 @@ import Exceptions.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MediaCenter {
     //Saving each user library is easier to remove media
@@ -75,6 +77,14 @@ public class MediaCenter {
         } catch (IOException ignored) {}
     }
 
+    List<Media> listAllMedia() {
+       return this.mainLibrary
+               .values()
+               .stream()
+               .flatMap(x -> x.getLibrary().values().stream())
+               .collect(Collectors.toList());
+    }
+
     //TODO We can implement partial searching in the future
     //It would be nice for the gui guys
     //I even think we can use the youtube api to play search videos
@@ -84,6 +94,10 @@ public class MediaCenter {
                 .flatMap(x -> x.getLibrary().values().stream())
                 .filter(x -> x.getName().equals(name))
                 .findFirst();
+    }
+
+    void rmMedia(Utilizador user, String media_id) {
+        user.removeMedia(media_id);
     }
 
     public static void main(String[] args) {
