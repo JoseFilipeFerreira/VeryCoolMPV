@@ -1,4 +1,4 @@
-public class Administrador extends Utilizador{
+public class Administrador extends Utilizador {
 
     Administrador(String email, String name) {
         super(email, name);

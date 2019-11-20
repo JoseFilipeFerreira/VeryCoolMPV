@@ -17,6 +17,7 @@ public class Utilizador {
     private String passwd;
     private boolean isLogged;
     private List<Utilizador> friends;
+    private List<Playlist> savedPlaylists;
 
     Utilizador(String email, String name) {
         this.name = name;
@@ -29,6 +30,7 @@ public class Utilizador {
         this.passwd = null;
         this.userMedia = new Biblioteca();
         this.friends = new ArrayList<>();
+        this.savedPlaylists = new ArrayList<>();
     }
 
     String getEmail() {
@@ -74,6 +76,12 @@ public class Utilizador {
         Media newMedia = new Musica(this, file);
         this.userMedia.addMedia(newMedia);
         return newMedia;
+    }
+
+    void removeMedia(String media_id) {
+        this.userMedia
+                .rmMedia(media_id)
+                .map(x -> x.getPath().toFile().delete());
     }
 
     Biblioteca getUserMedia() {
