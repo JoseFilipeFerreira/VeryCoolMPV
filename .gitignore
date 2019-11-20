@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+out/
 
 # Log file
 *.log
@@ -32,3 +33,6 @@ hs_err_pid*
 *.aux
 *.out
 *.pdf
+
+# Media Files
+.media
