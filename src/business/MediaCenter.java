@@ -1,3 +1,5 @@
+package business;
+
 import Exceptions.*;
 
 import java.io.IOException;
@@ -12,13 +14,13 @@ public class MediaCenter {
     private Map<String, Biblioteca> mainLibrary;
     private Map<String, Utilizador> registedUsers;
 
-    MediaCenter() {
+    public MediaCenter() {
         this.mainLibrary = new HashMap<>();
         this.registedUsers = new HashMap<>();
     }
 
     //This needs to be better managed
-    Utilizador createUser(Utilizador user, String email, String name)
+    public Utilizador createUser(Utilizador user, String email, String name)
             throws PermissionDeniedException, UserExistsException {
         if(user instanceof Administrador) {
             if(this.registedUsers.containsKey(email))
@@ -71,7 +73,7 @@ public class MediaCenter {
         return log;
     }
 
-    void uploadMedia(Utilizador user, String path) {
+    public void uploadMedia(Utilizador user, String path) {
         try {
             user.uploadMedia(path);
         } catch (IOException ignored) {}
@@ -88,7 +90,7 @@ public class MediaCenter {
     //TODO We can implement partial searching in the future
     //It would be nice for the gui guys
     //I even think we can use the youtube api to play search videos
-    Optional<Media> searchByName(String name) {
+    public Optional<Media> searchByName(String name) {
         return this.mainLibrary.values()
                 .stream()
                 .flatMap(x -> x.getLibrary().values().stream())
@@ -106,9 +108,9 @@ public class MediaCenter {
         try {
             Utilizador user = mdia.createUser(admin, "adeus", "ola");
 
-            //Pls remove this before the due date
-            mdia.uploadMedia(user, "/home/hitler/Downloads/ola.mp3");
-            Optional<Media> media = mdia.searchByName("ola.mp3");
+            //TODO Pls remove this before the due date
+            mdia.uploadMedia(user, "/home/mightymime/Music/Noisestorm-Crab_Rave.mp3");
+            Optional<Media> media = mdia.searchByName("Noisestorm-Crab_Rave.mp3");
             media.orElseThrow().play();
         } catch (PermissionDeniedException | UserExistsException ignored) {}
     }

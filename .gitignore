@@ -34,5 +34,6 @@ hs_err_pid*
 *.out
 *.pdf
 
-# Media Files
+# business.Media Files
 .media
+.attach_pid*
