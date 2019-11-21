@@ -60,7 +60,7 @@ public class MediaCenter {
     }
 
     //Allow multiple logins, but I don't think that's a good idea
-    Utilizador login(String user, String passwd)
+    public Utilizador login(String user, String passwd)
             throws NonExistentUserException, InvalidPasswordException,
             AlreadyLoggedInException, NonSettedPasswdException
     {
