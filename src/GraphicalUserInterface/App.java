@@ -1,36 +1,42 @@
 package GraphicalUserInterface;
 
-import Exceptions.PermissionDeniedException;
-import Exceptions.UserExistsException;
+import Exceptions.*;
 import business.Administrador;
-import business.Media;
 import business.MediaCenter;
 import business.Utilizador;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Optional;
 
 public class App {
-    private JButton PLAYButton;
-    private JPanel PlayPLS;
-    private JTextField musicPLS;
+    private JPanel Login;
+    private JButton LoginButton;
+    private JTextField user;
+    private JPasswordField password;
+    private JLabel userLbl;
+    private JLabel passwdLbl;
 
     public App(MediaCenter mdia) {
-        PLAYButton.addActionListener(new ActionListener() {
+        LoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String name = musicPLS.getText();
-                Optional<Media> media = mdia.searchByName(name + ".mp3");
-                media.orElseThrow().play();
+                String u = user.getText();
+                String p = password.getText();
+
+                try {
+                    mdia.login(u, p);
+                } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
+                    password.setText("");
+                    JOptionPane.showMessageDialog(null,"Invalid Credentials");
+                } catch (NonSettedPasswdException e) {
+                    JOptionPane.showMessageDialog(null,"Password not set");
+                }
             }
         });
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("VeryCoolGUI.jpeg");
-
         MediaCenter mdia = new MediaCenter();
 
         Administrador admin = new Administrador("abc", "def");
@@ -41,7 +47,8 @@ public class App {
 
         mdia.uploadMedia(user, "/home/mightymime/Music/Xexe_Band-Afoga_o_Ganso.mp3");
 
-        frame.setContentPane(new App(mdia).PlayPLS);
+        JFrame frame = new JFrame("VeryCoolGUI.jpeg");
+        frame.setContentPane(new App(mdia).Login);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
