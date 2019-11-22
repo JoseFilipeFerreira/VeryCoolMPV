@@ -1,4 +1,4 @@
-package business;
+package Business;
 
 public class Administrador extends Utilizador {
 

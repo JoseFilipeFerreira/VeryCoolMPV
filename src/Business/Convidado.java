@@ -1,4 +1,4 @@
-package business;
+package Business;
 
 public class Convidado extends Utilizador {
     private static long guestId = 0;

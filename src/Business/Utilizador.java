@@ -1,8 +1,9 @@
-package business;
+package Business;
 
 import Exceptions.AlreadyLoggedInException;
 import Exceptions.InvalidPasswordException;
 import Exceptions.NonSettedPasswdException;
+import Exceptions.SettedPasswdException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -46,6 +47,14 @@ public class Utilizador {
             throw new InvalidPasswordException();
     }
 
+    void firstPasswdCheck(String new_passwd)
+            throws SettedPasswdException {
+        if (this.passwd == null) {
+            this.passwd = new_passwd;
+        }
+        throw new SettedPasswdException();
+    }
+
     void login() throws AlreadyLoggedInException {
         if(this.isLogged)
             throw new AlreadyLoggedInException();
@@ -72,8 +81,8 @@ public class Utilizador {
             Files.createDirectory(newer);
         }
         Path file = newer.resolve(old.getFileName());
-        if(Files.notExists(newer.resolve(old.getFileName())))
-            Files.copy(old, newer.resolve(old.getFileName()));
+        if(Files.notExists(file))
+            Files.copy(old, file);
         Media newMedia = new Musica(this, file);
         this.userMedia.addMedia(newMedia);
         return newMedia;

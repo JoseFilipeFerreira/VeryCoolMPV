@@ -1,4 +1,4 @@
-package business;
+package Business;
 
 import java.util.List;
 

@@ -1,10 +1,9 @@
 package GraphicalUserInterface;
 
+import Business.Administrador;
+import Business.MediaCenter;
+import Business.Utilizador;
 import Exceptions.*;
-import business.Administrador;
-import business.MediaCenter;
-import business.Utilizador;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

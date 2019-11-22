@@ -1,4 +1,4 @@
-package business;
+package Business;
 
 import Exceptions.*;
 
@@ -31,6 +31,12 @@ public class MediaCenter {
             return novo;
         }
         throw new PermissionDeniedException();
+    }
+
+    public void fstPasswdCheck(String email, String new_passwd)
+            throws SettedPasswdException {
+        this.registedUsers.get(email)
+                .firstPasswdCheck(new_passwd);
     }
 
     void passwd(Utilizador u, String old_passwd, String new_passwd)
