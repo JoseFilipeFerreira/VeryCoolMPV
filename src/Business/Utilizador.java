@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Utilizador {
     private String name;
-    private Biblioteca userMedia;
+    private MediaMap userMedia;
     private String email;
     private String passwd;
     private boolean isLogged;
@@ -30,13 +30,27 @@ public class Utilizador {
         //Null passwd to force user to set it on first login
         //Better alternatives are welcome
         this.passwd = null;
-        this.userMedia = new Biblioteca();
+        this.userMedia = new MediaMap(this);
+        this.friends = new ArrayList<>();
+        this.savedPlaylists = new ArrayList<>();
+    }
+
+    Utilizador(String email, String name, String passwd) {
+        this.email = email;
+        this.name = name;
+        this.isLogged = false;
+        this.passwd = passwd;
+        this.userMedia = new MediaMap(this);
         this.friends = new ArrayList<>();
         this.savedPlaylists = new ArrayList<>();
     }
 
     String getEmail() {
         return email;
+    }
+
+    public String getName() {
+        return name;
     }
 
     void checkPasswd(String passwd)
@@ -69,6 +83,10 @@ public class Utilizador {
         this.passwd = passwd;
     }
 
+    public String getPasswd() {
+        return passwd;
+    }
+
     void setName(String name) {
         this.name = name;
     }
@@ -84,17 +102,19 @@ public class Utilizador {
         if(Files.notExists(file))
             Files.copy(old, file);
         Media newMedia = new Musica(this, file);
-        this.userMedia.addMedia(newMedia);
+        this.userMedia.put(newMedia.getName(), newMedia);
         return newMedia;
     }
 
     void removeMedia(String media_id) {
         this.userMedia
-                .rmMedia(media_id)
-                .map(x -> x.getPath().toFile().delete());
+                .remove(media_id)
+                .getPath()
+                .toFile()
+                .delete();
     }
 
-    Biblioteca getUserMedia() {
+    MediaMap getUserMedia() {
         return userMedia;
     }
 }

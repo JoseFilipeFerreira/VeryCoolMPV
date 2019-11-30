@@ -18,6 +18,11 @@ public class Musica extends Media {
         this.cat = new Categoria();
     }
 
+    Musica(String name, String path, String owner) {
+        super(owner, path, name);
+        this.cat = new Categoria();
+    }
+
     //Maybe do this with a setter
     void updateCat(String new_cat)
             throws InvalidGenreException {
