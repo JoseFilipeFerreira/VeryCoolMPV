@@ -24,7 +24,7 @@ public class UserMap implements Map<String, Utilizador> {
         Connection conn = DBConnect.connect();
         try {
             Statement stm = conn.createStatement();
-            String sql = "SELECT nome FROM Utilizadores WHERE email='" + key +
+            String sql = "SELECT name FROM Utilizadores WHERE email='" + key +
                     "'";
             ResultSet rs = stm.executeQuery(sql);
             return rs.next();
