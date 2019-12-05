@@ -6,6 +6,10 @@ public class Administrador extends Utilizador {
         super(email, name);
     }
 
+    public Administrador(String email, String name, String passwd) {
+        super(email, name, passwd);
+    }
+
     Utilizador createUser(String userName, String name) {
         return new Utilizador(userName, name);
     }

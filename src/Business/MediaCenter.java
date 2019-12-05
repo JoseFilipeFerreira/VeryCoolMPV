@@ -61,7 +61,6 @@ public class MediaCenter {
         this.registedUsers.remove(to_rm);
     }
 
-    //Allow multiple logins, but I don't think that's a good idea
     public Utilizador login(String user, String passwd)
             throws NonExistentUserException, InvalidPasswordException,
             AlreadyLoggedInException, NonSettedPasswdException
@@ -86,9 +85,6 @@ public class MediaCenter {
                .values());
     }
 
-    //TODO We can implement partial searching in the future
-    //It would be nice for the gui guys
-    //I even think we can use the youtube api to play search videos
     public List<Media> searchByName(String name) {
         return this.mainLibrary.searchByName(name);
     }
