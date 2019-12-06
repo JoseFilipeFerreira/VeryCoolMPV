@@ -28,7 +28,7 @@ public class Categoria {
         return pos;
     }
 
-    String getGenre() {
+    public String getGenre() {
         return genres.get(this.pos);
     }
 
