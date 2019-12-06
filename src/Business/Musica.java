@@ -6,6 +6,9 @@ import java.nio.file.Path;
 
 public class Musica extends Media {
     Categoria cat;
+    String album;
+    String singer;
+    int faixa;
 
     Musica (Utilizador owner, Path path, String cat)
             throws InvalidGenreException {

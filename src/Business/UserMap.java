@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class UserMap implements Map<String, Utilizador> {
-
     public static void main(String[] args) {
         Administrador admin = new Administrador("abc", "def", "ghi");
         Utilizador user = new Utilizador("ree", "roo", "raa");
@@ -17,6 +16,8 @@ public class UserMap implements Map<String, Utilizador> {
         a.put(admin.getEmail(), admin);
         a.put(user.getEmail(), user);
     }
+
+
     public void clear() {
         Connection conn = DBConnect.connect();
         try {
@@ -81,7 +82,7 @@ public class UserMap implements Map<String, Utilizador> {
         Connection conn = DBConnect.connect();
         try {
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT nome FROM Utilizadores");
+            ResultSet rs = stm.executeQuery("SELECT name FROM Utilizadores");
             return !rs.next();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -92,7 +93,6 @@ public class UserMap implements Map<String, Utilizador> {
         throw new NullPointerException("Not implemented!");
     }
 
-    /* Exercício: Alterar para utilizar transacções! */
     public Utilizador put(String key, Utilizador value) {
         Connection conn;
         try {
@@ -102,8 +102,7 @@ public class UserMap implements Map<String, Utilizador> {
             stm.executeUpdate("DELETE FROM Utilizadores WHERE email='" + key + "'");
             String sql =
                     "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
-                            "','";
-            sql += value.getPasswd() + "'," + false + ")";
+                            "','" + value.getPasswd() + "'," + false + ")";
             int i = stm.executeUpdate(sql);
             return new Utilizador(value.getEmail(), value.getName(), value.getPasswd());
         } catch (Exception e) {
@@ -120,8 +119,7 @@ public class UserMap implements Map<String, Utilizador> {
             stm.executeUpdate("DELETE FROM Utilizadores WHERE email='" + key + "'");
             String sql =
                     "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
-                            "','";
-            sql += value.getPasswd() + "'," + true + ")";
+                            "','" + value.getPasswd() + "'," + true + ")";
             int i = stm.executeUpdate(sql);
             return new Administrador(value.getEmail(), value.getName(), value.getPasswd());
         } catch (Exception e) {
@@ -137,7 +135,10 @@ public class UserMap implements Map<String, Utilizador> {
         try {
             Utilizador al = this.get(key);
             Statement stm = conn.createStatement();
-            String sql = "DELETE FROM Utilizadores WHERE (`email` = " +
+            String sql = "delete from Playlist where `Utilizadores_email` = '" +
+                    key + "';" +
+                    "delete from Media where `owner` = '" + key + "';" +
+                    "DELETE FROM Utilizadores WHERE (`email` = " +
                     "'" + key + "');";
             int i = stm.executeUpdate(sql);
             return al;
