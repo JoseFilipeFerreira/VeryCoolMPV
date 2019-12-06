@@ -1,6 +1,6 @@
 package VeryCoolGUI;
 
-import business.*;
+import Business.*;
 import Exceptions.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
