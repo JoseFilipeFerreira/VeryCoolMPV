@@ -9,9 +9,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragOver="#mouseHover" onMouseDragEntered="#mouseUnhover" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
    <children>
-      <Button fx:id="inicioSair" layoutX="24.0" layoutY="186.0" mnemonicParsing="false" onAction="#exitProgram" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: #2b2b2f;" text="SAIR" textFill="WHITE">
+      <Button fx:id="exit" layoutX="24.0" layoutY="186.0" mnemonicParsing="false" onAction="#exitProgram" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: #2b2b2f;" text="SAIR" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
@@ -22,7 +22,7 @@
          <font>
             <Font name="Novecento sans UltraBold" size="51.0" />
          </font></Label>
-      <Button fx:id="inicioLogin" layoutX="24.0" layoutY="146.0" mnemonicParsing="false" onAction="#changeMenu" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: #2b2b2f;" text="LOGIN" textFill="WHITE">
+      <Button fx:id="login" layoutX="24.0" layoutY="146.0" mnemonicParsing="false" onAction="#changeLogin" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: #2b2b2f;" text="LOGIN" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
