@@ -1,4 +1,4 @@
-package business;
+package Business;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 
 public class Biblioteca {
     private Map<String, Media> library;
+    private Utilizador owner;
 
-    Biblioteca() {
+    Biblioteca(Utilizador u) {
+        this.owner = u;
         this.library = new HashMap<>();
     }
 
@@ -21,10 +23,12 @@ public class Biblioteca {
         this.library.put(a.getName(), a);
     }
 
+    //Ported to MediaMap
     Optional<Media> rmMedia(String media_id) {
         return Optional.ofNullable(this.library.remove(media_id));
     }
 
+    //Ported to MediaMap
     void playAll() {
         this.library
                 .values()
@@ -32,11 +36,11 @@ public class Biblioteca {
     }
 
     //TODO Random playlists
-    Playlist createPlaylist(Predicate<? super Media> filter) {
+    Playlist createPlaylist(Predicate<? super Media> filter, Utilizador u) {
         return new Playlist(this.library
                 .values()
                 .stream()
                 .filter(filter)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()), u);
     }
 }

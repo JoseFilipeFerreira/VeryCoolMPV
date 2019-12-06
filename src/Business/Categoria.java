@@ -1,4 +1,4 @@
-package business;
+package Business;
 
 import Exceptions.InvalidGenreException;
 import java.util.ArrayList;

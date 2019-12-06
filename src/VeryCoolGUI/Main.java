@@ -1,22 +1,16 @@
 package VeryCoolGUI;
 
+import Business.*;
 import Exceptions.*;
-import business.*;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Shadow;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -100,7 +94,8 @@ public class Main extends Application {
     }
 
     public void playMusic(ActionEvent actionEvent) {
-        mediacenter.searchByName(search.getText()).orElseThrow().play();
+        //searchByName now returns a list
+        //mediacenter.searchByName(search.getText()).orElseThrow().play();
     }
 
     public void loginCheckCredentials(ActionEvent actionEvent) throws IOException {
