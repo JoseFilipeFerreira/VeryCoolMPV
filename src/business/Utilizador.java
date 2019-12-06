@@ -56,7 +56,7 @@ public class Utilizador {
         this.isLogged = false;
     }
 
-    void setPasswd(String passwd) {
+    public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
 
