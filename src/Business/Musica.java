@@ -21,19 +21,31 @@ public class Musica extends Media {
         this.cat = new Categoria();
     }
 
-    Musica(String name, String path, String owner) {
+    Musica(String name, String path, String owner, String album,
+           String singer, int faixa) {
         super(owner, path, name);
         this.cat = new Categoria();
+        this.album = album;
+        this.singer = singer;
+        this.faixa = faixa;
+    }
+
+    String getAlbum() {
+        return album;
+    }
+
+    String getSinger() {
+        return singer;
+    }
+
+    int getFaixa() {
+        return faixa;
     }
 
     //Maybe do this with a setter
     void updateCat(String new_cat)
             throws InvalidGenreException {
         this.cat = new Categoria(new_cat);
-    }
-
-    public void download() {
-        throw new UnsupportedOperationException();
     }
 
     public int getCat() {

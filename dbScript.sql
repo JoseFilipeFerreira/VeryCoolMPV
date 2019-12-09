@@ -14,6 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema DSS
 -- -----------------------------------------------------
+DROP SCHEMA `DSS`;
 CREATE SCHEMA IF NOT EXISTS `DSS` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 USE `DSS` ;
 
@@ -41,6 +42,9 @@ CREATE TABLE IF NOT EXISTS `DSS`.`Media` (
   `album` VARCHAR(45) NULL DEFAULT NULL,
   `artista` VARCHAR(45) NULL DEFAULT NULL,
   `faixa` INT(11) NULL DEFAULT NULL,
+  `serie_name` VARCHAR(45) NULL DEFAULT NULL,
+  `season` INT(11) NULL DEFAULT NULL,
+  `episode` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`name`),
   INDEX `fk_Media_Utilizadores_idx` (`owner` ASC) VISIBLE,
   CONSTRAINT `fk_Media_Utilizadores`
