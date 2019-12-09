@@ -51,7 +51,7 @@
             <Image url="@icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="upload" layoutX="28.0" layoutY="117.0" mnemonicParsing="false" onAction="#changeUploadMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="UPLOAD" textFill="WHITE">
+      <Button fx:id="upload" layoutX="28.0" layoutY="117.0" mnemonicParsing="false" onAction="#changeUploadMusic" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="UPLOAD" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>

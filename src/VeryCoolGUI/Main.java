@@ -106,6 +106,7 @@ public class Main extends Application {
             email.setText("");
             password.setText("");
         } catch (NonSettedPasswdException e) {
+            user = e.getUser();
             swapFxml(ae, "resources/createPassword.fxml");
         }
     }
@@ -205,8 +206,12 @@ public class Main extends Application {
         swapFxml(ae,"resources/login.fxml");
     }
 
-    public void changeUploadMedia(ActionEvent ae) throws IOException {
+    public void changeUploadMusic(ActionEvent ae) throws IOException {
         swapFxml(ae, "resources/uploadMusic.fxml");
+    }
+
+    public void changeUploadVideo(ActionEvent ae) throws IOException {
+        swapFxml(ae, "resources/uploadVideo.fxml");
     }
 
     private void swapFxml(ActionEvent ae, String name) throws IOException {
