@@ -104,7 +104,7 @@ public class UserMap implements Map<String, Utilizador> {
             if(value.getPasswd() != null) {
                 sql =
                         "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
-                                "','" + value.getPasswd() + "'," + false + ")";
+                                "','" + value.getPasswd() + "'," + value.isAdmin() + ")";
             }
             else {
                 sql =
@@ -112,7 +112,7 @@ public class UserMap implements Map<String, Utilizador> {
                                 " ('" + key +
                                 "'," +
                                 "'" + value.getName() +
-                                "'," + false + ")";
+                                "'," + value.isAdmin() + ")";
             }
             int i = stm.executeUpdate(sql);
             return new Utilizador(value.getEmail(), value.getName(), value.getPasswd());
@@ -121,33 +121,6 @@ public class UserMap implements Map<String, Utilizador> {
         }
     }
 
-    public Administrador put(String key, Administrador value) {
-        Connection conn;
-        try {
-            conn = DBConnect.connect();
-            Utilizador al = null;
-            Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Utilizadores WHERE email='" + key + "'");
-            String sql;
-            if(value.getPasswd() != null) {
-                sql =
-                        "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
-                                "','" + value.getPasswd() + "'," + true + ")";
-            }
-            else {
-                sql =
-                        "INSERT INTO Utilizadores (email, name, admin) VALUES" +
-                                " ('" + key +
-                                "'," +
-                                "'" + value.getName() +
-                                "'," + true + ")";
-            }
-            int i = stm.executeUpdate(sql);
-            return new Administrador(value.getEmail(), value.getName(), value.getPasswd());
-        } catch (Exception e) {
-            throw new NullPointerException(e.getMessage());
-        }
-    }
     public void putAll(Map<? extends String, ? extends Utilizador> t) {
         throw new NullPointerException("Not implemented!");
     }
