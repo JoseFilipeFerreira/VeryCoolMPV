@@ -142,14 +142,26 @@ public class Main extends Application {
         }
     }
 
-    public void selectFileUpload(ActionEvent ae) {
+    public void selectMusicUpload(ActionEvent ae) {
         Node but = (Node) ae.getSource();
         Stage stage = (Stage) but.getScene().getWindow();
         FileChooser fc = new FileChooser();
         fc.setTitle("Select File for Upload");
         fc.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(
-                        "Media Files", "*.mp3", "*.mp4", "*.wav", "*.flac", "*.avi"));
+                        "Music Files", "*.mp3", "*.wav", "*.flac"));
+        File selectedFile = fc.showOpenDialog(stage);
+        pathToFile.setText(selectedFile.getPath());
+    }
+
+    public void selectVideoUpload(ActionEvent ae) {
+        Node but = (Node) ae.getSource();
+        Stage stage = (Stage) but.getScene().getWindow();
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Select File for Upload");
+        fc.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Video Files", "*.mp4", "*.avi", "*.mkv"));
         File selectedFile = fc.showOpenDialog(stage);
         pathToFile.setText(selectedFile.getPath());
     }
@@ -194,7 +206,7 @@ public class Main extends Application {
     }
 
     public void changeUploadMedia(ActionEvent ae) throws IOException {
-        swapFxml(ae, "resources/uploadMedia.fxml");
+        swapFxml(ae, "resources/uploadMusic.fxml");
     }
 
     private void swapFxml(ActionEvent ae, String name) throws IOException {
