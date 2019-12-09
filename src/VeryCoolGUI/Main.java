@@ -97,7 +97,10 @@ public class Main extends Application {
         String passwd = password.getText();
         try {
             user = mediacenter.login(usr, passwd);
-            swapFxml(actionEvent, "resources/ourMedia.fxml");
+            if (user instanceof Administrador)
+                swapFxml(actionEvent, "resources/ourMediaAdmin.fxml");
+            else
+                swapFxml(actionEvent, "resources/ourMedia.fxml");
         } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
             email.setText("");
             password.setText("");
