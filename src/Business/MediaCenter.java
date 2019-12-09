@@ -19,7 +19,7 @@ public class MediaCenter {
     //This needs to be better managed
     public Utilizador createUser(Utilizador user, String email, String name)
             throws PermissionDeniedException, UserExistsException {
-        if(user instanceof Administrador) {
+        if(user.isAdmin()) {
             if(this.registedUsers.containsKey(email))
                 throw new UserExistsException();
             Utilizador novo = new Utilizador(email, name);
@@ -67,9 +67,9 @@ public class MediaCenter {
         this.registedUsers.remove(to_rm.getEmail());
     }
 
-    void rmUser(Utilizador admin, String to_rm)
+    public void rmUser(Utilizador admin, String to_rm)
             throws PermissionDeniedException {
-        if(! (admin instanceof Administrador))
+        if(admin.isAdmin())
             throw new PermissionDeniedException();
         this.mainLibrary.remove(to_rm);
         this.registedUsers.remove(to_rm);
