@@ -27,6 +27,7 @@ public class Main extends Application {
 
     /* button */
     public Button exit, back;
+    public Button create, remove;
     public Button confirm, select;
     public Button login, logout;
     public Button play, pause;
@@ -39,7 +40,7 @@ public class Main extends Application {
 
     /* user input fields */
     public TextField search;
-    public TextField name, email, password;
+    public TextField name, email, password, oldPasswd;
     public DatePicker datePicker;
     public SplitMenuButton dropDownMenu;
 
@@ -69,11 +70,11 @@ public class Main extends Application {
         Utilizador test;
         try {
             test = mediacenter.createUser(admin, "adeus", "ola");
-            test.setPasswd("123");
+            mediacenter.fstPasswd(test,"123");
             test = mediacenter.createUser(admin, "help", "pls");
 
             mediacenter.uploadMedia(test, "/home/mightymime/Music/Xexe_Band-Afoga_o_Ganso.mp3");
-        } catch (PermissionDeniedException | UserExistsException ignored) {}
+        } catch (PermissionDeniedException | UserExistsException | SettedPasswdException ignored) {}
 
         FXMLLoader loader = new FXMLLoader();
         URL xmlUrl = getClass().getResource("resources/inicio.fxml");
@@ -100,10 +101,7 @@ public class Main extends Application {
         String passwd = password.getText();
         try {
             user = mediacenter.login(usr, passwd);
-            if (user instanceof Administrador)
-                swapFxml(ae, "resources/ourMediaAdmin.fxml");
-            else
-                swapFxml(ae, "resources/ourMedia.fxml");
+            changeOurMedia(ae);
         } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
             email.setText("");
             password.setText("");
@@ -113,22 +111,62 @@ public class Main extends Application {
         }
     }
 
-    public void setPassword(ActionEvent ae) throws IOException {
+    public void setPassword(ActionEvent ae) throws IOException, SettedPasswdException {
         String password = this.password.getText();
         if (password != null){
-            user.setPasswd(password);
+            mediacenter.fstPasswd(user, password);
+            changeLogin(ae);
             user = null;
-            swapFxml(ae, "resources/login.fxml");
         }
     }
 
-    public void editProfile(ActionEvent ae) {
-        String e = email.getText();
+    public void editProfile(ActionEvent ae) throws IOException {
         String n = name.getText();
         String p = password.getText();
-        if (p != null)
-            //TODO pls fix
-            user.setPasswd(p);
+        String op = oldPasswd.getText();
+        try {
+            if (n != null)
+                mediacenter.chName(user, n);
+            if (p != null && op != null)
+                mediacenter.passwd(user, op, p);
+            changeOurMedia(ae);
+        }
+        catch (InvalidPasswordException | NonSettedPasswdException ignored){
+            name.setText("");
+            password.setText("");
+            oldPasswd.setText("");
+        }
+    }
+
+
+    public void removeUser(ActionEvent ae) throws IOException {
+        String e = email.getText();
+        if(e != null) {
+            try {
+                mediacenter.rmUser(user, e);
+                changeOurMedia(ae);
+            }
+            catch (PermissionDeniedException ignored){
+                changeOurMedia(ae);
+            }
+        }
+    }
+
+    public void createUser(ActionEvent ae) throws IOException {
+        String e = email.getText();
+        String n = name.getText();
+        if(e != null && n != null) {
+            try {
+                mediacenter.createUser(user, e, n);
+                changeOurMedia(ae);
+            } catch (UserExistsException ignored) {
+                email.setText("");
+                name.setText("");
+            }
+            catch (PermissionDeniedException ignored){
+                changeOurMedia(ae);
+            }
+        }
     }
 
     public void uploadMedia(ActionEvent ae) throws IOException {
@@ -141,7 +179,7 @@ public class Main extends Application {
             // TODO pls fix
             // Music music = new Musica(user, path, nome, artist, categoria, date);
             mediacenter.uploadMedia(user, path);
-            swapFxml(ae, "resources/myMedia.fxml");
+            changeMyMedia(ae);
         }
     }
 
@@ -188,12 +226,10 @@ public class Main extends Application {
     }
 
     public void changeOurMedia(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/ourMedia.fxml");
-
-    }
-
-    public void changeOurMediaAdmin(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/ourMediaAdmin.fxml");
+        if(user.isAdmin())
+            swapFxml(ae,"resources/ourMediaAdmin.fxml");
+        else
+            swapFxml(ae,"resources/ourMedia.fxml");
     }
 
     public void changeMyMedia(ActionEvent ae) throws IOException {
@@ -222,7 +258,6 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource(name));
 
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.show();
     }
