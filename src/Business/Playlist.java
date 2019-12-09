@@ -1,23 +1,23 @@
-package business;
+package Business;
 
 import java.util.List;
 
 public class Playlist extends Biblioteca {
     private boolean shared;
 
-    Playlist() {
-        super();
+    Playlist(Utilizador owner) {
+        super(owner);
         this.shared = false;
     }
 
-    Playlist(List<Media> media) {
-        super();
+    Playlist(List<Media> media, Utilizador u) {
+        super(u);
         this.shared = false;
         media.forEach(this::addMedia);
     }
 
-    Playlist(boolean shared) {
-        super();
+    Playlist(boolean shared, Utilizador u) {
+        super(u);
         this.shared = shared;
     }
 

@@ -1,7 +1,7 @@
 package VeryCoolGUI;
 
+import Business.*;
 import Exceptions.*;
-import business.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -89,8 +89,10 @@ public class Main extends Application {
         System.exit(1);
     }
 
-    public void playMusic(ActionEvent ae) {
-        mediacenter.searchByName(search.getText()).orElseThrow().play();
+
+    public void playMusic(ActionEvent actionEvent) {
+        //searchByName now returns a list
+        //mediacenter.searchByName(search.getText()).orElseThrow().play();
     }
 
     public void loginCheckCredentials(ActionEvent ae) throws IOException {
