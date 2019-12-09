@@ -104,49 +104,38 @@ public class MediaMap implements Map<String, Media> {
         throw new NullPointerException("Not implemented!");
     }
 
-    public Media put(String key, Media Value) {
-        throw new UnsupportedOperationException();
-    }
-
-    public Musica put(String key, Musica value) {
+    public Media put(String key, Media valuer) {
         Connection conn;
         try {
             conn = DBConnect.connect();
             Media al = null;
             Statement stm = conn.createStatement();
             stm.executeUpdate("DELETE FROM Media WHERE name='" + key + "'");
-            String sql =
-                    "INSERT INTO Media (name, path, owner, album, artista, " +
-                            "faixa) VALUES ('" + key + "','"
-                            + value.getPath().toString() + "','"
-                            + value.getOwner() + "','"
-                            + value.getAlbum() + "','"
-                            + value.getSinger() + "','"
-                            + value.getFaixa() + "')";
-            int i = stm.executeUpdate(sql);
-            return value;
-        } catch (Exception e) {
-            throw new NullPointerException(e.getMessage());
-        }
-    }
-
-    public Video put(String key, Video value) {
-        Connection conn;
-        try {
-            conn = DBConnect.connect();
-            Media al = null;
-            Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Media WHERE name='" + key + "'");
-            String sql =
-                    "INSERT INTO Media (name, path, owner, serie_name, season, " +
-                            "episode) VALUES ('" + key + "','"
-                            + value.getPath().toString() + "','"
-                            + value.getOwner() + "','"
-                            + value.getSerie() + "','"
-                            + value.getSeason() + "','"
-                            + value.getEpisode() + "')";
-            int i = stm.executeUpdate(sql);
-            return value;
+            if(valuer instanceof Musica) {
+                Musica value = (Musica) valuer;
+                String sql =
+                        "INSERT INTO Media (name, path, owner, album, artista, " +
+                                "faixa) VALUES ('" + key + "','"
+                                + value.getPath().toString() + "','"
+                                + value.getOwner() + "','"
+                                + value.getAlbum() + "','"
+                                + value.getSinger() + "','"
+                                + value.getFaixa() + "')";
+                int i = stm.executeUpdate(sql);
+            }
+            else {
+                Video value = (Video) valuer;
+                String sql =
+                        "INSERT INTO Media (name, path, owner, serie_name, season, " +
+                                "episode) VALUES ('" + key + "','"
+                                + value.getPath().toString() + "','"
+                                + value.getOwner() + "','"
+                                + value.getSerie() + "','"
+                                + value.getSeason() + "','"
+                                + value.getEpisode() + "')";
+                int i = stm.executeUpdate(sql);
+            }
+            return valuer;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }
