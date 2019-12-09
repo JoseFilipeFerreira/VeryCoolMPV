@@ -63,10 +63,9 @@ public class Utilizador {
 
     void firstPasswdCheck(String new_passwd)
             throws SettedPasswdException {
-        if (this.passwd == null) {
-            this.passwd = new_passwd;
-        }
-        throw new SettedPasswdException();
+        if (this.passwd != null)
+            throw new SettedPasswdException();
+        this.passwd = new_passwd;
     }
 
     void login() throws AlreadyLoggedInException {
@@ -79,11 +78,11 @@ public class Utilizador {
         this.isLogged = false;
     }
 
-    public void setPasswd(String passwd) {
+    void setPasswd(String passwd) {
         this.passwd = passwd;
     }
 
-    public String getPasswd() {
+    String getPasswd() {
         return passwd;
     }
 
