@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
    <children>
       <Button layoutX="404.0" layoutY="208.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="57.0" style="-fx-background-color: #2b2b2f;" text="CRIAR" textFill="WHITE">
          <font>
@@ -27,7 +27,7 @@
          <font>
             <Font name="Novecento sans Normal" size="13.0" />
          </font></TextField>
-      <Button layoutX="71.0" layoutY="166.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="VOLTAR" textFill="WHITE">
+      <Button fx:id="back" layoutX="71.0" layoutY="166.0" mnemonicParsing="false" onAction="#changeOurMediaAdmin" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="VOLTAR" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
@@ -38,7 +38,7 @@
       <Line endY="223.0" layoutX="185.0" layoutY="75.0" startY="-12.0" stroke="#2b2b2f" strokeWidth="3.0" />
       <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Assets/icon.png" />
+            <Image url="@icon.png" />
          </image>
       </ImageView>
       <Button layoutX="315.0" layoutY="208.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="77.0" style="-fx-background-color: #2b2b2f;" text="REMOVER" textFill="WHITE">

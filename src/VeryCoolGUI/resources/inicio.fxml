@@ -33,7 +33,7 @@
       <Line endY="274.0" layoutX="185.0" layoutY="75.0" startY="-42.0" stroke="#2b2b2f" strokeWidth="3.0" />
       <ImageView fitHeight="204.0" fitWidth="212.0" layoutX="263.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Assets/icon.png" />
+            <Image url="@icon.png" />
          </image>
       </ImageView>
    </children>

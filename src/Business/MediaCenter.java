@@ -29,20 +29,22 @@ public class MediaCenter {
         throw new PermissionDeniedException();
     }
 
-    public void fstPasswdCheck(String email, String new_passwd)
+    public void fstPasswd(Utilizador u, String new_passwd)
             throws SettedPasswdException {
-        this.registedUsers.get(email)
-                .firstPasswdCheck(new_passwd);
+        u.firstPasswdCheck(new_passwd);
+        this.registedUsers.put(u.getEmail(), u);
     }
 
-    void passwd(Utilizador u, String old_passwd, String new_passwd)
+    public void passwd(Utilizador u, String old_passwd, String new_passwd)
             throws NonSettedPasswdException, InvalidPasswordException {
         u.checkPasswd(old_passwd);
         u.setPasswd(new_passwd);
+        this.registedUsers.put(u.getEmail(), u);
     }
 
-    void chName(Utilizador u, String new_name) {
+    public void chName(Utilizador u, String new_name) {
         u.setName(new_name);
+        this.registedUsers.put(u.getEmail(), u);
     }
 
     void rmUser(Utilizador admin, Utilizador to_rm)

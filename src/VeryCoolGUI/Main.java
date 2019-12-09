@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 
 
 public class Main extends Application {
@@ -25,27 +26,22 @@ public class Main extends Application {
     private  static Utilizador user;
 
     /* button */
-    public Button exit;
-    public Button back;
-    public Button login;
-    public Button logout;
-    public Button confirm;
-    public Button select;
-    public Button play;
-    public Button pause;
-    public Button upload;
-    public Button download;
+    public Button exit, back;
+    public Button confirm, select;
+    public Button login, logout;
+    public Button play, pause;
+    public Button upload, download;
     public Button criarBiblioteca;
     public Button myMedia;
     public Button friends;
     public Button editProfile;
+    public Button createAcount;
 
     /* user input fields */
     public TextField search;
-    public TextField name;
-    public TextField email;
-    public PasswordField password;
+    public TextField name, email, password;
     public DatePicker datePicker;
+    public SplitMenuButton dropDownMenu;
 
     /* data display */
     public Label pathToFile;
@@ -69,7 +65,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         mediacenter = new MediaCenter();
-        Administrador admin = new Administrador("abc", "def");
+        Administrador admin = new Administrador("admin", "admin");
         Utilizador test;
         try {
             test = mediacenter.createUser(admin, "adeus", "ola");
@@ -80,7 +76,7 @@ public class Main extends Application {
         } catch (PermissionDeniedException | UserExistsException ignored) {}
 
         FXMLLoader loader = new FXMLLoader();
-        URL xmlUrl = getClass().getResource("inicio.fxml");
+        URL xmlUrl = getClass().getResource("resources/inicio.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
 
@@ -89,121 +85,156 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void exitProgram(ActionEvent actionEvent) {
+    public void exitProgram(ActionEvent ae) {
         System.exit(1);
     }
+
 
     public void playMusic(ActionEvent actionEvent) {
         //searchByName now returns a list
         //mediacenter.searchByName(search.getText()).orElseThrow().play();
     }
 
-    public void loginCheckCredentials(ActionEvent actionEvent) throws IOException {
+    public void loginCheckCredentials(ActionEvent ae) throws IOException {
         String usr = email.getText();
         String passwd = password.getText();
         try {
             user = mediacenter.login(usr, passwd);
-            swapFxml(actionEvent, "ourMedia.fxml");
+            if (user instanceof Administrador)
+                swapFxml(ae, "resources/ourMediaAdmin.fxml");
+            else
+                swapFxml(ae, "resources/ourMedia.fxml");
         } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
             email.setText("");
             password.setText("");
         } catch (NonSettedPasswdException e) {
-            swapFxml(actionEvent, "createPassword.fxml");
+            user = e.getUser();
+            swapFxml(ae, "resources/createPassword.fxml");
         }
     }
 
-    public void setPassword(ActionEvent actionEvent) throws IOException {
-        String passwd = password.getText();
-        if (passwd != null){
-            user.setPasswd(passwd);
+    public void setPassword(ActionEvent ae) throws IOException {
+        String password = this.password.getText();
+        if (password != null){
+            user.setPasswd(password);
             user = null;
-            swapFxml(actionEvent, "login.fxml");
+            swapFxml(ae, "resources/login.fxml");
         }
     }
 
-    public void editProfile(ActionEvent actionEvent) {
+    public void editProfile(ActionEvent ae) {
+        String e = email.getText();
+        String n = name.getText();
+        String p = password.getText();
+        if (p != null)
+            //TODO pls fix
+            user.setPasswd(p);
     }
 
-    public void logout(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"login.fxml");
-        user = null;
-    }
-
-    public void loginConvidado(ActionEvent actionEvent) throws IOException {
-        user = new Convidado();
-        swapFxml(actionEvent,"ourMediaConvidado.fxml");
-    }
-
-    public void changeCriarConta(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"criarConta.fxml");
-    }
-
-    public void changeEditProfile(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"editProfile.fxml");
-    }
-
-    public void changeOurMedia(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"ourMedia.fxml");
-
-    }
-
-    public void changeMyMedia(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"myMedia.fxml");
-    }
-
-    public void changeInicio(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"inicio.fxml");
-    }
-
-    public void changeLogin(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"login.fxml");
-    }
-
-    public void changeUploadMedia(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent, "uploadMedia.fxml");
-    }
-
-    public void uploadMedia(ActionEvent actionEvent) throws IOException {
+    public void uploadMedia(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
+        String nome = mediaName.getText();
+        String artist = mediaArtist.getText();
+        String categoria = "k-pop";
+        LocalDate date = datePicker.getValue();
         if (path != null) {
+            // TODO pls fix
+            // Music music = new Musica(user, path, nome, artist, categoria, date);
             mediacenter.uploadMedia(user, path);
-            swapFxml(actionEvent, "myMedia.fxml");
+            swapFxml(ae, "resources/myMedia.fxml");
         }
     }
 
-    public void selectFileUpload(ActionEvent actionEvent) {
-        Node but = (Node) actionEvent.getSource();
+    public void selectMusicUpload(ActionEvent ae) {
+        Node but = (Node) ae.getSource();
         Stage stage = (Stage) but.getScene().getWindow();
-
         FileChooser fc = new FileChooser();
         fc.setTitle("Select File for Upload");
-
         fc.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(
-                        "Media Files", "*.mp3", "*.mp4", "*.wav", "*.flac", "*.avi"));
-
+                        "Music Files", "*.mp3", "*.wav", "*.flac"));
         File selectedFile = fc.showOpenDialog(stage);
-
         pathToFile.setText(selectedFile.getPath());
     }
 
-    public void swapFxml(ActionEvent actionEvent, String name) throws IOException {
-        Node but = (Node) actionEvent.getSource();
+    public void selectVideoUpload(ActionEvent ae) {
+        Node but = (Node) ae.getSource();
+        Stage stage = (Stage) but.getScene().getWindow();
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Select File for Upload");
+        fc.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Video Files", "*.mp4", "*.avi", "*.mkv"));
+        File selectedFile = fc.showOpenDialog(stage);
+        pathToFile.setText(selectedFile.getPath());
+    }
+
+    public void logout(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/login.fxml");
+        user = null;
+    }
+
+    public void loginConvidado(ActionEvent ae) throws IOException {
+        user = new Convidado();
+        swapFxml(ae,"resources/ourMediaConvidado.fxml");
+    }
+
+    public void changeCriarConta(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/criarConta.fxml");
+    }
+
+    public void changeEditProfile(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/editProfile.fxml");
+    }
+
+    public void changeOurMedia(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/ourMedia.fxml");
+
+    }
+
+    public void changeOurMediaAdmin(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/ourMediaAdmin.fxml");
+    }
+
+    public void changeMyMedia(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/myMedia.fxml");
+    }
+
+    public void changeInicio(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/inicio.fxml");
+    }
+
+    public void changeLogin(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/login.fxml");
+    }
+
+    public void changeUploadMusic(ActionEvent ae) throws IOException {
+        swapFxml(ae, "resources/uploadMusic.fxml");
+    }
+
+    public void changeUploadVideo(ActionEvent ae) throws IOException {
+        swapFxml(ae, "resources/uploadVideo.fxml");
+    }
+
+    private void swapFxml(ActionEvent ae, String name) throws IOException {
+        Node but = (Node) ae.getSource();
         Stage stage = (Stage) but.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource(name));
+
         Scene scene = new Scene(root);
+
         stage.setScene(scene);
         stage.show();
     }
 
-    public void mouseHover(MouseEvent mouseEvent) {
-        Button b = (Button) mouseEvent.getSource();
+    public void mouseHover(MouseEvent me) {
+        Button b = (Button) me.getSource();
         b.setEffect(null);
         b.setStyle("-fx-background-color: #343438");
     }
 
-    public void mouseUnhover(MouseEvent mouseEvent) {
-        Button b = (Button) mouseEvent.getSource();
+    public void mouseUnhover(MouseEvent me) {
+        Button b = (Button) me.getSource();
         b.setStyle("-fx-background-color: #2b2b2f");
         DropShadow s = new DropShadow();
         s.setWidth(0);

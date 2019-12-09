@@ -13,4 +13,8 @@ public class Administrador extends Utilizador {
     Utilizador createUser(String userName, String name) {
         return new Utilizador(userName, name);
     }
+
+    public boolean isAdmin() {
+        return true;
+    }
 }

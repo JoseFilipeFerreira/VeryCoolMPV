@@ -15,9 +15,12 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema DSS
 -- -----------------------------------------------------
 DROP SCHEMA `DSS`;
+CREATE USER IF NOT EXISTS 'user'@'localhost' IDENTIFIED BY '1234';
 CREATE SCHEMA IF NOT EXISTS `DSS` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 USE `DSS` ;
 
+GRANT ALL PRIVILEGES ON DSS.* TO 'user'@'localhost';
+FLUSH PRIVILEGES;
 -- -----------------------------------------------------
 -- Table `DSS`.`Utilizadores`
 -- -----------------------------------------------------
