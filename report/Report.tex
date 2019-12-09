@@ -506,6 +506,39 @@ si.
     \caption{Diagrama de sequência do Editar Utilizador}
 \end{figure}
 
+\chapter{Diagramas de Máquina Estado}
+
+Para uma melhor demonstração e planeamento dos estados da aplicação são criados os
+diagramas de Máquina Estado. A modelação destes é muito importante pois permite
+mostrar todos os estados possíveis que podem ser tomados. Para isso foram modelados
+4 diagramas:
+
+\section{Diagrama de Máquina Estado Principal - Login}
+
+Este diagrama demonstra o primeiro passo que cada user terá que tomar antes de 
+interagir com o sistema. Quando é realizado o Login o utilizador tem ou não de 
+inserir as suas credenciai, podendo ser tomados estados
+diferentes. O primeiro estado acontece quando o ator que está a interagir
+com o sistema não possui conta mas pretende utiliza-lo, então entra como
+convidado. O segundo estado acontece quando o ator possui conta e o terceiro
+quando o ator que inseriu as credenciais para fazer login tem privilégios de 
+administrador.
+
+\section{Diagrama de Máquina Estado Convidado}
+
+Um convidado pode aceder ao media presente no sistema e pode reproduzi-lo.
+
+\section{Diagrama de Máquina Estado Utilizador}
+
+Um utilizador é um Convidado mas com funcionalidades a mais. Além
+de conseguir só reproduzir media, pode fazer upload/download do mesmo, criar
+playlists e alterar as suas credenciais.
+
+\section{Diagrama de Máquina Estado Administrador}
+
+Um administrador é idêntico a um utilizador mas com mais duas funcionalidades:
+criação e remoção de contas atráves do email.
+
 \chapter{Diagrama de Classes}
 
 Com base no modelo de Dominio decidimos criar as classes apresentadas na figura abaixo,
