@@ -3,20 +3,16 @@ package VeryCoolGUI;
 import Exceptions.*;
 import business.*;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Shadow;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -31,27 +27,22 @@ public class Main extends Application {
     private  static Utilizador user;
 
     /* button */
-    public Button exit;
-    public Button back;
-    public Button login;
-    public Button logout;
-    public Button confirm;
-    public Button select;
-    public Button play;
-    public Button pause;
-    public Button upload;
-    public Button download;
+    public Button exit, back;
+    public Button confirm, select;
+    public Button login, logout;
+    public Button play, pause;
+    public Button upload, download;
     public Button criarBiblioteca;
     public Button myMedia;
     public Button friends;
     public Button editProfile;
+    public Button createAcount;
 
     /* user input fields */
     public TextField search;
-    public TextField name;
-    public TextField email;
-    public PasswordField password;
+    public TextField name, email, password;
     public DatePicker datePicker;
+    public SplitMenuButton dropDownMenu;
 
     /* data display */
     public Label pathToFile;
@@ -75,7 +66,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         mediacenter = new MediaCenter();
-        Administrador admin = new Administrador("abc", "def");
+        Administrador admin = new Administrador("admin", "admin");
         Utilizador test;
         try {
             test = mediacenter.createUser(admin, "adeus", "ola");
@@ -86,7 +77,7 @@ public class Main extends Application {
         } catch (PermissionDeniedException | UserExistsException ignored) {}
 
         FXMLLoader loader = new FXMLLoader();
-        URL xmlUrl = getClass().getResource("inicio.fxml");
+        URL xmlUrl = getClass().getResource("resources/inicio.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
 
@@ -108,21 +99,21 @@ public class Main extends Application {
         String passwd = password.getText();
         try {
             user = mediacenter.login(usr, passwd);
-            swapFxml(actionEvent, "ourMedia.fxml");
+            swapFxml(actionEvent, "resources/ourMedia.fxml");
         } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
             email.setText("");
             password.setText("");
         } catch (NonSettedPasswdException e) {
-            swapFxml(actionEvent, "createPassword.fxml");
+            swapFxml(actionEvent, "resources/createPassword.fxml");
         }
     }
 
     public void setPassword(ActionEvent actionEvent) throws IOException {
-        String passwd = password.getText();
-        if (passwd != null){
-            user.setPasswd(passwd);
+        String password = this.password.getText();
+        if (password != null){
+            user.setPasswd(password);
             user = null;
-            swapFxml(actionEvent, "login.fxml");
+            swapFxml(actionEvent, "resources/login.fxml");
         }
     }
 
@@ -130,49 +121,53 @@ public class Main extends Application {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"login.fxml");
+        swapFxml(actionEvent,"resources/login.fxml");
         user = null;
     }
 
     public void loginConvidado(ActionEvent actionEvent) throws IOException {
         user = new Convidado();
-        swapFxml(actionEvent,"ourMediaConvidado.fxml");
+        swapFxml(actionEvent,"resources/ourMediaConvidado.fxml");
     }
 
     public void changeCriarConta(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"criarConta.fxml");
+        swapFxml(actionEvent,"resources/criarConta.fxml");
     }
 
     public void changeEditProfile(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"editProfile.fxml");
+        swapFxml(actionEvent,"resources/editProfile.fxml");
     }
 
     public void changeOurMedia(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"ourMedia.fxml");
+        swapFxml(actionEvent,"resources/ourMedia.fxml");
 
+    }
+
+    public void changeOurMediaAdmin(ActionEvent actionEvent) throws IOException {
+        swapFxml(actionEvent,"resources/ourMediaAdmin.fxml");
     }
 
     public void changeMyMedia(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"myMedia.fxml");
+        swapFxml(actionEvent,"resources/myMedia.fxml");
     }
 
     public void changeInicio(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"inicio.fxml");
+        swapFxml(actionEvent,"resources/inicio.fxml");
     }
 
     public void changeLogin(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent,"login.fxml");
+        swapFxml(actionEvent,"resources/login.fxml");
     }
 
     public void changeUploadMedia(ActionEvent actionEvent) throws IOException {
-        swapFxml(actionEvent, "uploadMedia.fxml");
+        swapFxml(actionEvent, "resources/uploadMedia.fxml");
     }
 
     public void uploadMedia(ActionEvent actionEvent) throws IOException {
         String path = pathToFile.getText();
         if (path != null) {
             mediacenter.uploadMedia(user, path);
-            swapFxml(actionEvent, "myMedia.fxml");
+            swapFxml(actionEvent, "resources/myMedia.fxml");
         }
     }
 
@@ -192,11 +187,13 @@ public class Main extends Application {
         pathToFile.setText(selectedFile.getPath());
     }
 
-    public void swapFxml(ActionEvent actionEvent, String name) throws IOException {
+    private void swapFxml(ActionEvent actionEvent, String name) throws IOException {
         Node but = (Node) actionEvent.getSource();
         Stage stage = (Stage) but.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource(name));
+
         Scene scene = new Scene(root);
+
         stage.setScene(scene);
         stage.show();
     }

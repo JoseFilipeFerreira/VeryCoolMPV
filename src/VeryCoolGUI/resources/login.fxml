@@ -13,22 +13,38 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
    <children>
-      <Button fx:id="confirm" layoutX="381.0" layoutY="271.0" mnemonicParsing="false" onAction="#editProfile" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #2b2b2f;" text="EDITAR" textFill="WHITE">
+      <Button fx:id="confirm" layoutX="345.0" layoutY="244.0" mnemonicParsing="false" onAction="#loginCheckCredentials" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="LOGIN" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
          <effect>
             <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
          </effect></Button>
-      <Label layoutX="237.0" layoutY="62.0" text="EMAIL" textFill="WHITE">
+      <Label layoutX="246.0" layoutY="121.0" text="EMAIL" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font></Label>
-      <TextField fx:id="email" layoutX="237.0" layoutY="81.0" prefHeight="29.0" prefWidth="215.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
+      <Label layoutX="246.0" layoutY="181.0" text="PASSWORD" textFill="WHITE">
+         <font>
+            <Font name="Novecento sans UltraBold" size="13.0" />
+         </font></Label>
+      <PasswordField fx:id="password" layoutX="246.0" layoutY="200.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
+         <font>
+            <Font name="Novecento sans Normal" size="13.0" />
+         </font></PasswordField>
+      <TextField fx:id="email" layoutX="246.0" layoutY="140.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Novecento sans Normal" size="13.0" />
          </font></TextField>
-      <Button fx:id="back" layoutX="71.0" layoutY="166.0" mnemonicParsing="false" onAction="#changeOurMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="VOLTAR" textFill="WHITE">
+      <Button fx:id="loginAsConvidado" layoutX="72.0" layoutY="140.0" mnemonicParsing="false" onAction="#loginConvidado" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="CONVIDADO" textFill="WHITE">
+         <font>
+            <Font name="Novecento sans UltraBold" size="13.0" />
+         </font>
+         <effect>
+            <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+         </effect>
+      </Button>
+      <Button fx:id="back" layoutX="73.0" layoutY="186.0" mnemonicParsing="false" onAction="#changeInicio" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="VOLTAR" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
@@ -39,24 +55,8 @@
       <Line endY="223.0" layoutX="185.0" layoutY="75.0" startY="-12.0" stroke="#2b2b2f" strokeWidth="3.0" />
       <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Assets/icon.png" />
+            <Image url="@icon.png" />
          </image>
       </ImageView>
-      <TextField fx:id="name" layoutX="237.0" layoutY="152.0" prefHeight="29.0" prefWidth="215.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
-         <font>
-            <Font name="Novecento sans Normal" size="13.0" />
-         </font>
-      </TextField>
-      <Label layoutX="237.0" layoutY="133.0" text="NOME" textFill="WHITE">
-         <font>
-            <Font name="Novecento sans UltraBold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="238.0" layoutY="200.0" text="PASWORD" textFill="WHITE">
-         <font>
-            <Font name="Novecento sans UltraBold" size="13.0" />
-         </font>
-      </Label>
-      <PasswordField fx:id="password" layoutX="237.0" layoutY="219.0" prefHeight="26.0" prefWidth="215.0" style="-fx-background-color: #2b2b2f;" />
    </children>
 </Pane>

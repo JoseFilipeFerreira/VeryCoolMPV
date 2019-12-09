@@ -48,7 +48,7 @@
       <Line endY="272.0" layoutX="144.0" layoutY="75.0" startY="-35.0" stroke="#2b2b2f" strokeWidth="3.0" />
       <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Assets/icon.png" />
+            <Image url="@icon.png" />
          </image>
       </ImageView>
       <Button fx:id="upload" layoutX="28.0" layoutY="117.0" mnemonicParsing="false" onAction="#changeUploadMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="UPLOAD" textFill="WHITE">
