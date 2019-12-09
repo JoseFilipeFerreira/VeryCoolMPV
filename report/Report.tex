@@ -131,16 +131,12 @@ defina.
 O Diagrama de Use Cases representa os atores do sistema e as tarefas de cada um
 deles. No nosso caso existem 4 atores:
 \begin{itemize}
-    \item \textbf{Utilizador}: Todos os outros referidos abaixo são atores deste
+    \item \textbf{Convidado}: Todos os outros referidos abaixo são atores deste
         tipo. Logo, a este ator estará relacionado as ações que todos podem
         fazer;
-    \item \textbf{Utilizador sem password}: É um utilizador que após ter pedido
-        a um administrador para criar uma conta dando o email e nome. Este pode
-        definir a sua password para passar a ser um utilizador com password;
-    \item \textbf{Utilizador com password}: Ter password significa que já tem
-        uma conta "completa", ou seja, tem acesso à totalidade de ações que um
+    \item \textbf{Utilizador}: Tem acesso à totalidade de ações que um
         user sem permissões de administrador pode ter;
-    \item \textbf{Utilizador com permissões de administrador}: A diferença deste 
+    \item \textbf{Administrador}: A diferença deste 
         utilizador para os restantes é que este é o único que pode criar uma
         conta e assim ser o responsável pela existência dos restantes.
 \end{itemize}
@@ -167,28 +163,20 @@ password, utilizador com password e utilizador com permissões de administrador.
     \caption{Especificação do \emph{Use Case} Entrar como convidado}
 \end{figure}
 
-\subsection{Media Control}
+\subsection{Reproduzir Conteúdo}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Media_Control.png}  
-    \caption{Especificação do \emph{Use Case} Media Control}
+    \caption{Especificação do \emph{Use Case} Reproduzir Conteúdo}
 \end{figure}
 
-\subsection{Escolher media}
-
-\begin{figure}[H]
-	\centering 
-    \includegraphics[width=\textwidth]{images/Escolher_Media.png}  
-    \caption{Especificação do \emph{Use Case} Escolher media}
-\end{figure}
-
-\subsection{Definir password}
+\subsection{Editar Utilizador}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Definir_Password.png}  
-    \caption{Especificação do \emph{Use Case} Definir password}
+    \caption{Especificação do \emph{Use Case} Editar Utilizador}
 \end{figure}
 
 \subsection{Login}
@@ -223,44 +211,52 @@ password, utilizador com password e utilizador com permissões de administrador.
     \caption{especificação do \emph{use case} upload}
 \end{figure}
 
-\subsection{Eliminar media}
+\subsection{Remover Conteúdo}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Eliminar_media.png}  
-    \caption{especificação do \emph{use case} Eliminar media}
+    \caption{especificação do \emph{use case} Remover Conteúdo}
 \end{figure}
 
-\subsection{Classificar}
+\subsection{Alterar Categoria}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Classificar.png}  
-    \caption{Especificação do \emph{Use Case} Classificar}
+    \caption{Especificação do \emph{Use Case} Alterar Categoria}
 \end{figure}
 
-\subsection{Criar Biblioteca}
+\subsection{Criar Playlist}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Criar_Biblioteca.png}  
-    \caption{Especificação do \emph{Use Case} Criar Biblioteca}
+    \caption{Especificação do \emph{Use Case} Criar Playlist}
 \end{figure}
 
-\subsection{Eliminar Biblioteca}
+\subsection{Remover Playlist}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Eliminar_Biblioteca.png}  
-    \caption{Especificação do \emph{Use Case} Eliminar Biblioteca}
+    \caption{Especificação do \emph{Use Case} Remover Playlist}
 \end{figure}
 
-\subsection{Adicionar amigo}
+\subsection{Fazer convite}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Adicionar_Amigo.png}  
-    \caption{Especificação do \emph{Use Case} Adicionar amigo}
+    \caption{Especificação do \emph{Use Case} Fazer convite}
+\end{figure}
+
+\subsection{Responder convite}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/Responder_Convite.png}  
+    \caption{Especificação do \emph{Use Case} Responder convite}
 \end{figure}
 
 \subsection{Remover amigo}
@@ -271,20 +267,20 @@ password, utilizador com password e utilizador com permissões de administrador.
     \caption{Especificação do \emph{Use Case} Remover amigo}
 \end{figure}
 
-\subsection{Criar Conta}
+\subsection{Registar Utilizador}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Criar_Conta.png}  
-    \caption{Especificação do \emph{Use Case} Criar conta}
+    \caption{Especificação do \emph{Use Case} Registar Utilizador}
 \end{figure}
 
-\subsection{Remover conta}
+\subsection{Eliminar utilizador}
 
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Remover_Conta.png}  
-    \caption{Especificação do \emph{Use Case} Remover conta}
+    \caption{Especificação do \emph{Use Case} Eliminar Utilizador}
 \end{figure}
 
 \chapter{Mockups}
@@ -375,6 +371,300 @@ OLED ou AMOLED, um menor consumo de energia.
     \includegraphics[width=\textwidth]{images/Classificar_Menu.png}  
     \caption{Menu para classificar um ou mais media}
 \end{figure}
+
+\chapter{Diagrama de Sequência de Sistemas}
+
+Com base nos use cases e nas suas especificações foram construidos diagramas de sequência
+para cada use case que nos ajudam a interpretar como o sistema e o ator interajem entre
+si.
+
+\section{Login}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/loginSeq.png}  
+    \caption{Diagrama de sequência do Login}
+\end{figure}
+
+\section{Logout}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/logoutSeq.png}  
+    \caption{Diagrama de sequência do Logout}
+\end{figure}
+
+\section{Entrar como convidado}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/convidadoSeq.png}  
+    \caption{Diagrama de sequência do Entrar como Convidado}
+\end{figure}
+
+\section{Upload}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/uploadSeq.png}  
+    \caption{Diagrama de sequência do Upload}
+\end{figure}
+
+\section{Download}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/downloadSeq.png}  
+    \caption{Diagrama de sequência do Download}
+\end{figure}
+
+\section{Remover Conteúdo}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/remconteudoSeq.png}  
+    \caption{Diagrama de sequência do Remover Conteúdo}
+\end{figure}
+
+\section{Alterar Categoria}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/altcategoriaSeq.png}  
+    \caption{Diagrama de sequência do Alterar Categoria}
+\end{figure}
+
+\section{Criar Playlist}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/criarplaylistSeq.png}  
+    \caption{Diagrama de sequência do Criar Playlist}
+\end{figure}
+
+\section{Remover Playlist}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/remplaylistSeq.png}  
+    \caption{Diagrama de sequência do Remover Playlist}
+\end{figure}
+
+\section{Reproduzir Conteúdo}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/repconteudoSeq.png}  
+    \caption{Diagrama de sequência do Reproduzir Conteúdo}
+\end{figure}
+
+\section{Registar Utilizador}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/reguserSeq.png}  
+    \caption{Diagrama de sequência do Registar Utilizador}
+\end{figure}
+
+\section{Eliminar Utilizador}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/elemuserSeq.png}  
+    \caption{Diagrama de sequência do Eliminar Utilizador}
+\end{figure}
+
+\section{Fazer Convite}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/fazerconviteSeq.png}  
+    \caption{Diagrama de sequência do Fazer Convite}
+\end{figure}
+
+\section{Responder a convite}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/respconviteSeq.png}  
+    \caption{Diagrama de sequência do Responder a Convite}
+\end{figure}
+
+\section{Remover Amigo}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/remamigoSeq.png}  
+    \caption{Diagrama de sequência do Remover Amigo}
+\end{figure}
+
+\section{Editar Utilizador}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/edituserSeq.png}  
+    \caption{Diagrama de sequência do Editar Utilizador}
+\end{figure}
+
+\chapter{Diagrama de Classes}
+
+Com base no modelo de Dominio decidimos criar as classes apresentadas na figura abaixo,
+exceto uma (MediaCenter) que foi acrescida por decisão nossa para melhor manutenção
+da aplicação e serve como a classe "principal" do projeto.
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/classdiagram.png}  
+    \caption{Diagrama de Classes}
+\end{figure}
+
+\chapter{Diagrama de Packages}
+
+Na criação dos packages tivemos em mente dois grupos: o que agrupa as classes que 
+interajem com os atores do sistema e o que agrupa as classes relacionadas com o media.
+Assim o manuseamento será muito mais "fácil" quando for necessário tratar de um use case
+especifico.
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/packages.png}  
+    \caption{Diagrama de Packages}
+\end{figure}
+
+\chapter{Diagramas de Sequência de Sistemas}
+
+No capitulo anterior foi apresentado como o sistema está estruturado relativamente aos
+packages, e com isso foi nos dado a oportunidade de voltar a analisar cada um
+dos use cases mas desta vez com base nos subsistemas criados: Media e Users.
+
+\section{Login}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/loginSub.png}  
+    \caption{Diagrama de sequência de subsistema do Login}
+\end{figure}
+
+\section{Logout}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/logoutSub.png}  
+    \caption{Diagrama de sequência de subsistema do Logout}
+\end{figure}
+
+\section{Entrar como convidado}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/convidadoSub.png}  
+    \caption{Diagrama de sequência de subsistema do Entrar como Convidado}
+\end{figure}
+
+\section{Upload}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/uploadSub.png}  
+    \caption{Diagrama de sequência de subsistema do Upload}
+\end{figure}
+
+\section{Download}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/downloadSub.png}  
+    \caption{Diagrama de sequência de subsistema do Download}
+\end{figure}
+
+\section{Remover Conteúdo}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/remconteudoSub.png}  
+    \caption{Diagrama de sequência de subsistema do Remover Conteúdo}
+\end{figure}
+
+\section{Alterar Categoria}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/altcategoriaSub.png}  
+    \caption{Diagrama de sequência de subsistema do Alterar Categoria}
+\end{figure}
+
+\section{Criar Playlist}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/criarplaylistSub.png}  
+    \caption{Diagrama de sequência de subsistema do Criar Playlist}
+\end{figure}
+
+\section{Remover Playlist}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/remplaylistSub.png}  
+    \caption{Diagrama de sequência de subsistema do Remover Playlist}
+\end{figure}
+
+\section{Reproduzir Conteúdo}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/repconteudoSub.png}  
+    \caption{Diagrama de sequência de subsistema do Reproduzir Conteúdo}
+\end{figure}
+
+\section{Registar Utilizador}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/reguserSub.png}  
+    \caption{Diagrama de sequência de subsistema do Registar Utilizador}
+\end{figure}
+
+\section{Eliminar Utilizador}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/elemuserSub.png}  
+    \caption{Diagrama de sequência de subsistema do Eliminar Utilizador}
+\end{figure}
+
+\section{Fazer Convite}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/fazerconviteSub.png}  
+    \caption{Diagrama de sequência de subsistema do Fazer Convite}
+\end{figure}
+
+\section{Responder a convite}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/respconviteSub.png}  
+    \caption{Diagrama de sequência de subsistema do Responder a Convite}
+\end{figure}
+
+\section{Remover Amigo}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/remamigoSub.png}  
+    \caption{Diagrama de sequência de subsistema do Remover Amigo}
+\end{figure}
+
+\section{Editar Utilizador}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/edituserSub.png}  
+    \caption{Diagrama de sequência de subsistema do Editar Utilizador}
+\end{figure}
+
 
 
 \end{document}
