@@ -42,6 +42,18 @@ public class MediaCenter {
         this.registedUsers.put(u.getEmail(), u);
     }
 
+    public void passwd(Administrador u, String old_passwd, String new_passwd)
+            throws NonSettedPasswdException, InvalidPasswordException {
+        u.checkPasswd(old_passwd);
+        u.setPasswd(new_passwd);
+        this.registedUsers.put(u.getEmail(), u);
+    }
+
+    public void chName(Administrador u, String new_name) {
+        u.setName(new_name);
+        this.registedUsers.put(u.getEmail(), u);
+    }
+
     public void chName(Utilizador u, String new_name) {
         u.setName(new_name);
         this.registedUsers.put(u.getEmail(), u);
