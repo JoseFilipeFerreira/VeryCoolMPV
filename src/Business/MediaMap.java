@@ -66,9 +66,16 @@ public class MediaMap implements Map<String, Media> {
                 "SELECT * FROM Media WHERE name='" + key + "' and owner='" +
                     this.owner.getEmail() + "'";
             ResultSet rs = stm.executeQuery(sql);
-            if (rs.next())
-                al = new Musica(rs.getString(1), rs.getString(2),
-                        rs.getString(3));
+            if (rs.next()) {
+                if(rs.getString(5) != null)
+                    al = new Musica(rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5),
+                            rs.getInt(6));
+            }
+                else
+                    al = new Video(rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(7), rs.getInt(8),
+                            rs.getInt(9));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -76,8 +83,7 @@ public class MediaMap implements Map<String, Media> {
     }
 
     public int hashCode() {
-        //return this.inst.hashCode();
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     public boolean isEmpty() {
@@ -98,21 +104,38 @@ public class MediaMap implements Map<String, Media> {
         throw new NullPointerException("Not implemented!");
     }
 
-    /* Exercício: Alterar para utilizar transacções! */
-    public Media put(String key, Media value) {
+    public Media put(String key, Media valuer) {
         Connection conn;
         try {
             conn = DBConnect.connect();
             Media al = null;
             Statement stm = conn.createStatement();
             stm.executeUpdate("DELETE FROM Media WHERE name='" + key + "'");
-            String sql =
-                    "INSERT INTO Media VALUES ('" + key + "','"
-                            + value.getPath().toString() + "','"
-                            + value.getOwner() + "')";
-            int i = stm.executeUpdate(sql);
-            return new Musica(value.getName(), value.getPath().toString(),
-                    value.getOwner());
+            if(valuer instanceof Musica) {
+                Musica value = (Musica) valuer;
+                String sql =
+                        "INSERT INTO Media (name, path, owner, album, artista, " +
+                                "faixa) VALUES ('" + key + "','"
+                                + value.getPath().toString() + "','"
+                                + value.getOwner() + "','"
+                                + value.getAlbum() + "','"
+                                + value.getSinger() + "','"
+                                + value.getFaixa() + "')";
+                int i = stm.executeUpdate(sql);
+            }
+            else {
+                Video value = (Video) valuer;
+                String sql =
+                        "INSERT INTO Media (name, path, owner, serie_name, season, " +
+                                "episode) VALUES ('" + key + "','"
+                                + value.getPath().toString() + "','"
+                                + value.getOwner() + "','"
+                                + value.getSerie() + "','"
+                                + value.getSeason() + "','"
+                                + value.getEpisode() + "')";
+                int i = stm.executeUpdate(sql);
+            }
+            return valuer;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }
@@ -162,8 +185,14 @@ public class MediaMap implements Map<String, Media> {
                     "Select * from Media where owner='" +
                     this.owner.getEmail() + "'");
             for (; rs.next(); ) {
-                col.add(new Musica(rs.getString(1), rs.getString(2),
-                        rs.getString(3)));
+                if(rs.getString(5) != null)
+                    col.add(new Musica(rs.getString(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getInt(6)));
+                else
+                    col.add(new Video(rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(7), rs.getInt(8),
+                            rs.getInt(9)));
             }
             return col;
         } catch (Exception e) {
@@ -186,8 +215,14 @@ public class MediaMap implements Map<String, Media> {
                     "Select * from Media where owner='" +
                             this.owner.getEmail() + "' and regexp '^" + s + "'");
             for (; rs.next(); ) {
-                col.add(new Musica(rs.getString(1), rs.getString(2),
-                        rs.getString(3)));
+                if(rs.getString(5) != null)
+                    col.add(new Musica(rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5),
+                            rs.getInt(6)));
+                else
+                    col.add(new Video(rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(7), rs.getInt(8),
+                            rs.getInt(9)));
             }
             return col;
         } catch (Exception e) {

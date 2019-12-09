@@ -1,10 +1,11 @@
 package Business;
 
+import Exceptions.PermissionDeniedException;
+
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Media {
     String owner;
@@ -23,7 +24,15 @@ public abstract class Media {
         this.nome = nome;
     }
 
-    void download(){}
+    void download(Utilizador u, Path dest) throws PermissionDeniedException {
+        if(!u.getEmail().equals(this.owner)) {
+            throw new PermissionDeniedException();
+        }
+        Path org = Paths.get(this.path);
+        try {
+            Files.copy(org, dest);
+        } catch (IOException ignored) {}
+    }
 
     String getName() {
         return nome;
