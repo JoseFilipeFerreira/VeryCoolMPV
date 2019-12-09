@@ -100,9 +100,20 @@ public class UserMap implements Map<String, Utilizador> {
             Utilizador al = null;
             Statement stm = conn.createStatement();
             stm.executeUpdate("DELETE FROM Utilizadores WHERE email='" + key + "'");
-            String sql =
-                    "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
-                            "','" + value.getPasswd() + "'," + false + ")";
+            String sql;
+            if(value.getPasswd() != null) {
+                sql =
+                        "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
+                                "','" + value.getPasswd() + "'," + false + ")";
+            }
+            else {
+                sql =
+                        "INSERT INTO Utilizadores (email, name, admin) VALUES" +
+                                " ('" + key +
+                                "'," +
+                                "'" + value.getName() +
+                                "'," + false + ")";
+            }
             int i = stm.executeUpdate(sql);
             return new Utilizador(value.getEmail(), value.getName(), value.getPasswd());
         } catch (Exception e) {
@@ -117,9 +128,20 @@ public class UserMap implements Map<String, Utilizador> {
             Utilizador al = null;
             Statement stm = conn.createStatement();
             stm.executeUpdate("DELETE FROM Utilizadores WHERE email='" + key + "'");
-            String sql =
-                    "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
-                            "','" + value.getPasswd() + "'," + true + ")";
+            String sql;
+            if(value.getPasswd() != null) {
+                sql =
+                        "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
+                                "','" + value.getPasswd() + "'," + true + ")";
+            }
+            else {
+                sql =
+                        "INSERT INTO Utilizadores (email, name, admin) VALUES" +
+                                " ('" + key +
+                                "'," +
+                                "'" + value.getName() +
+                                "'," + true + ")";
+            }
             int i = stm.executeUpdate(sql);
             return new Administrador(value.getEmail(), value.getName(), value.getPasswd());
         } catch (Exception e) {
@@ -152,7 +174,7 @@ public class UserMap implements Map<String, Utilizador> {
         try {
             int i = 0;
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT nome FROM Utilizadores");
+            ResultSet rs = stm.executeQuery("SELECT name FROM Utilizadores");
             for (; rs.next(); i++) ;
             return i;
         } catch (Exception e) {
