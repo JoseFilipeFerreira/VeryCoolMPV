@@ -56,7 +56,7 @@ public class Utilizador {
     void checkPasswd(String passwd)
             throws InvalidPasswordException, NonSettedPasswdException {
         if(this.passwd == null)
-            throw new NonSettedPasswdException();
+            throw new NonSettedPasswdException(this);
         if(!this.passwd.equals(passwd))
             throw new InvalidPasswordException();
     }
@@ -116,5 +116,9 @@ public class Utilizador {
 
     MediaMap getUserMedia() {
         return userMedia;
+    }
+
+    public boolean isAdmin() {
+        return false;
     }
 }
