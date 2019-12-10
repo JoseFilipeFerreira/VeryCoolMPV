@@ -3,12 +3,15 @@ package Business;
 import Exceptions.InvalidGenreException;
 
 import java.nio.file.Path;
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class Musica extends Media {
     Categoria cat;
     String album;
     String singer;
     int faixa;
+    LocalDate release_date;
 
     Musica (Utilizador owner, Path path, String cat)
             throws InvalidGenreException {
@@ -22,12 +25,13 @@ public class Musica extends Media {
     }
 
     Musica(String name, String path, String owner, String album,
-           String singer, int faixa) {
+           String singer, int faixa, Date release_date) {
         super(owner, path, name);
         this.cat = new Categoria();
         this.album = album;
         this.singer = singer;
         this.faixa = faixa;
+        this.release_date = release_date;
     }
 
     String getAlbum() {

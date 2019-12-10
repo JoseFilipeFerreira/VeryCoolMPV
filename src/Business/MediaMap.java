@@ -70,12 +70,12 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     al = new Musica(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6));
+                            rs.getInt(6), rs.getDate(7));
             }
                 else
                     al = new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(7), rs.getInt(8),
-                            rs.getInt(9));
+                            rs.getString(3), rs.getString(8), rs.getInt(9),
+                            rs.getInt(10));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -188,11 +188,11 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6), rs.getDate(7)));
                 else
                     col.add(new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(7), rs.getInt(8),
-                            rs.getInt(9)));
+                            rs.getString(3), rs.getString(8), rs.getInt(9),
+                            rs.getInt(10)));
             }
             return col;
         } catch (Exception e) {
@@ -218,11 +218,11 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6)));
+                            rs.getInt(6), rs.getDate(7)));
                 else
                     col.add(new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(7), rs.getInt(8),
-                            rs.getInt(9)));
+                            rs.getString(3), rs.getString(8), rs.getInt(9),
+                            rs.getInt(10)));
             }
             return col;
         } catch (Exception e) {
