@@ -88,7 +88,7 @@ public class MediaCenter {
         return log;
     }
 
-    public void uploadMedia(Utilizador user, String path) {
+    public void uploadMedia(Utilizador user, Media path) {
         try {
             user.uploadMedia(path);
         } catch (IOException ignored) {}

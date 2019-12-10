@@ -90,9 +90,8 @@ public class Utilizador {
         this.name = name;
     }
 
-    //I want some nice upload over the air
-    Media uploadMedia(String mediaPath) throws IOException {
-        Path old = Paths.get(mediaPath);
+    Media uploadMedia(Media media) throws IOException {
+        Path old = media.getPath();
         Path newer = Paths.get(".media");
         if(Files.notExists(newer)) {
             Files.createDirectory(newer);
@@ -100,9 +99,9 @@ public class Utilizador {
         Path file = newer.resolve(old.getFileName());
         if(Files.notExists(file))
             Files.copy(old, file);
-        Media newMedia = new Musica(this, file);
-        this.userMedia.put(newMedia.getName(), newMedia);
-        return newMedia;
+        media.setPath(file.toString());
+        this.userMedia.put(media.getName(), media);
+        return media;
     }
 
     void removeMedia(String media_id) {

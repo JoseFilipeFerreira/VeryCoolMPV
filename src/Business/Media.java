@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 
 public abstract class Media {
     String owner;
     private String nome;
     private String path;
+    private Date release_date;
 
     Media(Utilizador owner, Path path) {
         this.path = path.toString();
@@ -18,10 +20,11 @@ public abstract class Media {
         this.nome = path.getFileName().toString();
     }
 
-    Media(String owner, String path, String nome) {
+    Media(String owner, String path, String nome, java.sql.Date release_date) {
         this.path = path;
         this.owner = owner;
         this.nome = nome;
+        this.release_date = release_date;
     }
 
     void download(Utilizador u, Path dest) throws PermissionDeniedException {
@@ -56,5 +59,13 @@ public abstract class Media {
 
     public String getOwner() {
         return this.owner;
+    }
+
+    public Date getRelease_date() {
+        return this.release_date;
+    }
+
+    void setPath(String path) {
+        this.path = path;
     }
 }

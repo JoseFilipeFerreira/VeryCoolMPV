@@ -10,7 +10,6 @@ public class Musica extends Media {
     String album;
     String singer;
     int faixa;
-    Date release_date;
 
     Musica (Utilizador owner, Path path, String cat)
             throws InvalidGenreException {
@@ -25,12 +24,11 @@ public class Musica extends Media {
 
     Musica(String name, String path, String owner, String album,
            String singer, int faixa, Date release_date) {
-        super(owner, path, name);
+        super(owner, path, name, release_date);
         this.cat = new Categoria();
         this.album = album;
         this.singer = singer;
         this.faixa = faixa;
-        this.release_date = release_date;
     }
 
     String getAlbum() {
@@ -53,9 +51,5 @@ public class Musica extends Media {
 
     public int getCat() {
          return this.cat.getPos();
-    }
-
-    public Date getRelease_date() {
-        return this.release_date;
     }
 }
