@@ -4,14 +4,13 @@ import Exceptions.InvalidGenreException;
 
 import java.nio.file.Path;
 import java.sql.Date;
-import java.time.LocalDate;
 
 public class Musica extends Media {
     Categoria cat;
     String album;
     String singer;
     int faixa;
-    LocalDate release_date;
+    Date release_date;
 
     Musica (Utilizador owner, Path path, String cat)
             throws InvalidGenreException {
