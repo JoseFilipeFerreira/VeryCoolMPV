@@ -54,4 +54,8 @@ public class Musica extends Media {
     public int getCat() {
          return this.cat.getPos();
     }
+
+    public Date getRelease_date() {
+        return this.release_date;
+    }
 }

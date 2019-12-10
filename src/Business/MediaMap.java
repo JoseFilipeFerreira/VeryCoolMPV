@@ -115,12 +115,13 @@ public class MediaMap implements Map<String, Media> {
                 Musica value = (Musica) valuer;
                 String sql =
                         "INSERT INTO Media (name, path, owner, album, artista, " +
-                                "faixa) VALUES ('" + key + "','"
+                                "faixa, release_date) VALUES ('" + key + "','"
                                 + value.getPath().toString() + "','"
                                 + value.getOwner() + "','"
                                 + value.getAlbum() + "','"
                                 + value.getSinger() + "','"
-                                + value.getFaixa() + "')";
+                                + value.getFaixa() + "','"
+                                + value.getRelease_date() + "')";
                 int i = stm.executeUpdate(sql);
             }
             else {
