@@ -172,6 +172,8 @@ public class MediaMap implements Map<String, Media> {
         try {
             Media al = this.get(key);
             Statement stm = conn.createStatement();
+            stm.executeUpdate("DELETE FROM Playlist where (`Media_name` = '"
+                    + key + "');");
             String sql = "DELETE FROM Media WHERE (`name` = " +
                     "'" + key + "');";
             int i = stm.executeUpdate(sql);

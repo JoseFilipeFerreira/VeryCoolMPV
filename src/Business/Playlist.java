@@ -1,32 +1,44 @@
 package Business;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Playlist extends Biblioteca {
+public class Playlist {
+    private String title;
+    private int id;
+    private String owner;
+    private List<String> media;
     private boolean shared;
 
-    Playlist(Utilizador owner) {
-        super(owner);
-        this.shared = false;
-    }
-
-    Playlist(List<Media> media, Utilizador u) {
-        super(u);
-        this.shared = false;
-        media.forEach(this::addMedia);
-    }
-
-    Playlist(boolean shared, Utilizador u) {
-        super(u);
+    Playlist(String owner, int id, boolean shared, String title) {
+        this.id = id;
+        this.title = title;
+        this.owner = owner;
+        this.media = new ArrayList<>();
         this.shared = shared;
     }
 
-    boolean isShared() {
-        return shared;
+    void add(String a) {
+        this.media.add(a);
     }
 
-    boolean toggleShared() {
-        this.shared = !this.shared;
+    int getId() {
+        return id;
+    }
+
+    String getOwner() {
+        return owner;
+    }
+
+    List<String> getMedia() {
+        return media;
+    }
+
+    boolean is_shared() {
         return this.shared;
+    }
+
+    String getTitle() {
+        return title;
     }
 }

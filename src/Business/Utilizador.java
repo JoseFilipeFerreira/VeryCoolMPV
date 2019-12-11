@@ -19,7 +19,6 @@ public class Utilizador {
     private String passwd;
     private boolean isLogged;
     private List<Utilizador> friends;
-    private List<Playlist> savedPlaylists;
 
     Utilizador(String email, String name) {
         this.name = name;
@@ -32,7 +31,6 @@ public class Utilizador {
         this.passwd = null;
         this.userMedia = new MediaMap(this);
         this.friends = new ArrayList<>();
-        this.savedPlaylists = new ArrayList<>();
     }
 
     Utilizador(String email, String name, String passwd) {
@@ -42,7 +40,6 @@ public class Utilizador {
         this.passwd = passwd;
         this.userMedia = new MediaMap(this);
         this.friends = new ArrayList<>();
-        this.savedPlaylists = new ArrayList<>();
     }
 
     String getEmail() {

@@ -86,7 +86,8 @@ CREATE TABLE IF NOT EXISTS `DSS`.`Playlist` (
   `Media_name` VARCHAR(45) NOT NULL,
   `playlist_id` INT(11) NOT NULL,
   `is_shared` TINYINT(4) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`Utilizadores_email`, `Media_name`),
+  `title` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Utilizadores_email`, `Media_name`, `playlist_id`),
   INDEX `fk_Utilizadores_has_Media_Media1_idx` (`Media_name` ASC) VISIBLE,
   INDEX `fk_Utilizadores_has_Media_Utilizadores1_idx` (`Utilizadores_email` ASC) VISIBLE,
   CONSTRAINT `fk_Utilizadores_has_Media_Media1`
@@ -98,7 +99,6 @@ CREATE TABLE IF NOT EXISTS `DSS`.`Playlist` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
-
 
 -- -----------------------------------------------------
 -- Table `DSS`.`Amigos`

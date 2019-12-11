@@ -36,8 +36,8 @@ public class Biblioteca {
     }
 
     //TODO Random playlists
-    Playlist createPlaylist(Predicate<? super Media> filter, Utilizador u) {
-        return new Playlist(this.library
+    PlaylistMap createPlaylist(Predicate<? super Media> filter, Utilizador u) {
+        return new PlaylistMap(this.library
                 .values()
                 .stream()
                 .filter(filter)
