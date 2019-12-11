@@ -1,4 +1,4 @@
 package Exceptions;
 
-public class InvalidMusicException {
+public class InvalidMusicException extends Exception {
 }
