@@ -3,8 +3,6 @@ package Business;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Biblioteca {
     private Map<String, Media> library;
@@ -36,11 +34,11 @@ public class Biblioteca {
     }
 
     //TODO Random playlists
-    PlaylistMap createPlaylist(Predicate<? super Media> filter, Utilizador u) {
-        return new PlaylistMap(this.library
-                .values()
-                .stream()
-                .filter(filter)
-                .collect(Collectors.toList()), u);
-    }
+//    PlaylistMap createPlaylist(Predicate<? super Media> filter, Utilizador u) {
+//        return new Playlist(this.library
+//                .values()
+//                .stream()
+//                .filter(filter)
+//                .collect(Collectors.toList()), u);
+//    }
 }

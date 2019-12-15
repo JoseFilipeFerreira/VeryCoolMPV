@@ -35,6 +35,18 @@ public class Musica extends Media {
         this.faixa = faixa;
     }
 
+    Musica(String name, String path, Utilizador owner, String album,
+           String singer, int faixa, Date release_date) throws
+            InvalidMusicException {
+        super(owner.getEmail(), path, name, release_date);
+        if(singer == null)
+            throw new InvalidMusicException();
+        this.id_cat = -1;
+        this.album = album;
+        this.singer = singer;
+        this.faixa = faixa;
+    }
+
     String getAlbum() {
         return album;
     }

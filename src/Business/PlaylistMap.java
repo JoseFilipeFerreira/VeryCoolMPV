@@ -93,7 +93,6 @@ public class PlaylistMap implements Map<Integer, Playlist> {
 
     public Playlist put(Integer key, Playlist value) {
         Connection conn;
-        int id = value.getId();
         String owner = value.getOwner();
         List<String> media = value.getMedia();
         String title = value.getTitle();
@@ -103,7 +102,7 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             Statement stm = conn.createStatement();
             for (String media_name : media) {
                 stm.executeUpdate(
-                        "INSERT INTO Media VALUES ('" + owner + "','"
+                        "INSERT IGNORE INTO Playlist VALUES ('" + owner + "','"
                                 + media_name + "','"
                                 + key + "','"
                                 + shared + "','"
@@ -168,6 +167,20 @@ public class PlaylistMap implements Map<Integer, Playlist> {
            throw new NullPointerException(e.getMessage());
        }
     }
-}
 
+    Map<Integer, Playlist> sharedPlaylists() {
+        Connection conn = DBConnect.connect();
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("select playlist_id from Playlist" +
+                    " where is_shared = true");
+            Map<Integer, Playlist> res = new HashMap<>();
+            while(rs.next())
+                res.put(rs.getInt(1), this.get(rs.getInt(1)));
+            return res;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+}
 

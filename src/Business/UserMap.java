@@ -114,8 +114,7 @@ public class UserMap implements Map<String, Utilizador> {
             } else {
                 sql =
                         "INSERT INTO Utilizadores (email, name, admin) VALUES" +
-                                " ('" + key +
-                                "'," +
+                                " ('" + key + "'," +
                                 "'" + value.getName() +
                                 "'," + value.isAdmin() + ")";
             }
@@ -163,7 +162,7 @@ public class UserMap implements Map<String, Utilizador> {
     public Collection<Utilizador> values() {
         Connection conn = DBConnect.connect();
         try {
-            Collection<Utilizador> col = new HashSet<Utilizador>();
+            Collection<Utilizador> col = new HashSet<>();
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM Utilizadores");
             for (; rs.next(); ) {

@@ -41,4 +41,8 @@ public class Playlist {
     String getTitle() {
         return title;
     }
+
+    boolean isOwner(Utilizador u) {
+        return this.owner.equals(u.getEmail());
+    }
 }
