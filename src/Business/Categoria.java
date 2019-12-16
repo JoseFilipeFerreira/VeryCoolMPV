@@ -11,19 +11,19 @@ import java.util.List;
 public class Categoria {
     private int pos;
 
-   Categoria() {
+   public Categoria() {
         try {
             this.pos = this.cat_id("Other");
         } catch (InvalidGenreException ignored) {}
-    }
+   }
 
-    Categoria(int pos) throws InvalidGenreException {
+    public Categoria(int pos) throws InvalidGenreException {
         if (!this.valid_cat(pos))
             throw new InvalidGenreException();
         this.pos = pos;
     }
 
-    Categoria(String genre) throws InvalidGenreException {
+    public Categoria(String genre) throws InvalidGenreException {
         this.pos = this.cat_id(genre);
     }
 
@@ -76,7 +76,7 @@ public class Categoria {
         return null;
     }
 
-    List<String> getAllGenres() {
+    public List<String> getAllGenres() {
         Connection conn = DBConnect.connect();
         try {
             Statement stm = conn.createStatement();
