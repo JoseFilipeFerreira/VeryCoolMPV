@@ -99,18 +99,22 @@ public class UserMap implements Map<String, Utilizador> {
             conn = DBConnect.connect();
             Utilizador al = null;
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Utilizadores WHERE email='" + key + "'");
+            if(this.containsKey(key)) {
+                stm.executeUpdate("UPDATE Utilizadores SET " +
+                        "name = '" + value.getName() +
+                        "', passwd = '" + value.getPasswd() +
+                        "'WHERE email = '" + key + "'");
+                return value;
+            }
             String sql;
-            if(value.getPasswd() != null) {
+            if (value.getPasswd() != null) {
                 sql =
                         "INSERT INTO Utilizadores VALUES ('" + key + "','" + value.getName() +
                                 "','" + value.getPasswd() + "'," + value.isAdmin() + ")";
-            }
-            else {
+            } else {
                 sql =
                         "INSERT INTO Utilizadores (email, name, admin) VALUES" +
-                                " ('" + key +
-                                "'," +
+                                " ('" + key + "'," +
                                 "'" + value.getName() +
                                 "'," + value.isAdmin() + ")";
             }
@@ -158,7 +162,7 @@ public class UserMap implements Map<String, Utilizador> {
     public Collection<Utilizador> values() {
         Connection conn = DBConnect.connect();
         try {
-            Collection<Utilizador> col = new HashSet<Utilizador>();
+            Collection<Utilizador> col = new HashSet<>();
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM Utilizadores");
             for (; rs.next(); ) {

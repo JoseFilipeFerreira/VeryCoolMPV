@@ -70,12 +70,12 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     al = new Musica(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6));
+                            rs.getInt(6), rs.getDate(7), rs.getInt(11));
             }
                 else
                     al = new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(7), rs.getInt(8),
-                            rs.getInt(9));
+                            rs.getString(3), rs.getString(8), rs.getInt(9),
+                            rs.getInt(10), rs.getDate(7));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -110,30 +110,55 @@ public class MediaMap implements Map<String, Media> {
             conn = DBConnect.connect();
             Media al = null;
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Media WHERE name='" + key + "'");
             if(valuer instanceof Musica) {
                 Musica value = (Musica) valuer;
-                String sql =
-                        "INSERT INTO Media (name, path, owner, album, artista, " +
-                                "faixa) VALUES ('" + key + "','"
-                                + value.getPath().toString() + "','"
-                                + value.getOwner() + "','"
-                                + value.getAlbum() + "','"
-                                + value.getSinger() + "','"
-                                + value.getFaixa() + "')";
-                int i = stm.executeUpdate(sql);
+                if(this.containsKey(key)) {
+                    stm.executeUpdate("Update Media SET "
+                            + "album = '" + value.getAlbum() + "',"
+                            + "artista = '" + value.getSinger() + "',"
+                            + "faixa = '" + value.getFaixa() + "',"
+                            + "release_date = '" + value.getRelease_date() + "'"
+                            + "categoria = '" + value.getCat() + "'"
+                            + "WHERE name ='" + key + "'");
+                }
+                else {
+                    String sql =
+                            "INSERT INTO Media (name, path, owner, album, artista, " +
+                                    "faixa, categoria, release_date) VALUES " +
+                                    "('" + key + "','"
+                                    + value.getPath().toString() + "','"
+                                    + value.getOwner() + "','"
+                                    + value.getAlbum() + "','"
+                                    + value.getSinger() + "','"
+                                    + value.getFaixa() + "','"
+                                    + value.getCat() + "','"
+                                    + value.getRelease_date() + "')";
+                    int i = stm.executeUpdate(sql);
+                }
             }
             else {
                 Video value = (Video) valuer;
-                String sql =
-                        "INSERT INTO Media (name, path, owner, serie_name, season, " +
-                                "episode) VALUES ('" + key + "','"
-                                + value.getPath().toString() + "','"
-                                + value.getOwner() + "','"
-                                + value.getSerie() + "','"
-                                + value.getSeason() + "','"
-                                + value.getEpisode() + "')";
-                int i = stm.executeUpdate(sql);
+                if(this.containsKey(key)) {
+                    stm.executeUpdate(
+                            "UPDATE Media SET "
+                                    + "serie_name = '" + value.getSerie() + "',"
+                                    + "season = '" + value.getSeason() + "',"
+                                    + "episode = '" + value.getEpisode() + "'"
+                                    + "Where name = '" + key + "'");
+                }
+                else {
+                    String sql =
+                            "INSERT INTO Media (name, path, owner, " +
+                                    "release_date, serie_name, season, " +
+                                    "episode) VALUES ('" + key + "','"
+                                    + value.getPath().toString() + "','"
+                                    + value.getOwner() + "','"
+                                    + value.getRelease_date() + "','"
+                                    + value.getSerie() + "','"
+                                    + value.getSeason() + "','"
+                                    + value.getEpisode() + "')";
+                    int i = stm.executeUpdate(sql);
+                }
             }
             return valuer;
         } catch (Exception e) {
@@ -150,6 +175,8 @@ public class MediaMap implements Map<String, Media> {
         try {
             Media al = this.get(key);
             Statement stm = conn.createStatement();
+            stm.executeUpdate("DELETE FROM Playlist where (`Media_name` = '"
+                    + key + "');");
             String sql = "DELETE FROM Media WHERE (`name` = " +
                     "'" + key + "');";
             int i = stm.executeUpdate(sql);
@@ -178,7 +205,7 @@ public class MediaMap implements Map<String, Media> {
     public Collection<Media> values() {
         Connection conn = DBConnect.connect();
         try {
-            Collection<Media> col = new HashSet<Media>();
+            Collection<Media> col = new HashSet<>();
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(this.owner == null ?
                     "SELECT * FROM Media" :
@@ -188,11 +215,11 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6), rs.getDate(7), rs.getInt(11)));
                 else
                     col.add(new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(7), rs.getInt(8),
-                            rs.getInt(9)));
+                            rs.getString(3), rs.getString(8), rs.getInt(9),
+                            rs.getInt(10), rs.getDate(7)));
             }
             return col;
         } catch (Exception e) {
@@ -218,11 +245,11 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6)));
+                            rs.getInt(6), rs.getDate(7), rs.getInt(11)));
                 else
                     col.add(new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(7), rs.getInt(8),
-                            rs.getInt(9)));
+                            rs.getString(3), rs.getString(8), rs.getInt(9),
+                            rs.getInt(10), rs.getDate(7)));
             }
             return col;
         } catch (Exception e) {
@@ -230,5 +257,4 @@ public class MediaMap implements Map<String, Media> {
         }
     }
 }
-
 
