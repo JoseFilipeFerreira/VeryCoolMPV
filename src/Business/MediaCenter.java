@@ -71,7 +71,6 @@ public class MediaCenter {
             throws PermissionDeniedException {
         if(!admin.isAdmin())
             throw new PermissionDeniedException();
-        this.mainLibrary.remove(to_rm);
         this.registedUsers.remove(to_rm);
     }
 
