@@ -23,9 +23,9 @@ public class Musica extends Media {
         this.id_cat = -1;
     }
 
-    Musica(String name, String path, String owner, String album,
-           String singer, int faixa, Date release_date) throws
-            InvalidMusicException {
+    public Musica(String name, String path, String owner, String album,
+           String singer, int faixa, Date release_date, String cat) throws
+            InvalidMusicException, InvalidGenreException {
         super(owner, path, name, release_date);
         if(singer == null)
             throw new InvalidMusicException();
@@ -33,11 +33,25 @@ public class Musica extends Media {
         this.album = album;
         this.singer = singer;
         this.faixa = faixa;
+        this.id_cat = new Categoria(cat).getPos();
     }
 
-    Musica(String name, String path, Utilizador owner, String album,
-           String singer, int faixa, Date release_date) throws
-            InvalidMusicException {
+    public Musica(String name, String path, String owner, String album,
+                  String singer, int faixa, Date release_date, int cat) throws
+            InvalidMusicException, InvalidGenreException {
+        super(owner, path, name, release_date);
+        if(singer == null)
+            throw new InvalidMusicException();
+        this.id_cat = -1;
+        this.album = album;
+        this.singer = singer;
+        this.faixa = faixa;
+        this.id_cat = new Categoria(cat).getPos();
+    }
+
+    public Musica(String name, String path, Utilizador owner, String album,
+           String singer, int faixa, Date release_date, String cat) throws
+            InvalidMusicException, InvalidGenreException {
         super(owner.getEmail(), path, name, release_date);
         if(singer == null)
             throw new InvalidMusicException();
@@ -45,6 +59,21 @@ public class Musica extends Media {
         this.album = album;
         this.singer = singer;
         this.faixa = faixa;
+        this.id_cat = new Categoria(cat).getPos();
+    }
+
+
+    public Musica(String name, String path, Utilizador owner, String album,
+                  String singer, int faixa, Date release_date, int cat) throws
+            InvalidMusicException, InvalidGenreException {
+        super(owner.getEmail(), path, name, release_date);
+        if(singer == null)
+            throw new InvalidMusicException();
+        this.id_cat = -1;
+        this.album = album;
+        this.singer = singer;
+        this.faixa = faixa;
+        this.id_cat = new Categoria(cat).getPos();
     }
 
     String getAlbum() {
@@ -64,7 +93,6 @@ public class Musica extends Media {
         this.id_cat = new_cat;
     }
 
-    //TODO implement cats in DB and implement this the proper way
     public int getCat() {
          return this.id_cat;
     }

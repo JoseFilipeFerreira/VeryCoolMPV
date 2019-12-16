@@ -70,7 +70,7 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     al = new Musica(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6), rs.getDate(7));
+                            rs.getInt(6), rs.getDate(7), rs.getInt(11));
             }
                 else
                     al = new Video(rs.getString(1), rs.getString(2),
@@ -118,17 +118,20 @@ public class MediaMap implements Map<String, Media> {
                             + "artista = '" + value.getSinger() + "',"
                             + "faixa = '" + value.getFaixa() + "',"
                             + "release_date = '" + value.getRelease_date() + "'"
+                            + "categoria = '" + value.getCat() + "'"
                             + "WHERE name ='" + key + "'");
                 }
                 else {
                     String sql =
                             "INSERT INTO Media (name, path, owner, album, artista, " +
-                                    "faixa, release_date) VALUES ('" + key + "','"
+                                    "faixa, categoria, release_date) VALUES " +
+                                    "('" + key + "','"
                                     + value.getPath().toString() + "','"
                                     + value.getOwner() + "','"
                                     + value.getAlbum() + "','"
                                     + value.getSinger() + "','"
                                     + value.getFaixa() + "','"
+                                    + value.getCat() + "','"
                                     + value.getRelease_date() + "')";
                     int i = stm.executeUpdate(sql);
                 }
@@ -202,7 +205,7 @@ public class MediaMap implements Map<String, Media> {
     public Collection<Media> values() {
         Connection conn = DBConnect.connect();
         try {
-            Collection<Media> col = new HashSet<Media>();
+            Collection<Media> col = new HashSet<>();
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(this.owner == null ?
                     "SELECT * FROM Media" :
@@ -212,7 +215,7 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getInt(6), rs.getDate(7)));
+                        rs.getInt(6), rs.getDate(7), rs.getInt(11)));
                 else
                     col.add(new Video(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(8), rs.getInt(9),
@@ -242,7 +245,7 @@ public class MediaMap implements Map<String, Media> {
                 if(rs.getString(5) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6), rs.getDate(7)));
+                            rs.getInt(6), rs.getDate(7), rs.getInt(11)));
                 else
                     col.add(new Video(rs.getString(1), rs.getString(2),
                             rs.getString(3), rs.getString(8), rs.getInt(9),
@@ -254,5 +257,4 @@ public class MediaMap implements Map<String, Media> {
         }
     }
 }
-
 
