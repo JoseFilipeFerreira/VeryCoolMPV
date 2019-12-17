@@ -4,6 +4,7 @@ import Business.*;
 import Exceptions.*;
 import Utils.Metadata;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -37,7 +37,7 @@ public class Main extends Application {
     @FXML private Button create, remove;
     @FXML private Button confirm, select;
     @FXML private Button login, logout;
-    @FXML private Button play, pause;
+    @FXML private Button playPause, stop;
     @FXML private Button upload, download;
     @FXML private Button criarBiblioteca;
     @FXML private Button myMedia;
@@ -58,11 +58,7 @@ public class Main extends Application {
 
     /* data display */
     @FXML private Label pathToFile;
-
-    @FXML private TableView<Media> mediaTable;
-    @FXML private TableColumn<Media, String> nameCol;
-    @FXML private TableColumn<Media, String> pathCol;
-    @FXML private TableColumn<Media, String> ownerCol;
+    @FXML private ListView<String> listViewMedia;
 
     public static void main(String[] args) {
         launch(args);
@@ -168,23 +164,26 @@ public class Main extends Application {
         String sEpisode = videoEpisode.getText();
         LocalDate date = datePicker.getValue();
 
-        Integer episode;
-        Integer season;
         try {
-            episode = (sEpisode.equals(""))? null : Integer.parseInt(sEpisode);
-            season = (sSeason.equals(""))? null : Integer.parseInt(sEpisode);
+            Integer episode = (sEpisode.equals(""))? null : Integer.parseInt(sEpisode);
+            Integer season = (sSeason.equals(""))? null : Integer.parseInt(sEpisode);
+            if (path != null && !nome.equals("") && date != null) {
+                Video video = new Video(
+                        user,
+                        path,
+                        nome,
+                        serie.equals("")? null : serie,
+                        season,
+                        episode,
+                        Date.valueOf(date));
+
+                mediacenter.uploadMedia(user, video);
+                changeMyMedia(ae);
+            }
         }
         catch (NumberFormatException e){
             videoEpisode.setText("");
             videoSeason.setText("");
-            return;
-        }
-
-        if (path != null && !nome.equals("") && date != null) {
-            Video video = new Video(user, path, nome, serie, season, episode, Date.valueOf(date));
-
-            mediacenter.uploadMedia(user, video);
-            changeMyMedia(ae);
         }
     }
 
@@ -285,6 +284,8 @@ public class Main extends Application {
     public void loginConvidado(ActionEvent ae) throws IOException {
         user = new Convidado();
         swapFxml(ae,"resources/ourMediaConvidado.fxml");
+        
+        //populateList(mediacenter.searchByName(""));
     }
 
     public void changeOurMedia(ActionEvent ae) throws IOException {
@@ -293,24 +294,18 @@ public class Main extends Application {
         else
             swapFxml(ae, "resources/ourMedia.fxml");
 
-        //populateTable(mediacenter.searchByName(""));
+        //populateList(mediacenter.searchByName(""));
     }
 
     public void populateTableOnTyping(KeyEvent keyEvent) {
-        populateTable(mediacenter.searchByName(""));
+        populateList(mediacenter.searchByName(search.getText()));
+
     }
 
-
-    public void populateTable(List<Media> m){
-        pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        ownerCol.setCellValueFactory(new PropertyValueFactory<>("owner"));
-
-        mediaTable.getColumns().add(pathCol);
-        mediaTable.getColumns().add(nameCol);
-        mediaTable.getColumns().add(ownerCol);
-
-        mediaTable.getItems().addAll(m);
+    public void populateList(List<Media> m){
+        listViewMedia.setItems(FXCollections.observableList(
+                m.stream().map(Media::toString).collect(Collectors.toList())
+        ));
     }
 
     public void changeMyMedia(ActionEvent ae) throws IOException {
