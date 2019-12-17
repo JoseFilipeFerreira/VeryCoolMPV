@@ -43,4 +43,9 @@ public class Video extends Media {
     public int getCat() {
          throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String toString() {
+        return "Video: " + this.getName() + " - " + serie + " (" + episode + "/" + season + ") (" + this.getRelease_date().getYear() + ")";
+    }
 }

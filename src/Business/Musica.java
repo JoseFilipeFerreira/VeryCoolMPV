@@ -96,4 +96,9 @@ public class Musica extends Media {
     public int getCat() {
          return this.id_cat;
     }
+
+    @Override
+    public String toString() {
+        return "Music: " + singer + " - " + this.getName() + " (" + album + ") (" + this.getRelease_date().toLocalDate().getYear() + ")";
+    }
 }
