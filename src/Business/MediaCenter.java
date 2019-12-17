@@ -61,7 +61,7 @@ public class MediaCenter {
 
     void rmUser(Utilizador admin, Utilizador to_rm)
             throws PermissionDeniedException {
-        if(! (admin instanceof Administrador))
+        if(!admin.isAdmin())
             throw new PermissionDeniedException();
         this.mainLibrary.remove(to_rm.getEmail());
         this.registedUsers.remove(to_rm.getEmail());
@@ -104,5 +104,25 @@ public class MediaCenter {
 
     void rmMedia(Utilizador user, String media_id) {
         user.removeMedia(media_id);
+    }
+
+    public void chCat(Musica m, Utilizador u, String cat) throws
+            InvalidGenreException {
+        Categoria n = new Categoria(cat);
+        m.setCat(n);
+        if(m.getOwner().equals(u.getEmail()))
+            mainLibrary.updateCat(m.getCat(), m.getName());
+        else
+            mainLibrary.updateCat(m, u.getEmail());
+    }
+
+    public void playMedia(Media m) {
+        List<Media> a = new ArrayList<>();
+        a.add(m);
+        new MediaPlayer(a);
+    }
+
+    public void playMedia(List<Media> m) {
+        new MediaPlayer(m);
     }
 }

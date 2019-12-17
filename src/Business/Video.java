@@ -1,5 +1,6 @@
 package Business;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Date;
 
@@ -40,7 +41,13 @@ public class Video extends Media {
         return episode;
     }
 
-    public int getCat() {
-         throw new UnsupportedOperationException();
+    void play() {
+        ProcessBuilder a = new ProcessBuilder("mpv", this.getPath().toString());
+        try {
+            Process p = a.start();
+            p.waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

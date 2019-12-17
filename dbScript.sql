@@ -52,7 +52,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS`.`Media` (
   `name` VARCHAR(45) NOT NULL,
-  `path` VARCHAR(45) NOT NULL,
+  `path` VARCHAR(100) NOT NULL,
   `owner` VARCHAR(45) NOT NULL,
   `edited_by` VARCHAR(45) NULL DEFAULT NULL,
   `album` VARCHAR(45) NULL DEFAULT NULL,

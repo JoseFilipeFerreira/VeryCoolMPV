@@ -41,17 +41,7 @@ public abstract class Media {
         return nome;
     }
 
-    abstract int getCat();
-
-    public void play() {
-        ProcessBuilder a = new ProcessBuilder("mpv", this.getPath().toString());
-        try {
-            Process p = a.start();
-            p.waitFor();
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+    abstract void play();
 
     Path getPath() {
         return Paths.get(this.path);
