@@ -3,6 +3,7 @@ package Business;
 import Exceptions.InvalidGenreException;
 import Exceptions.InvalidMusicException;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Date;
 
@@ -97,7 +98,21 @@ public class Musica extends Media {
          return this.id_cat;
     }
 
-    @Override
+    void setCat(Categoria cat) {
+        this.id_cat = cat.getPos();
+    }
+
+    void play() {
+        ProcessBuilder a = new ProcessBuilder("mpv", "--no-video",
+                this.getPath().toString());
+        try {
+            Process p = a.start();
+            p.waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String toString() {
         return "Music: " + singer + " - " + this.getName() + " (" + album + ") (" + this.getRelease_date().toLocalDate().getYear() + ")";
     }

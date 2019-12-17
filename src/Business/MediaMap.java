@@ -104,6 +104,39 @@ public class MediaMap implements Map<String, Media> {
         throw new NullPointerException("Not implemented!");
     }
 
+    void updateCat(int cat_id, String key) {
+        Connection con = DBConnect.connect();
+        try {
+            Statement stm = con.createStatement();
+            stm.executeUpdate("UPDATE Media set categoria = '" + cat_id + "' " +
+                    "where name = '" + key + "' and edited_by IS NULL");
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    void updateCat(Musica value, String user) {
+        Connection con = DBConnect.connect();
+        try {
+            Statement stm = con.createStatement();
+            stm.executeUpdate( "INSERT INTO Media (name, path, owner, album, artista, " +
+                    "faixa, categoria, edited_by, release_date) VALUES " +
+                    "('" + value.getName() + "','"
+                    + value.getPath().toString() + "','"
+                    + value.getOwner() + "','"
+                    + value.getAlbum() + "','"
+                    + value.getSinger() + "','"
+                    + value.getFaixa() + "','"
+                    + value.getCat() + "','"
+                    + user + "','"
+                    + value.getRelease_date() + "')"
+                    + "ON DUPLICATE KEY UPDATE "
+                    + "edited_by = '" + user + "'");
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
     public Media put(String key, Media valuer) {
         Connection conn;
         try {
@@ -112,16 +145,6 @@ public class MediaMap implements Map<String, Media> {
             Statement stm = conn.createStatement();
             if(valuer instanceof Musica) {
                 Musica value = (Musica) valuer;
-                if(this.containsKey(key)) {
-                    stm.executeUpdate("Update Media SET "
-                            + "album = '" + value.getAlbum() + "',"
-                            + "artista = '" + value.getSinger() + "',"
-                            + "faixa = '" + value.getFaixa() + "',"
-                            + "release_date = '" + value.getRelease_date() + "'"
-                            + "categoria = '" + value.getCat() + "'"
-                            + "WHERE name ='" + key + "'");
-                }
-                else {
                     String sql =
                             "INSERT INTO Media (name, path, owner, album, artista, " +
                                     "faixa, categoria, release_date) VALUES " +
@@ -132,21 +155,17 @@ public class MediaMap implements Map<String, Media> {
                                     + value.getSinger() + "','"
                                     + value.getFaixa() + "','"
                                     + value.getCat() + "','"
-                                    + value.getRelease_date() + "')";
+                                    + value.getRelease_date() + "')"
+                            + "ON DUPLICATE KEY UPDATE "
+                                    + "album = '" + value.getAlbum() + "',"
+                                    + "artista = '" + value.getSinger() + "',"
+                                    + "faixa = '" + value.getFaixa() + "',"
+                                    + "release_date = '" + value.getRelease_date() + "'"
+                                    + "categoria = '" + value.getCat() + "'";
                     int i = stm.executeUpdate(sql);
-                }
             }
             else {
                 Video value = (Video) valuer;
-                if(this.containsKey(key)) {
-                    stm.executeUpdate(
-                            "UPDATE Media SET "
-                                    + "serie_name = '" + value.getSerie() + "',"
-                                    + "season = '" + value.getSeason() + "',"
-                                    + "episode = '" + value.getEpisode() + "'"
-                                    + "Where name = '" + key + "'");
-                }
-                else {
                     String sql =
                             "INSERT INTO Media (name, path, owner, " +
                                     "release_date, serie_name, season, " +
@@ -154,11 +173,16 @@ public class MediaMap implements Map<String, Media> {
                                     + value.getPath().toString() + "','"
                                     + value.getOwner() + "','"
                                     + value.getRelease_date() + "','"
-                                    + value.getSerie() + "','"
-                                    + value.getSeason() + "','"
-                                    + value.getEpisode() + "')";
+                                    + value.getSerie() + "',"
+                                    + (value.getSeason() == null ? null :
+                                     "'" + value.getSeason() + "'") + ","
+                                    + (value.getEpisode() == null ? null :
+                                    "'" + value.getEpisode() + "'") + ")"
+                                    + "ON DUPLICATE KEY UPDATE "
+                                    + "serie_name = '" + value.getSerie() + "',"
+                                    + "season = '" + value.getSeason() + "',"
+                                    + "episode = '" + value.getEpisode() + "'";
                     int i = stm.executeUpdate(sql);
-                }
             }
             return valuer;
         } catch (Exception e) {
@@ -227,20 +251,15 @@ public class MediaMap implements Map<String, Media> {
         }
     }
 
-    void playAll() {
-        this.values()
-                .forEach(Media::play);
-    }
-
-    List<Media> searchByName(String s) {
+    Collection<Media> values(String uid) {
         Connection conn = DBConnect.connect();
         try {
-            List<Media> col = new ArrayList<>();
+            Collection<Media> col = new HashSet<>();
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media where name regexp '^" + s + "'" :
+                    "SELECT * FROM Media" :
                     "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and regexp '^" + s + "'");
+                            this.owner.getEmail() + "'");
             for (; rs.next(); ) {
                 if(rs.getString(5) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
@@ -252,6 +271,81 @@ public class MediaMap implements Map<String, Media> {
                             rs.getInt(10), rs.getDate(7)));
             }
             return col;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    void playAll() {
+        this.values()
+                .forEach(Media::play);
+    }
+
+    List<Media> searchByName(String s) {
+        Connection conn = DBConnect.connect();
+        try {
+            List<Media> col = new ArrayList<>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(this.owner == null ?
+                    "SELECT * FROM Media where lower(name) regexp '" + s.toLowerCase() +
+                            "'" :
+                    "Select * from Media where owner='" +
+                            this.owner.getEmail() + "' and lower(name) regexp" +
+                            " '" + s.toLowerCase() + "'");
+            for (; rs.next(); ) {
+                if(rs.getString(5) != null)
+                    col.add(new Musica(rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5),
+                            rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                else
+                    col.add(new Video(rs.getString(1), rs.getString(2),
+                            rs.getString(3), rs.getString(8), rs.getInt(9),
+                            rs.getInt(10), rs.getDate(7)));
+            }
+            return col;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    List<String> artistList() {
+        Connection conn = DBConnect.connect();
+        try {
+            List<String> ls = new ArrayList<>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT distinct artista from Media");
+            while(rs.next())
+                ls.add(rs.getString(1));
+            return ls;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    List<String> albumList(String art) {
+        Connection conn = DBConnect.connect();
+        try {
+            List<String> ls = new ArrayList<>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT distinct album from Media" +
+                    " where artista = '" + art + "'");
+            while(rs.next())
+                ls.add(rs.getString(1));
+            return ls;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    List<String> albumList() {
+        Connection conn = DBConnect.connect();
+        try {
+            List<String> ls = new ArrayList<>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT distinct album from Media");
+            while(rs.next())
+                ls.add(rs.getString(1));
+            return ls;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }

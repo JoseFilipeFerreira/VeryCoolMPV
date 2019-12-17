@@ -52,8 +52,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS`.`Media` (
   `name` VARCHAR(45) NOT NULL,
-  `path` VARCHAR(45) NOT NULL,
+  `path` VARCHAR(100) NOT NULL,
   `owner` VARCHAR(45) NOT NULL,
+  `edited_by` VARCHAR(45) NULL DEFAULT NULL,
   `album` VARCHAR(45) NULL DEFAULT NULL,
   `artista` VARCHAR(45) NULL DEFAULT NULL,
   `faixa` INT(11) NULL DEFAULT NULL,
@@ -64,9 +65,13 @@ CREATE TABLE IF NOT EXISTS `DSS`.`Media` (
   `categoria` INT NULL DEFAULT NULL,
   PRIMARY KEY (`name`),
   INDEX `fk_Media_Utilizadores_idx` (`owner` ASC) VISIBLE,
+  INDEX `fk_Media_Utilizadores1_idx` (`edited_by` ASC) VISIBLE,
   INDEX `fk_Media_Categoria1_idx` (`categoria` ASC) VISIBLE,
   CONSTRAINT `fk_Media_Utilizadores`
     FOREIGN KEY (`owner`)
+    REFERENCES `DSS`.`Utilizadores` (`email`),
+CONSTRAINT `fk_Media_Utilizadores1`
+    FOREIGN KEY (`edited_by`)
     REFERENCES `DSS`.`Utilizadores` (`email`),
   CONSTRAINT `fk_Media_Categoria1`
     FOREIGN KEY (`categoria`)
