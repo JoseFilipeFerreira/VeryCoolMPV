@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,10 +31,6 @@ public class Main extends Application {
     private static MediaCenter mediacenter;
     private  static Utilizador user;
     private static Stage stage;
-
-
-    public ListView<String> listViewMedia;
-
 
     /* button */
     @FXML private Button exit, back, swap;
@@ -63,13 +58,7 @@ public class Main extends Application {
 
     /* data display */
     @FXML private Label pathToFile;
-
-    @FXML private Label displayMediaTMP;
-
-    @FXML private TableView<Media> mediaTable;
-    @FXML private TableColumn<Media, String> nameCol;
-    @FXML private TableColumn<Media, String> pathCol;
-    @FXML private TableColumn<Media, String> ownerCol;
+    @FXML private ListView<String> listViewMedia;
 
     public static void main(String[] args) {
         launch(args);
@@ -296,7 +285,7 @@ public class Main extends Application {
         user = new Convidado();
         swapFxml(ae,"resources/ourMediaConvidado.fxml");
         
-        //populateTable(mediacenter.searchByName(""));
+        //populateList(mediacenter.searchByName(""));
     }
 
     public void changeOurMedia(ActionEvent ae) throws IOException {
@@ -305,29 +294,18 @@ public class Main extends Application {
         else
             swapFxml(ae, "resources/ourMedia.fxml");
 
-        //populateTable(mediacenter.searchByName(""));
+        //populateList(mediacenter.searchByName(""));
     }
 
     public void populateTableOnTyping(KeyEvent keyEvent) {
-        listViewMedia.setItems(FXCollections.observableList(
-                mediacenter.searchByName(search.getText())
-                        .stream()
-                        .map(Media::toString)
-                        .collect(Collectors.toList())
-        ));
+        populateList(mediacenter.searchByName(search.getText()));
+
     }
 
-
-    public void populateTable(List<Media> m){
-        pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        ownerCol.setCellValueFactory(new PropertyValueFactory<>("owner"));
-
-        mediaTable.getColumns().add(pathCol);
-        mediaTable.getColumns().add(nameCol);
-        mediaTable.getColumns().add(ownerCol);
-
-        mediaTable.getItems().addAll(m);
+    public void populateList(List<Media> m){
+        listViewMedia.setItems(FXCollections.observableList(
+                m.stream().map(Media::toString).collect(Collectors.toList())
+        ));
     }
 
     public void changeMyMedia(ActionEvent ae) throws IOException {
