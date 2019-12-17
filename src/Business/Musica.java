@@ -113,4 +113,7 @@ public class Musica extends Media {
         }
     }
 
+    public String toString() {
+        return "Music: " + singer + " - " + this.getName() + " (" + album + ") (" + this.getRelease_date().toLocalDate().getYear() + ")";
+    }
 }

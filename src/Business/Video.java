@@ -50,4 +50,9 @@ public class Video extends Media {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Video: " + this.getName() + " - " + serie + " (" + episode + "/" + season + ") (" + this.getRelease_date().getYear() + ")";
+    }
 }
