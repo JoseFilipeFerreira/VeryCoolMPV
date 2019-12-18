@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO fix the guest login
+
 public class MediaCenter {
-    //Saving each user library is easier to remove media
     private MediaMap mainLibrary;
     private UserMap registedUsers;
     private Utilizador user;
@@ -15,6 +16,7 @@ public class MediaCenter {
     public MediaCenter() {
         this.mainLibrary = new MediaMap();
         this.registedUsers = new UserMap();
+        this.user = null;
     }
 
     //This needs to be better managed
@@ -30,10 +32,10 @@ public class MediaCenter {
         throw new PermissionDeniedException();
     }
 
-    public void fstPasswd(Utilizador u, String new_passwd)
+    public void fstPasswd(String new_passwd)
             throws SettedPasswdException {
-        u.firstPasswdCheck(new_passwd);
-        this.registedUsers.put(u.getEmail(), u);
+        user.firstPasswdCheck(new_passwd);
+        this.registedUsers.put(user.getEmail(), user);
     }
 
     public void passwd(String old_passwd, String new_passwd)
@@ -63,9 +65,26 @@ public class MediaCenter {
             throw new NonExistentUserException();
         }
         Utilizador log = this.registedUsers.get(user);
-        log.checkPasswd(passwd);
-        log.login();
+        try {
+            log.checkPasswd(passwd);
+            log.login();
+        } catch (NonSettedPasswdException e) {
+            this.user = log;
+            throw e;
+        }
         this.user = log;
+    }
+
+    public void logout() {
+        this.user = null;
+    }
+
+    public boolean isAdmin() {
+        return this.user.isAdmin();
+    }
+
+    public String getEmail() {
+        return this.user.getEmail();
     }
 
     public void uploadMedia(Media path) {
