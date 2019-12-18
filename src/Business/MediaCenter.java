@@ -10,6 +10,7 @@ public class MediaCenter {
     //Saving each user library is easier to remove media
     private MediaMap mainLibrary;
     private UserMap registedUsers;
+    private Utilizador user;
 
     public MediaCenter() {
         this.mainLibrary = new MediaMap();
@@ -17,7 +18,7 @@ public class MediaCenter {
     }
 
     //This needs to be better managed
-    public Utilizador createUser(Utilizador user, String email, String name)
+    public Utilizador createUser(String email, String name)
             throws PermissionDeniedException, UserExistsException {
         if(user.isAdmin()) {
             if(this.registedUsers.containsKey(email))
@@ -35,46 +36,26 @@ public class MediaCenter {
         this.registedUsers.put(u.getEmail(), u);
     }
 
-    public void passwd(Utilizador u, String old_passwd, String new_passwd)
+    public void passwd(String old_passwd, String new_passwd)
             throws NonSettedPasswdException, InvalidPasswordException {
-        u.checkPasswd(old_passwd);
-        u.setPasswd(new_passwd);
-        this.registedUsers.put(u.getEmail(), u);
+        user.checkPasswd(old_passwd);
+        user.setPasswd(new_passwd);
+        this.registedUsers.put(user.getEmail(), user);
     }
 
-    public void passwd(Administrador u, String old_passwd, String new_passwd)
-            throws NonSettedPasswdException, InvalidPasswordException {
-        u.checkPasswd(old_passwd);
-        u.setPasswd(new_passwd);
-        this.registedUsers.put(u.getEmail(), u);
+    public void chName(String new_name) {
+        user.setName(new_name);
+        this.registedUsers.put(user.getEmail(), user);
     }
 
-    public void chName(Administrador u, String new_name) {
-        u.setName(new_name);
-        this.registedUsers.put(u.getEmail(), u);
-    }
-
-    public void chName(Utilizador u, String new_name) {
-        u.setName(new_name);
-        this.registedUsers.put(u.getEmail(), u);
-    }
-
-    void rmUser(Utilizador admin, Utilizador to_rm)
+    public void rmUser(String to_rm)
             throws PermissionDeniedException {
-        if(!admin.isAdmin())
-            throw new PermissionDeniedException();
-        this.mainLibrary.remove(to_rm.getEmail());
-        this.registedUsers.remove(to_rm.getEmail());
-    }
-
-    public void rmUser(Utilizador admin, String to_rm)
-            throws PermissionDeniedException {
-        if(!admin.isAdmin())
+        if(!user.isAdmin())
             throw new PermissionDeniedException();
         this.registedUsers.remove(to_rm);
     }
 
-    public Utilizador login(String user, String passwd)
+    public void login(String user, String passwd)
             throws NonExistentUserException, InvalidPasswordException,
             AlreadyLoggedInException, NonSettedPasswdException
     {
@@ -84,10 +65,10 @@ public class MediaCenter {
         Utilizador log = this.registedUsers.get(user);
         log.checkPasswd(passwd);
         log.login();
-        return log;
+        this.user = log;
     }
 
-    public void uploadMedia(Utilizador user, Media path) {
+    public void uploadMedia(Media path) {
         try {
             user.uploadMedia(path);
         } catch (IOException ignored) {}
@@ -102,18 +83,18 @@ public class MediaCenter {
         return this.mainLibrary.searchByName(name);
     }
 
-    void rmMedia(Utilizador user, String media_id) {
+    void rmMedia(String media_id) {
         user.removeMedia(media_id);
     }
 
-    public void chCat(Musica m, Utilizador u, String cat) throws
+    public void chCat(Musica m, String cat) throws
             InvalidGenreException {
         Categoria n = new Categoria(cat);
         m.setCat(n);
-        if(m.getOwner().equals(u.getEmail()))
+        if(m.getOwner().equals(user.getEmail()))
             mainLibrary.updateCat(m.getCat(), m.getName());
         else
-            mainLibrary.updateCat(m, u.getEmail());
+            mainLibrary.updateCat(m, user.getEmail());
     }
 
     public void playMedia(Media m) {
