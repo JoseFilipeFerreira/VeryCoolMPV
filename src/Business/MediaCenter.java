@@ -4,6 +4,7 @@ import Exceptions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 //TODO fix the guest login
@@ -99,7 +100,7 @@ public class MediaCenter {
     }
 
     public List<Media> searchByName(String name) {
-        return this.mainLibrary.searchByName(name);
+        return this.mainLibrary.searchByName(name, this.user.getEmail());
     }
 
     void rmMedia(String media_id) {
@@ -114,6 +115,10 @@ public class MediaCenter {
             mainLibrary.updateCat(m.getCat(), m.getName());
         else
             mainLibrary.updateCat(m, user.getEmail());
+    }
+
+    public Collection<Media> allMedia() {
+        return this.mainLibrary.values(user.getEmail());
     }
 
     public void playMedia(Media m) {

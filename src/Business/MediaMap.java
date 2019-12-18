@@ -160,7 +160,7 @@ public class MediaMap implements Map<String, Media> {
                                     + "album = '" + value.getAlbum() + "',"
                                     + "artista = '" + value.getSinger() + "',"
                                     + "faixa = '" + value.getFaixa() + "',"
-                                    + "release_date = '" + value.getRelease_date() + "'"
+                                    + "release_date = '" + value.getRelease_date() + "',"
                                     + "categoria = '" + value.getCat() + "'";
                     int i = stm.executeUpdate(sql);
             }
@@ -254,23 +254,41 @@ public class MediaMap implements Map<String, Media> {
     Collection<Media> values(String uid) {
         Connection conn = DBConnect.connect();
         try {
-            Collection<Media> col = new HashSet<>();
+            Map<String,Media> col = new HashMap<>();
             Statement stm = conn.createStatement();
+            if(this.owner == null) {
+                ResultSet rs = stm.executeQuery("SELECT * FROM Media " +
+                        "where edited_by = '" + uid + "'");
+                for (; rs.next(); ) {
+                    if (rs.getString(5) != null)
+                        col.put(rs.getString(3), new Musica(rs.getString(1),
+                                rs.getString(2),
+                                rs.getString(3), rs.getString(4), rs.getString(5),
+                                rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                    else
+                        col.put(rs.getString(3), new Video(rs.getString(1),
+                                rs.getString(2),
+                                rs.getString(3), rs.getString(8), rs.getInt(9),
+                                rs.getInt(10), rs.getDate(7)));
+                }
+            }
             ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media" :
+                    "SELECT * FROM Media where edited_by is null" :
                     "Select * from Media where owner='" +
-                            this.owner.getEmail() + "'");
+                            this.owner.getEmail() + "' and edited_by is null");
             for (; rs.next(); ) {
-                if(rs.getString(5) != null)
-                    col.add(new Musica(rs.getString(1), rs.getString(2),
+                if (rs.getString(5) != null)
+                    col.putIfAbsent(rs.getString(3), new Musica(rs.getString(1),
+                            rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
                             rs.getInt(6), rs.getDate(7), rs.getInt(11)));
                 else
-                    col.add(new Video(rs.getString(1), rs.getString(2),
+                    col.putIfAbsent(rs.getString(3), new Video(rs.getString(1),
+                            rs.getString(2),
                             rs.getString(3), rs.getString(8), rs.getInt(9),
                             rs.getInt(10), rs.getDate(7)));
             }
-            return col;
+            return col.values();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }
@@ -281,28 +299,47 @@ public class MediaMap implements Map<String, Media> {
                 .forEach(Media::play);
     }
 
-    List<Media> searchByName(String s) {
+    List<Media> searchByName(String s, String uid) {
         Connection conn = DBConnect.connect();
         try {
-            List<Media> col = new ArrayList<>();
+            Map<String, Media> col = new HashMap<>();
             Statement stm = conn.createStatement();
+            if(this.owner == null) {
+                ResultSet rs = stm.executeQuery("SELECT * FROM Media where " +
+                        "lower(name) regexp '" + s.toLowerCase() + "' and " +
+                        "edited_by = '" + uid + "'");
+                for (; rs.next(); ) {
+                    if (rs.getString(5) != null)
+                        col.put(rs.getString(3), new Musica(rs.getString(1),
+                                rs.getString(2),
+                                rs.getString(3), rs.getString(4), rs.getString(5),
+                                rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                    else
+                        col.put(rs.getString(3), new Video(rs.getString(1),
+                                rs.getString(2),
+                                rs.getString(3), rs.getString(8), rs.getInt(9),
+                                rs.getInt(10), rs.getDate(7)));
+                }
+            }
             ResultSet rs = stm.executeQuery(this.owner == null ?
                     "SELECT * FROM Media where lower(name) regexp '" + s.toLowerCase() +
-                            "'" :
+                            "' and edited_by is null" :
                     "Select * from Media where owner='" +
                             this.owner.getEmail() + "' and lower(name) regexp" +
-                            " '" + s.toLowerCase() + "'");
+                            " '" + s.toLowerCase() + "' and edited_by is null");
             for (; rs.next(); ) {
                 if(rs.getString(5) != null)
-                    col.add(new Musica(rs.getString(1), rs.getString(2),
+                    col.put(rs.getString(3), new Musica(rs.getString(1),
+                            rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5),
                             rs.getInt(6), rs.getDate(7), rs.getInt(11)));
                 else
-                    col.add(new Video(rs.getString(1), rs.getString(2),
+                    col.put(rs.getString(3), new Video(rs.getString(1),
+                            rs.getString(2),
                             rs.getString(3), rs.getString(8), rs.getInt(9),
                             rs.getInt(10), rs.getDate(7)));
             }
-            return col;
+            return new ArrayList<>(col.values());
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }

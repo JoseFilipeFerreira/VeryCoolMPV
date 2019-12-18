@@ -30,7 +30,6 @@ public class Musica extends Media {
         super(owner, path, name, release_date);
         if(singer == null)
             throw new InvalidMusicException();
-        this.id_cat = -1;
         this.album = album;
         this.singer = singer;
         this.faixa = faixa;
@@ -43,35 +42,6 @@ public class Musica extends Media {
         super(owner, path, name, release_date);
         if(singer == null)
             throw new InvalidMusicException();
-        this.id_cat = -1;
-        this.album = album;
-        this.singer = singer;
-        this.faixa = faixa;
-        this.id_cat = new Categoria(cat).getPos();
-    }
-
-    public Musica(String name, String path, Utilizador owner, String album,
-           String singer, int faixa, Date release_date, String cat) throws
-            InvalidMusicException, InvalidGenreException {
-        super(owner.getEmail(), path, name, release_date);
-        if(singer == null)
-            throw new InvalidMusicException();
-        this.id_cat = -1;
-        this.album = album;
-        this.singer = singer;
-        this.faixa = faixa;
-        this.id_cat = new Categoria(cat).getPos();
-    }
-
-
-    public Musica(String name, String path, Utilizador owner, String album,
-                  String singer, int faixa, Date release_date, int cat) throws
-            InvalidMusicException, InvalidGenreException {
-        super(owner.getEmail(), path, name, release_date);
-        if(singer == null)
-            throw new InvalidMusicException();
-        this.id_cat = -1;
-        this.album = album;
         this.singer = singer;
         this.faixa = faixa;
         this.id_cat = new Categoria(cat).getPos();

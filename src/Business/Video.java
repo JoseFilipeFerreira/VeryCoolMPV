@@ -21,14 +21,6 @@ public class Video extends Media {
         this.episode = episode;
     }
 
-    public Video(Utilizador owner, String path, String nome, String serie,
-                 Integer season, Integer episode, Date release_date) {
-        super(owner.getEmail(), path, nome, release_date);
-        this.serie = serie;
-        this.season = season;
-        this.episode = episode;
-    }
-
     public String getSerie() {
         return serie;
     }
