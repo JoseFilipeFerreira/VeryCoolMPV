@@ -342,6 +342,53 @@ public class MediaMap implements Map<String, Media> {
         }
     }
 
+    List<Media> searchByArtist(String s, String uid) {
+        Connection conn = DBConnect.connect();
+        try {
+            Map<String, Media> col = new HashMap<>();
+            Statement stm = conn.createStatement();
+            if(this.owner == null) {
+                ResultSet rs = stm.executeQuery("SELECT * FROM Media where " +
+                        "lower(artista) regexp '" + s.toLowerCase() + "' and " +
+                        "edited_by = '" + uid + "'");
+                for (; rs.next(); ) {
+                    if (rs.getString(6) != null)
+                        col.put(rs.getString(1), new Musica(rs.getString(1),
+                                rs.getString(2),
+                                rs.getString(3), rs.getString(5),
+                                rs.getString(6),
+                                rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                    else
+                        col.put(rs.getString(1), new Video(rs.getString(3),
+                                rs.getString(2),
+                                rs.getString(1), rs.getString(9), rs.getInt(10),
+                                rs.getInt(11), rs.getDate(8)));
+                }
+            }
+            ResultSet rs = stm.executeQuery(this.owner == null ?
+                    "SELECT * FROM Media where lower(artista) regexp '" + s.toLowerCase() +
+                            "' and edited_by is null" :
+                    "Select * from Media where owner='" +
+                            this.owner.getEmail() + "' and lower(artist) regexp" +
+                            " '" + s.toLowerCase() + "' and edited_by is null");
+            for (; rs.next(); ) {
+                if(rs.getString(6) != null)
+                    col.put(rs.getString(1), new Musica(rs.getString(1),
+                            rs.getString(2),
+                            rs.getString(3), rs.getString(5), rs.getString(6),
+                            rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                else
+                    col.put(rs.getString(1), new Video(rs.getString(3),
+                            rs.getString(2),
+                            rs.getString(1), rs.getString(9), rs.getInt(10),
+                            rs.getInt(11), rs.getDate(8)));
+            }
+            return new ArrayList<>(col.values());
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
     List<String> artistList() {
         Connection conn = DBConnect.connect();
         try {

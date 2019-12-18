@@ -131,8 +131,8 @@ public class MediaCenter {
         new MediaPlayer(m);
     }
 
-    public List<String> artistSearch(String artist) {
-        return this.mainLibrary.artistList(artist);
+    public List<Media> searchByArtist(String artist) {
+        return this.mainLibrary.searchByArtist(artist, this.user.getEmail());
     }
 
     public List<Media> artistMedia(String artist) {
