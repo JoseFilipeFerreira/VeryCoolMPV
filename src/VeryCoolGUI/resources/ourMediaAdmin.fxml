@@ -13,7 +13,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
    <children>
-      <Button fx:id="playPause" layoutX="475.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMusic" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="PLAY" textFill="WHITE">
+      <Button fx:id="playPause" layoutX="475.0" layoutY="341.0" mnemonicParsing="false" onAction="#playAllMusic" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="PLAY" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
@@ -90,6 +90,6 @@
             <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
          </effect>
       </Button>
-      <ListView fx:id="listViewMedia" layoutX="176.0" layoutY="64.0" prefHeight="259.0" prefWidth="413.0" style="-fx-background-color: #2b2b2f; -fx-control-inner-background: #2b2b2f;" />
+      <ListView fx:id="listViewMedia" layoutX="176.0" layoutY="64.0" onMouseClicked="#playMusicClick" prefHeight="259.0" prefWidth="413.0" style="-fx-background-color: #2b2b2f; -fx-control-inner-background: #2b2b2f;" />
    </children>
 </Pane>

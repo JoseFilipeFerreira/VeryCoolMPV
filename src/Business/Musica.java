@@ -114,6 +114,10 @@ public class Musica extends Media {
     }
 
     public String toString() {
-        return "Music: " + singer + " - " + this.getName() + " (" + album + ") (" + this.getRelease_date().toLocalDate().getYear() + ")";
+        try {
+            return "Music: " + singer + " - " + this.getName() + " (" + album + ") (" + new Categoria(id_cat).toString() + ") (" + this.getRelease_date().toLocalDate().getYear() + ")";
+        } catch (InvalidGenreException e) {
+            return "Music: apita o comboio";
+        }
     }
 }
