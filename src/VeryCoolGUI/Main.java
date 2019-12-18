@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,95 +75,12 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void exitProgram(ActionEvent ae) {
-        System.exit(1);
-    }
-    
-    public void playAllMusic(ActionEvent ae) {
-        mediacenter.playMedia(mediacenter.searchByName(search.getText()));
+    //Events
+    public void populateTableOnTyping(KeyEvent keyEvent) {
+        populateList(getMediaDisplay());
     }
 
-    public void playMusicClick(MouseEvent me) {
-        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
-            int pos = listViewMedia.getSelectionModel().getSelectedIndex();
-            if (pos > 0) {
-                Media media = mediacenter.searchByName(search.getText()).get(pos);
-                mediacenter.playMedia(media);
-            }
-        }
-    }
-
-    public void loginCheckCredentials(ActionEvent ae) throws IOException {
-        String usr = email.getText();
-        String passwd = password.getText();
-        try {
-            mediacenter.login(usr, passwd);
-            changeOurMedia(ae);
-        } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
-            email.setText("");
-            password.setText("");
-        } catch (NonSettedPasswdException e) {
-            swapFxml(ae, "resources/createPassword.fxml");
-        }
-    }
-
-    public void setPassword(ActionEvent ae) throws IOException, SettedPasswdException {
-        String password = this.password.getText();
-        if (!password.equals("")){ //TODO verificar se agora dá direito
-            mediacenter.fstPasswd(password);
-            changeLogin(ae);
-            mediacenter.logout();
-        }
-    }
-
-    public void editProfile(ActionEvent ae) throws IOException {
-        String n = name.getText();
-        String p = password.getText();
-        String op = oldPasswd.getText();
-        try {
-            if (n != null)
-                mediacenter.chName(n);
-            if (p != null && op != null)
-                mediacenter.passwd(op, p);
-            changeOurMedia(ae);
-        }
-        catch (InvalidPasswordException | NonSettedPasswdException ignored){
-            name.setText("");
-            password.setText("");
-            oldPasswd.setText("");
-        }
-    }
-
-    public void removeUser(ActionEvent ae) throws IOException {
-        String e = email.getText();
-        if(e != null) {
-            try {
-                mediacenter.rmUser(e);
-                changeOurMedia(ae);
-            }
-            catch (PermissionDeniedException ignored){
-                changeOurMedia(ae);
-            }
-        }
-    }
-
-    public void createUser(ActionEvent ae) throws IOException {
-        String e = email.getText();
-        String n = name.getText();
-        if(e != null && n != null) {
-            try {
-                mediacenter.createUser(e, n);
-                changeOurMedia(ae);
-            } catch (UserExistsException ignored) {
-                email.setText("");
-                name.setText("");
-            }
-            catch (PermissionDeniedException ignored){
-                changeOurMedia(ae);
-            }
-        }
-    }
-
+    //Upload Media
     public void uploadVideo(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
         String nome = mediaName.getText();
@@ -276,23 +194,90 @@ public class Main extends Application {
         catch(NullPointerException ignored){}
     }
 
-    public void logout(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/login.fxml");
-        mediacenter.logout();
+    //Controll Media
+    public void playAllMusic(ActionEvent ae) {
+        mediacenter.playMedia(getMediaDisplay());
     }
 
-    public void changeCriarConta(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/criarConta.fxml");
+    public void playMusicClick(MouseEvent me) {
+        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
+            int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+            if (pos > 0)
+                mediacenter.playMedia(getMediaDisplay().get(pos));
+        }
     }
 
-    public void changeEditProfile(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/editProfile.fxml");
+    //Edit Users
+    public void setPassword(ActionEvent ae) throws IOException, SettedPasswdException {
+        String password = this.password.getText();
+        if (!password.equals("")){
+            mediacenter.fstPasswd(password);
+            changeLogin(ae);
+            mediacenter.logout();
+        }
     }
 
-    public void loginConvidado(ActionEvent ae) throws IOException {
-        //TODO pode dar asneira
-        //possível fix fazer login convidado
-        swapFxml(ae,"resources/ourMediaConvidado.fxml");
+    public void editProfile(ActionEvent ae) throws IOException {
+        String n = name.getText();
+        String p = password.getText();
+        String op = oldPasswd.getText();
+        try {
+            if (n != null)
+                mediacenter.chName(n);
+            if (p != null && op != null)
+                mediacenter.passwd(op, p);
+            changeOurMedia(ae);
+        }
+        catch (InvalidPasswordException | NonSettedPasswdException ignored){
+            name.setText("");
+            password.setText("");
+            oldPasswd.setText("");
+        }
+    }
+
+    public void removeUser(ActionEvent ae) throws IOException {
+        String e = email.getText();
+        if(e != null) {
+            try {
+                mediacenter.rmUser(e);
+                changeOurMedia(ae);
+            }
+            catch (PermissionDeniedException ignored){
+                changeOurMedia(ae);
+            }
+        }
+    }
+
+    public void createUser(ActionEvent ae) throws IOException {
+        String e = email.getText();
+        String n = name.getText();
+        if(e != null && n != null) {
+            try {
+                mediacenter.createUser(e, n);
+                changeOurMedia(ae);
+            } catch (UserExistsException ignored) {
+                email.setText("");
+                name.setText("");
+            }
+            catch (PermissionDeniedException ignored){
+                changeOurMedia(ae);
+            }
+        }
+    }
+
+    //Change Menu
+    public void loginCheckCredentials(ActionEvent ae) throws IOException {
+        String usr = email.getText();
+        String passwd = password.getText();
+        try {
+            mediacenter.login(usr, passwd);
+            changeOurMedia(ae);
+        } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
+            email.setText("");
+            password.setText("");
+        } catch (NonSettedPasswdException e) {
+            swapFxml(ae, "resources/createPassword.fxml");
+        }
     }
 
     public void changeOurMedia(ActionEvent ae) throws IOException {
@@ -302,22 +287,33 @@ public class Main extends Application {
             swapFxml(ae, "resources/ourMedia.fxml");
     }
 
-    public void populateTableOnTyping(KeyEvent keyEvent) {
-        populateList(mediacenter.searchByName(search.getText()));
-    }
-
-    public void populateList(List<Media> m){
-        listViewMedia.setItems(FXCollections.observableList(
-                m.stream().map(Media::toString).collect(Collectors.toList())
-        ));
-    }
-
     public void changeMyMedia(ActionEvent ae) throws IOException {
         swapFxml(ae,"resources/myMedia.fxml");
     }
 
     public void changeInicio(ActionEvent ae) throws IOException {
         swapFxml(ae,"resources/inicio.fxml");
+    }
+
+    public void logout(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/login.fxml");
+        mediacenter.logout();
+    }
+
+    public void exitProgram(ActionEvent ae) {
+        System.exit(1);
+    }
+
+    public void loginConvidado(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/ourMediaConvidado.fxml");
+    }
+
+    public void changeCriarConta(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/criarConta.fxml");
+    }
+
+    public void changeEditProfile(ActionEvent ae) throws IOException {
+        swapFxml(ae,"resources/editProfile.fxml");
     }
 
     public void changeLogin(ActionEvent ae) throws IOException {
@@ -330,12 +326,6 @@ public class Main extends Application {
 
     public void changeUploadVideo(ActionEvent ae) throws IOException {
         swapFxml(ae, "resources/uploadVideo.fxml");
-    }
-
-    private void swapFxml(ActionEvent ae, String path) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 
     // animations
@@ -356,5 +346,26 @@ public class Main extends Application {
         s.setOffsetY(2);
         s.setSpread(0);
         b.setEffect(s);
+    }
+
+    // auxiliary
+    private void swapFxml(ActionEvent ae, String path) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public List<Media> getMediaDisplay(){
+        String q = search.getText();
+        if (q.equals(""))
+            return new ArrayList<>(mediacenter.allMedia());
+        else
+            return mediacenter.searchByName(q);
+    }
+
+    public void populateList(List<Media> m){
+        listViewMedia.setItems(FXCollections.observableList(
+                m.stream().map(Media::toString).collect(Collectors.toList())
+        ));
     }
 }
