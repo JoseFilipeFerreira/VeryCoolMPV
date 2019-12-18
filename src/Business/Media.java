@@ -41,8 +41,6 @@ public abstract class Media {
         return nome;
     }
 
-    abstract void play();
-
     Path getPath() {
         return Paths.get(this.path);
     }

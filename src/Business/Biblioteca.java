@@ -26,13 +26,6 @@ public class Biblioteca {
         return Optional.ofNullable(this.library.remove(media_id));
     }
 
-    //Ported to MediaMap
-    void playAll() {
-        this.library
-                .values()
-                .forEach(Media::play);
-    }
-
     //TODO Random playlists
 //    PlaylistMap createPlaylist(Predicate<? super Media> filter, Utilizador u) {
 //        return new Playlist(this.library

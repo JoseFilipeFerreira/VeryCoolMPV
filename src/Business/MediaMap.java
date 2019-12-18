@@ -295,11 +295,6 @@ public class MediaMap implements Map<String, Media> {
         }
     }
 
-    void playAll() {
-        this.values()
-                .forEach(Media::play);
-    }
-
     List<Media> searchByName(String s, String uid) {
         Connection conn = DBConnect.connect();
         try {
