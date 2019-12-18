@@ -356,6 +356,32 @@ public class MediaMap implements Map<String, Media> {
         }
     }
 
+    List<String> artistList(String name) {
+        Connection conn = DBConnect.connect();
+        try {
+            List<String> ls = new ArrayList<>();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT distinct artista from Media" +
+                    " where artista regexp '^" + name + "'");
+            while(rs.next())
+                ls.add(rs.getString(1));
+            return ls;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    List<Media> artistMedia(String name, String uid) {
+        List<Media> a = new ArrayList<>(this.values(uid));
+        List<Media> b = new ArrayList<>();
+        for(Media m : a) {
+            Musica mm = (Musica) m;
+            if (mm.getSinger().equals(name))
+                b.add(m);
+        }
+        return b;
+    }
+
     List<String> albumList(String art) {
         Connection conn = DBConnect.connect();
         try {
