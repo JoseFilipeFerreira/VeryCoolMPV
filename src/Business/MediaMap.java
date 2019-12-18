@@ -260,15 +260,16 @@ public class MediaMap implements Map<String, Media> {
                 ResultSet rs = stm.executeQuery("SELECT * FROM Media " +
                         "where edited_by = '" + uid + "'");
                 for (; rs.next(); ) {
-                    if (rs.getString(6) != null)
+                    if (rs.getString(6) != null) {
                         col.put(rs.getString(1), new Musica(rs.getString(1),
                                 rs.getString(2),
                                 rs.getString(3), rs.getString(5), rs.getString(6),
                                 rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                    }
                     else
-                        col.put(rs.getString(1), new Video(rs.getString(1),
+                        col.put(rs.getString(1), new Video(rs.getString(3),
                                 rs.getString(2),
-                                rs.getString(3), rs.getString(9), rs.getInt(10),
+                                rs.getString(1), rs.getString(9), rs.getInt(10),
                                 rs.getInt(11), rs.getDate(8)));
                 }
             }
@@ -283,9 +284,9 @@ public class MediaMap implements Map<String, Media> {
                             rs.getString(3), rs.getString(5), rs.getString(6),
                             rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                 else
-                    col.putIfAbsent(rs.getString(1), new Video(rs.getString(1),
+                    col.putIfAbsent(rs.getString(1), new Video(rs.getString(3),
                             rs.getString(2),
-                            rs.getString(3), rs.getString(9), rs.getInt(10),
+                            rs.getString(1), rs.getString(9), rs.getInt(10),
                             rs.getInt(11), rs.getDate(8)));
             }
             return col.values();
@@ -316,9 +317,9 @@ public class MediaMap implements Map<String, Media> {
                                 rs.getString(6),
                                 rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                     else
-                        col.put(rs.getString(1), new Video(rs.getString(1),
+                        col.put(rs.getString(1), new Video(rs.getString(3),
                                 rs.getString(2),
-                                rs.getString(3), rs.getString(9), rs.getInt(10),
+                                rs.getString(1), rs.getString(9), rs.getInt(10),
                                 rs.getInt(11), rs.getDate(8)));
                 }
             }
@@ -335,9 +336,9 @@ public class MediaMap implements Map<String, Media> {
                             rs.getString(3), rs.getString(5), rs.getString(6),
                             rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                 else
-                    col.put(rs.getString(1), new Video(rs.getString(1),
+                    col.put(rs.getString(1), new Video(rs.getString(3),
                             rs.getString(2),
-                            rs.getString(3), rs.getString(9), rs.getInt(10),
+                            rs.getString(1), rs.getString(9), rs.getInt(10),
                             rs.getInt(11), rs.getDate(8)));
             }
             return new ArrayList<>(col.values());
