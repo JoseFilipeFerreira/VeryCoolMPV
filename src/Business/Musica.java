@@ -44,6 +44,7 @@ public class Musica extends Media {
             throw new InvalidMusicException();
         this.singer = singer;
         this.faixa = faixa;
+        this.album = album;
         this.id_cat = new Categoria(cat).getPos();
     }
 
