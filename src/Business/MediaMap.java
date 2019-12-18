@@ -67,15 +67,15 @@ public class MediaMap implements Map<String, Media> {
                     this.owner.getEmail() + "'";
             ResultSet rs = stm.executeQuery(sql);
             if (rs.next()) {
-                if(rs.getString(5) != null)
+                if(rs.getString(6) != null)
                     al = new Musica(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6), rs.getDate(7), rs.getInt(11));
+                            rs.getString(3), rs.getString(5), rs.getString(6),
+                            rs.getInt(7), rs.getDate(8), rs.getInt(12));
             }
                 else
                     al = new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(8), rs.getInt(9),
-                            rs.getInt(10), rs.getDate(7));
+                            rs.getString(3), rs.getString(9), rs.getInt(10),
+                            rs.getInt(11), rs.getDate(8));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -236,14 +236,14 @@ public class MediaMap implements Map<String, Media> {
                     "Select * from Media where owner='" +
                     this.owner.getEmail() + "'");
             for (; rs.next(); ) {
-                if(rs.getString(5) != null)
+                if(rs.getString(6) != null)
                     col.add(new Musica(rs.getString(1), rs.getString(2),
-                        rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                        rs.getString(3), rs.getString(5), rs.getString(6),
+                        rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                 else
                     col.add(new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(8), rs.getInt(9),
-                            rs.getInt(10), rs.getDate(7)));
+                            rs.getString(3), rs.getString(9), rs.getInt(10),
+                            rs.getInt(11), rs.getDate(8)));
             }
             return col;
         } catch (Exception e) {
@@ -260,16 +260,16 @@ public class MediaMap implements Map<String, Media> {
                 ResultSet rs = stm.executeQuery("SELECT * FROM Media " +
                         "where edited_by = '" + uid + "'");
                 for (; rs.next(); ) {
-                    if (rs.getString(5) != null)
-                        col.put(rs.getString(3), new Musica(rs.getString(1),
+                    if (rs.getString(6) != null)
+                        col.put(rs.getString(1), new Musica(rs.getString(1),
                                 rs.getString(2),
-                                rs.getString(3), rs.getString(4), rs.getString(5),
-                                rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                                rs.getString(3), rs.getString(5), rs.getString(6),
+                                rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                     else
-                        col.put(rs.getString(3), new Video(rs.getString(1),
+                        col.put(rs.getString(1), new Video(rs.getString(1),
                                 rs.getString(2),
-                                rs.getString(3), rs.getString(8), rs.getInt(9),
-                                rs.getInt(10), rs.getDate(7)));
+                                rs.getString(3), rs.getString(9), rs.getInt(10),
+                                rs.getInt(11), rs.getDate(8)));
                 }
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
@@ -277,16 +277,16 @@ public class MediaMap implements Map<String, Media> {
                     "Select * from Media where owner='" +
                             this.owner.getEmail() + "' and edited_by is null");
             for (; rs.next(); ) {
-                if (rs.getString(5) != null)
-                    col.putIfAbsent(rs.getString(3), new Musica(rs.getString(1),
+                if (rs.getString(6) != null)
+                    col.putIfAbsent(rs.getString(1), new Musica(rs.getString(1),
                             rs.getString(2),
-                            rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                            rs.getString(3), rs.getString(5), rs.getString(6),
+                            rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                 else
-                    col.putIfAbsent(rs.getString(3), new Video(rs.getString(1),
+                    col.putIfAbsent(rs.getString(1), new Video(rs.getString(1),
                             rs.getString(2),
-                            rs.getString(3), rs.getString(8), rs.getInt(9),
-                            rs.getInt(10), rs.getDate(7)));
+                            rs.getString(3), rs.getString(9), rs.getInt(10),
+                            rs.getInt(11), rs.getDate(8)));
             }
             return col.values();
         } catch (Exception e) {
@@ -309,16 +309,17 @@ public class MediaMap implements Map<String, Media> {
                         "lower(name) regexp '" + s.toLowerCase() + "' and " +
                         "edited_by = '" + uid + "'");
                 for (; rs.next(); ) {
-                    if (rs.getString(5) != null)
-                        col.put(rs.getString(3), new Musica(rs.getString(1),
+                    if (rs.getString(6) != null)
+                        col.put(rs.getString(1), new Musica(rs.getString(1),
                                 rs.getString(2),
-                                rs.getString(3), rs.getString(4), rs.getString(5),
-                                rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                                rs.getString(3), rs.getString(5),
+                                rs.getString(6),
+                                rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                     else
-                        col.put(rs.getString(3), new Video(rs.getString(1),
+                        col.put(rs.getString(1), new Video(rs.getString(1),
                                 rs.getString(2),
-                                rs.getString(3), rs.getString(8), rs.getInt(9),
-                                rs.getInt(10), rs.getDate(7)));
+                                rs.getString(3), rs.getString(9), rs.getInt(10),
+                                rs.getInt(11), rs.getDate(8)));
                 }
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
@@ -328,16 +329,16 @@ public class MediaMap implements Map<String, Media> {
                             this.owner.getEmail() + "' and lower(name) regexp" +
                             " '" + s.toLowerCase() + "' and edited_by is null");
             for (; rs.next(); ) {
-                if(rs.getString(5) != null)
-                    col.put(rs.getString(3), new Musica(rs.getString(1),
+                if(rs.getString(6) != null)
+                    col.put(rs.getString(1), new Musica(rs.getString(1),
                             rs.getString(2),
-                            rs.getString(3), rs.getString(4), rs.getString(5),
-                            rs.getInt(6), rs.getDate(7), rs.getInt(11)));
+                            rs.getString(3), rs.getString(5), rs.getString(6),
+                            rs.getInt(7), rs.getDate(8), rs.getInt(12)));
                 else
-                    col.put(rs.getString(3), new Video(rs.getString(1),
+                    col.put(rs.getString(1), new Video(rs.getString(1),
                             rs.getString(2),
-                            rs.getString(3), rs.getString(8), rs.getInt(9),
-                            rs.getInt(10), rs.getDate(7)));
+                            rs.getString(3), rs.getString(9), rs.getInt(10),
+                            rs.getInt(11), rs.getDate(8)));
             }
             return new ArrayList<>(col.values());
         } catch (Exception e) {
