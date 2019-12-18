@@ -73,17 +73,6 @@ public class Musica extends Media {
         this.id_cat = cat.getPos();
     }
 
-    void play() {
-        ProcessBuilder a = new ProcessBuilder("mpv", "--no-video",
-                this.getPath().toString());
-        try {
-            Process p = a.start();
-            p.waitFor();
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public String toString() {
         try {
             return "Music: " + singer + " - " + this.getName() + " (" + album + ") (" + new Categoria(id_cat).toString() + ") (" + this.getRelease_date().toLocalDate().getYear() + ")";

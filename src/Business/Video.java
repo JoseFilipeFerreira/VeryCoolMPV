@@ -33,17 +33,6 @@ public class Video extends Media {
         return episode;
     }
 
-    void play() {
-        ProcessBuilder a = new ProcessBuilder("mpv", this.getPath().toString());
-        try {
-            Process p = a.start();
-            p.waitFor();
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public String toString() {
         return "Video: " + this.getName() + " - " + serie + " (" + episode + "/" + season + ") (" + this.getRelease_date().getYear() + ")";
     }

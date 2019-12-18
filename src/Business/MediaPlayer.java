@@ -1,5 +1,6 @@
 package Business;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,17 @@ public class MediaPlayer implements Runnable {
     }
 
     public void run() {
-        this.list.forEach(Media::play);
+        List<String> paths = new ArrayList<>();
+        paths.add("mpv");
+        paths.add("--no-audio-display");
+        this.list.forEach(x -> paths.add(x.getPath().toString()));
+        paths.forEach(System.out::println);
+        ProcessBuilder a = new ProcessBuilder(paths);
+        try {
+            Process p = a.start();
+            p.waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
