@@ -130,4 +130,16 @@ public class MediaCenter {
     public void playMedia(List<Media> m) {
         new MediaPlayer(m);
     }
+
+    public List<Media> searchByArtist(String artist) {
+        return this.mainLibrary.searchByArtist(artist, this.user.getEmail());
+    }
+
+    public List<Media> artistMedia(String artist) {
+        return this.mainLibrary.artistMedia(artist, this.user.getEmail());
+    }
+
+    public List<Media> searchByCat(String cat) {
+        return this.mainLibrary.searchByCat(cat, this.user.getEmail());
+    }
 }
