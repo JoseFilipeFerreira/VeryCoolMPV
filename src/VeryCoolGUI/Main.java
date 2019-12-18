@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -29,7 +30,6 @@ import java.util.stream.Collectors;
 public class Main extends Application {
 
     private static MediaCenter mediacenter;
-    private  static Utilizador user;
     private static Stage stage;
 
     /* button */
@@ -78,31 +78,40 @@ public class Main extends Application {
         System.exit(1);
     }
     
-    public void playMusic(ActionEvent ae) {
-        mediacenter.searchByName(search.getText()).get(0).play();
+    public void playAllMusic(ActionEvent ae) {
+        mediacenter.playMedia(mediacenter.searchByName(search.getText()));
+    }
+
+    public void playMusicClick(MouseEvent me) {
+        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
+            int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+            if (pos > 0) {
+                Media media = mediacenter.searchByName(search.getText()).get(pos);
+                mediacenter.playMedia(media);
+            }
+        }
     }
 
     public void loginCheckCredentials(ActionEvent ae) throws IOException {
         String usr = email.getText();
         String passwd = password.getText();
         try {
-            user = mediacenter.login(usr, passwd);
+            mediacenter.login(usr, passwd);
             changeOurMedia(ae);
         } catch (NonExistentUserException | InvalidPasswordException | AlreadyLoggedInException e) {
             email.setText("");
             password.setText("");
         } catch (NonSettedPasswdException e) {
-            user = e.getUser();
             swapFxml(ae, "resources/createPassword.fxml");
         }
     }
 
     public void setPassword(ActionEvent ae) throws IOException, SettedPasswdException {
         String password = this.password.getText();
-        if (password != null){
-            mediacenter.fstPasswd(user, password);
+        if (!password.equals("")){ //TODO verificar se agora dá direito
+            mediacenter.fstPasswd(password);
             changeLogin(ae);
-            user = null;
+            mediacenter.logout();
         }
     }
 
@@ -112,9 +121,9 @@ public class Main extends Application {
         String op = oldPasswd.getText();
         try {
             if (n != null)
-                mediacenter.chName(user, n);
+                mediacenter.chName(n);
             if (p != null && op != null)
-                mediacenter.passwd(user, op, p);
+                mediacenter.passwd(op, p);
             changeOurMedia(ae);
         }
         catch (InvalidPasswordException | NonSettedPasswdException ignored){
@@ -128,13 +137,11 @@ public class Main extends Application {
         String e = email.getText();
         if(e != null) {
             try {
-                mediacenter.rmUser(user, e);
-                System.out.println("Deleted");
+                mediacenter.rmUser(e);
                 changeOurMedia(ae);
             }
             catch (PermissionDeniedException ignored){
                 changeOurMedia(ae);
-                System.out.println("Failed");
             }
         }
     }
@@ -144,7 +151,7 @@ public class Main extends Application {
         String n = name.getText();
         if(e != null && n != null) {
             try {
-                mediacenter.createUser(user, e, n);
+                mediacenter.createUser(e, n);
                 changeOurMedia(ae);
             } catch (UserExistsException ignored) {
                 email.setText("");
@@ -169,7 +176,7 @@ public class Main extends Application {
             Integer season = (sSeason.equals(""))? null : Integer.parseInt(sEpisode);
             if (path != null && !nome.equals("") && date != null) {
                 Video video = new Video(
-                        user,
+                        mediacenter.getEmail(),
                         path,
                         nome,
                         serie.equals("")? null : serie,
@@ -177,7 +184,7 @@ public class Main extends Application {
                         episode,
                         Date.valueOf(date));
 
-                mediacenter.uploadMedia(user, video);
+                mediacenter.uploadMedia(video);
                 changeMyMedia(ae);
             }
         }
@@ -208,9 +215,10 @@ public class Main extends Application {
         if (path != null && !name.equals("") && !album.equals("") && !singer.equals("") &&
                 date != null && categoria != null && faixa != null) {
             try {
-                Musica music = new Musica(name, path, user, album, singer, faixa, Date.valueOf(date), categoria);
+                Musica music = new Musica(
+                        name, path, mediacenter.getEmail(), album, singer, faixa, Date.valueOf(date), categoria);
 
-                mediacenter.uploadMedia(user, music);
+                mediacenter.uploadMedia(music);
                 changeMyMedia(ae);
             }
             catch (InvalidMusicException e) {}
@@ -270,7 +278,7 @@ public class Main extends Application {
 
     public void logout(ActionEvent ae) throws IOException {
         swapFxml(ae,"resources/login.fxml");
-        user = null;
+        mediacenter.logout();
     }
 
     public void changeCriarConta(ActionEvent ae) throws IOException {
@@ -282,24 +290,20 @@ public class Main extends Application {
     }
 
     public void loginConvidado(ActionEvent ae) throws IOException {
-        user = new Convidado();
+        //TODO pode dar asneira
+        //possível fix fazer login convidado
         swapFxml(ae,"resources/ourMediaConvidado.fxml");
-        
-        //populateList(mediacenter.searchByName(""));
     }
 
     public void changeOurMedia(ActionEvent ae) throws IOException {
-        if(user.isAdmin())
+        if(mediacenter.isAdmin())
             swapFxml(ae, "resources/ourMediaAdmin.fxml");
         else
             swapFxml(ae, "resources/ourMedia.fxml");
-
-        //populateList(mediacenter.searchByName(""));
     }
 
     public void populateTableOnTyping(KeyEvent keyEvent) {
         populateList(mediacenter.searchByName(search.getText()));
-
     }
 
     public void populateList(List<Media> m){
@@ -328,8 +332,8 @@ public class Main extends Application {
         swapFxml(ae, "resources/uploadVideo.fxml");
     }
 
-    private void swapFxml(ActionEvent ae, String name) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(name));
+    private void swapFxml(ActionEvent ae, String path) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(path));
         stage.setScene(new Scene(root));
         stage.show();
     }
