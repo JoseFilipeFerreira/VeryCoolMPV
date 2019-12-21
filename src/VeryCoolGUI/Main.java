@@ -34,40 +34,63 @@ public class Main extends Application {
     private static Stage stage;
 
     /* button */
-    @FXML private Button exit, back, swap;
-    @FXML private Button create, remove;
-    @FXML private Button confirm, select;
-    @FXML private Button login, logout;
-    @FXML private Button playPause, stop;
-    @FXML private Button upload, download;
-    @FXML private Button criarBiblioteca;
-    @FXML private Button myMedia;
-    @FXML private Button friends;
-    @FXML private Button editProfile;
-    @FXML private Button editAcount;
-    @FXML private Button myMediaRemove;
-    @FXML private Button myMediaClassificar;
+    @FXML
+    private Button exit, back, swap;
+    @FXML
+    private Button create, remove;
+    @FXML
+    private Button confirm, select;
+    @FXML
+    private Button login, logout;
+    @FXML
+    private Button playPause, stop;
+    @FXML
+    private Button upload, download;
+    @FXML
+    private Button criarBiblioteca;
+    @FXML
+    private Button myMedia;
+    @FXML
+    private Button friends;
+    @FXML
+    private Button editProfile;
+    @FXML
+    private Button editAcount;
+    @FXML
+    private Button myMediaRemove;
+    @FXML
+    private Button myMediaClassificar;
 
     /* user input fields */
-    @FXML private TextField search;
-    @FXML private TextField name, email, password, oldPasswd;
-    @FXML private TextField mediaName;
-    @FXML private TextField musicAlbum, musicTrack, musicSinger;
-    @FXML private TextField videoSerie, videoSeason, videoEpisode;
-    @FXML private DatePicker datePicker;
-    @FXML private ChoiceBox dropDownMenu;
-    @FXML private ChoiceBox searchBy;
+    @FXML
+    private TextField search;
+    @FXML
+    private TextField name, email, password, oldPasswd;
+    @FXML
+    private TextField mediaName;
+    @FXML
+    private TextField musicAlbum, musicTrack, musicSinger;
+    @FXML
+    private TextField videoSerie, videoSeason, videoEpisode;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private ChoiceBox dropDownMenu;
+    @FXML
+    private ChoiceBox searchBy;
 
     /* data display */
-    @FXML private Label pathToFile;
-    @FXML private ListView<String> listViewMedia;
+    @FXML
+    private Label pathToFile;
+    @FXML
+    private ListView<String> listViewMedia;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage fStage) throws Exception{
+    public void start(Stage fStage) throws Exception {
         mediacenter = new MediaCenter();
         stage = fStage;
         Parent root = FXMLLoader.load(getClass().getResource("resources/inicio.fxml"));
@@ -91,14 +114,14 @@ public class Main extends Application {
         LocalDate date = datePicker.getValue();
 
         try {
-            Integer episode = (sEpisode.equals(""))? null : Integer.parseInt(sEpisode);
-            Integer season = (sSeason.equals(""))? null : Integer.parseInt(sEpisode);
+            Integer episode = (sEpisode.equals("")) ? null : Integer.parseInt(sEpisode);
+            Integer season = (sSeason.equals("")) ? null : Integer.parseInt(sEpisode);
             if (path != null && !nome.equals("") && date != null) {
                 Video video = new Video(
                         mediacenter.getEmail(),
                         path,
                         nome,
-                        serie.equals("")? null : serie,
+                        serie.equals("") ? null : serie,
                         season,
                         episode,
                         Date.valueOf(date));
@@ -106,8 +129,7 @@ public class Main extends Application {
                 mediacenter.uploadMedia(video);
                 changeMyMedia(ae);
             }
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             videoEpisode.setText("");
             videoSeason.setText("");
         }
@@ -126,8 +148,7 @@ public class Main extends Application {
         Integer faixa = null;
         try {
             faixa = Integer.parseInt(sFaixa);
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             musicTrack.setText("");
         }
 
@@ -139,9 +160,8 @@ public class Main extends Application {
 
                 mediacenter.uploadMedia(music);
                 changeMyMedia(ae);
-            }
-            catch (InvalidMusicException e) {}
-            catch (InvalidGenreException ignored) {
+            } catch (InvalidMusicException e) {
+            } catch (InvalidGenreException ignored) {
                 dropDownMenu.setValue(null);
             }
         }
@@ -171,8 +191,8 @@ public class Main extends Application {
             String cat = metadata.getCategoria();
             if (cat != null)
                 dropDownMenu.setValue(cat);
+        } catch (NullPointerException ignored) {
         }
-        catch(NullPointerException ignored){}
     }
 
     public void selectVideoUpload(ActionEvent ae) {
@@ -184,15 +204,15 @@ public class Main extends Application {
                 new FileChooser.ExtensionFilter(
                         "Video Files", "*.mp4", "*.avi", "*.mkv"));
         File selectedFile = fc.showOpenDialog(stage);
-        try{
+        try {
             pathToFile.setText(selectedFile.getPath());
 
             Metadata metadata = new Metadata(selectedFile.getPath());
 
             mediaName.setText(metadata.getNome());
             datePicker.setValue(metadata.getData());
+        } catch (NullPointerException ignored) {
         }
-        catch(NullPointerException ignored){}
     }
 
     //Controll Media
@@ -201,7 +221,7 @@ public class Main extends Application {
     }
 
     public void playMusicClick(MouseEvent me) {
-        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
+        if (me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
             if (pos >= 0)
                 mediacenter.playMedia(getOurMediaDisplay().get(pos));
@@ -209,9 +229,10 @@ public class Main extends Application {
     }
 
     //Edit Users
-    public void setPassword(ActionEvent ae) throws IOException, SettedPasswdException {
+    public void setPassword(ActionEvent ae) throws IOException,
+            SettedPasswdException {
         String password = this.password.getText();
-        if (!password.equals("")){
+        if (!password.equals("")) {
             mediacenter.fstPasswd(password);
             changeLogin(ae);
             mediacenter.logout();
@@ -228,8 +249,7 @@ public class Main extends Application {
             if (p != null && op != null)
                 mediacenter.passwd(op, p);
             changeOurMedia(ae);
-        }
-        catch (InvalidPasswordException | NonSettedPasswdException ignored){
+        } catch (InvalidPasswordException | NonSettedPasswdException ignored) {
             name.setText("");
             password.setText("");
             oldPasswd.setText("");
@@ -238,12 +258,11 @@ public class Main extends Application {
 
     public void removeUser(ActionEvent ae) throws IOException {
         String e = email.getText();
-        if(e != null) {
+        if (e != null) {
             try {
                 mediacenter.rmUser(e);
                 changeOurMedia(ae);
-            }
-            catch (PermissionDeniedException ignored){
+            } catch (PermissionDeniedException ignored) {
                 changeOurMedia(ae);
             }
         }
@@ -252,15 +271,14 @@ public class Main extends Application {
     public void createUser(ActionEvent ae) throws IOException {
         String e = email.getText();
         String n = name.getText();
-        if(e != null && n != null) {
+        if (e != null && n != null) {
             try {
                 mediacenter.createUser(e, n);
                 changeOurMedia(ae);
             } catch (UserExistsException ignored) {
                 email.setText("");
                 name.setText("");
-            }
-            catch (PermissionDeniedException ignored){
+            } catch (PermissionDeniedException ignored) {
                 changeOurMedia(ae);
             }
         }
@@ -282,22 +300,22 @@ public class Main extends Application {
     }
 
     public void changeOurMedia(ActionEvent ae) throws IOException {
-        if(mediacenter.isAdmin())
+        if (mediacenter.isAdmin())
             swapFxml(ae, "resources/ourMediaAdmin.fxml");
         else
             swapFxml(ae, "resources/ourMedia.fxml");
     }
 
     public void changeMyMedia(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/myMedia.fxml");
+        swapFxml(ae, "resources/myMedia.fxml");
     }
 
     public void changeInicio(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/inicio.fxml");
+        swapFxml(ae, "resources/inicio.fxml");
     }
 
     public void logout(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/login.fxml");
+        swapFxml(ae, "resources/login.fxml");
         mediacenter.logout();
     }
 
@@ -306,19 +324,19 @@ public class Main extends Application {
     }
 
     public void loginConvidado(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/ourMediaConvidado.fxml");
+        swapFxml(ae, "resources/ourMediaConvidado.fxml");
     }
 
     public void changeCriarConta(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/criarConta.fxml");
+        swapFxml(ae, "resources/criarConta.fxml");
     }
 
     public void changeEditProfile(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/editProfile.fxml");
+        swapFxml(ae, "resources/editProfile.fxml");
     }
 
     public void changeLogin(ActionEvent ae) throws IOException {
-        swapFxml(ae,"resources/login.fxml");
+        swapFxml(ae, "resources/login.fxml");
     }
 
     public void changeUploadMusic(ActionEvent ae) throws IOException {
@@ -356,7 +374,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    public List<Media> getOurMediaDisplay(){
+    public List<Media> getOurMediaDisplay() {
         String q = search.getText();
         if (q.equals(""))
             return new ArrayList<>(mediacenter.allMedia());
@@ -371,9 +389,9 @@ public class Main extends Application {
         }
     }
 
-    public void populateList(List<Media> m){
+    public void populateList(List<Media> m) {
         listViewMedia.setItems(FXCollections.observableList(
                 m.stream().map(Media::toString).collect(Collectors.toList())
-        ));
+                                                           ));
     }
 }

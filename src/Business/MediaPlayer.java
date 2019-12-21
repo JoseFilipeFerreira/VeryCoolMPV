@@ -1,8 +1,8 @@
 package Business;
 
-import java.io.*;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,25 +15,23 @@ public class MediaPlayer implements Runnable {
         this.playing = false;
     }
 
-    void play (Media to_play) {
+    void play(Media to_play) {
         this.list.add(to_play);
         if(!this.playing) {
             this.playing = true;
             Thread t = new Thread(this);
             t.start();
-        }
-        else
+        } else
             this.queue(to_play);
     }
 
     void play(List<Media> to_play) {
         this.list.addAll(to_play);
-        if(!this.playing) {
+        if (!this.playing) {
             this.playing = true;
             Thread t = new Thread(this);
             t.start();
-        }
-        else
+        } else
             this.queue(to_play);
     }
 
@@ -62,7 +60,7 @@ public class MediaPlayer implements Runnable {
     }
 
     private void queue(List<Media> to_play) {
-        for(Media m: to_play) {
+        for (Media m : to_play) {
             ProcessBuilder a = new ProcessBuilder("./play.sh", m.getPath().toString());
             try {
                 Process p = a.start();
