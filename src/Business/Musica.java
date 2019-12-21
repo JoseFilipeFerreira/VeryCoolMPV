@@ -76,7 +76,7 @@ public class Musica extends Media {
         try {
             return singer + " - " + this.getName() + " (" + album + ") (" + new Categoria(id_cat).toString() + ") (" + this.getRelease_date().toLocalDate().getYear() + ") (Music)";
         } catch (InvalidGenreException e) {
-            return "Music: apita o comboio";
+            return "ERROR: invalid genre (this should never happen)";
         }
     }
 }
