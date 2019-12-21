@@ -18,6 +18,7 @@ public class MediaPlayer implements Runnable {
     void play (Media to_play) {
         this.list.add(to_play);
         if(!this.playing) {
+            this.playing = true;
             Thread t = new Thread(this);
             t.start();
         }
@@ -105,6 +106,7 @@ public class MediaPlayer implements Runnable {
             Process p = a.start();
             p.waitFor();
             this.playing = false;
+            this.list.clear();
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
