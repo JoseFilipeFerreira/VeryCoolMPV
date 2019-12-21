@@ -100,7 +100,6 @@ public class MediaPlayer implements Runnable {
         paths.add("--no-audio-display");
         paths.add("--input-ipc-server=/tmp/mpvsocket");
         this.list.forEach(x -> paths.add(x.getPath().toString()));
-        paths.forEach(System.out::println);
         ProcessBuilder a = new ProcessBuilder(paths);
         try {
             Process p = a.start();

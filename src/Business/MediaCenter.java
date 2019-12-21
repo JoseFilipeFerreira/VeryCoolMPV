@@ -119,8 +119,7 @@ public class MediaCenter {
     }
 
     public Collection<Media> allMedia() {
-//        return this.mainLibrary.values(user.getEmail());
-        return this.mainLibrary.values();
+        return this.mainLibrary.values(user.getEmail());
     }
 
     public void playMedia(Media m) {
