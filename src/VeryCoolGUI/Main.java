@@ -56,6 +56,7 @@ public class Main extends Application {
     @FXML private TextField videoSerie, videoSeason, videoEpisode;
     @FXML private DatePicker datePicker;
     @FXML private ChoiceBox dropDownMenu;
+    @FXML private ChoiceBox searchBy;
 
     /* data display */
     @FXML private Label pathToFile;
@@ -77,7 +78,7 @@ public class Main extends Application {
 
     //Events
     public void populateTableOnTyping(KeyEvent keyEvent) {
-        populateList(getMediaDisplay());
+        populateList(getOurMediaDisplay());
     }
 
     //Upload Media
@@ -196,14 +197,14 @@ public class Main extends Application {
 
     //Controll Media
     public void playAllMusic(ActionEvent ae) {
-        mediacenter.playMedia(getMediaDisplay());
+        mediacenter.playMedia(getOurMediaDisplay());
     }
 
     public void playMusicClick(MouseEvent me) {
         if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
-            if (pos > 0)
-                mediacenter.playMedia(getMediaDisplay().get(pos));
+            if (pos >= 0)
+                mediacenter.playMedia(getOurMediaDisplay().get(pos));
         }
     }
 
@@ -355,12 +356,19 @@ public class Main extends Application {
         stage.show();
     }
 
-    public List<Media> getMediaDisplay(){
+    public List<Media> getOurMediaDisplay(){
         String q = search.getText();
         if (q.equals(""))
             return new ArrayList<>(mediacenter.allMedia());
-        else
+        else {
+            switch (searchBy.getValue().toString()) {
+                case "ARTISTA":
+                    return mediacenter.searchByArtist(q);
+                case "CATEGORIA":
+                    return mediacenter.searchByCat(q);
+            }
             return mediacenter.searchByName(q);
+        }
     }
 
     public void populateList(List<Media> m){

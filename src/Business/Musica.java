@@ -3,7 +3,6 @@ package Business;
 import Exceptions.InvalidGenreException;
 import Exceptions.InvalidMusicException;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Date;
 
@@ -75,7 +74,7 @@ public class Musica extends Media {
 
     public String toString() {
         try {
-            return "Music: " + singer + " - " + this.getName() + " (" + album + ") (" + new Categoria(id_cat).toString() + ") (" + this.getRelease_date().toLocalDate().getYear() + ")";
+            return singer + " - " + this.getName() + " (" + album + ") (" + new Categoria(id_cat).toString() + ") (" + this.getRelease_date().toLocalDate().getYear() + ") (Music)";
         } catch (InvalidGenreException e) {
             return "Music: apita o comboio";
         }

@@ -1,6 +1,5 @@
 package Business;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Date;
 
@@ -34,6 +33,15 @@ public class Video extends Media {
     }
 
     public String toString() {
-        return "Video: " + this.getName() + " - " + serie + " (" + episode + "/" + season + ") (" + this.getRelease_date().getYear() + ")";
+        StringBuilder s = new StringBuilder(this.getName());
+        System.out.println(serie.equals("null"));
+        if(serie != null)
+            s.append(" - ").append(serie);
+        if(episode != null && season != null)
+            s.append(" (").append(episode).append("/").append(season).append(")");
+        s.append("(").append(this.getRelease_date().toLocalDate().getYear()).append(")");
+        s.append("(Video)");
+
+        return s.toString();
     }
 }
