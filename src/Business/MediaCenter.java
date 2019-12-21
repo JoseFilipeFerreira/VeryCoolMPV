@@ -13,6 +13,7 @@ public class MediaCenter {
     private MediaMap mainLibrary;
     private UserMap registedUsers;
     private Utilizador user;
+    private MediaPlayer player;
 
     public MediaCenter() {
         this.mainLibrary = new MediaMap();
@@ -20,7 +21,6 @@ public class MediaCenter {
         this.user = null;
     }
 
-    //This needs to be better managed
     public Utilizador createUser(String email, String name)
             throws PermissionDeniedException, UserExistsException {
         if(user.isAdmin()) {
@@ -141,5 +141,23 @@ public class MediaCenter {
 
     public List<Media> searchByCat(String cat) {
         return this.mainLibrary.searchByCat(cat, this.user.getEmail());
+    }
+
+    public List<Media> searchByArtistUser(String artist) {
+        return this.user
+                .getUserMedia()
+                .searchByArtist(artist, this.user.getEmail());
+    }
+
+    public List<Media> artistMediaUser(String artist) {
+        return this.user
+                .getUserMedia()
+                .artistMedia(artist, this.user.getEmail());
+    }
+
+    public List<Media> searchByCatUser(String cat) {
+        return this.user
+                .getUserMedia()
+                .searchByCat(cat, this.user.getEmail());
     }
 }
