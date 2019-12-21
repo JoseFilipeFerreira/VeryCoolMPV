@@ -9,14 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class UserMap implements Map<String, Utilizador> {
-    public static void main(String[] args) {
-        Administrador admin = new Administrador("abc", "def", "ghi");
-        Utilizador user = new Utilizador("ree", "roo", "raa");
-        UserMap a = new UserMap();
-        a.put(admin.getEmail(), admin);
-        a.put(user.getEmail(), user);
-    }
-
 
     public void clear() {
         Connection conn = DBConnect.connect();

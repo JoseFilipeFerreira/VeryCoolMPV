@@ -67,15 +67,25 @@ public class MediaMap implements Map<String, Media> {
                     this.owner.getEmail() + "'";
             ResultSet rs = stm.executeQuery(sql);
             if (rs.next()) {
-                if(rs.getString(6) != null)
-                    al = new Musica(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(5), rs.getString(6),
-                            rs.getInt(7), rs.getDate(8), rs.getInt(12));
-            }
+                if (rs.getString("artista") != null)
+                    al = new Musica(rs.getString("name"),
+                            rs.getString("path"),
+                            rs.getString("owner"),
+                            rs.getString("album"),
+                            rs.getString("artista"),
+                            (Integer) rs.getObject("faixa"),
+                            rs.getDate("release_date"),
+                            rs.getInt("categoria"));
                 else
-                    al = new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(9), rs.getInt(10),
-                            rs.getInt(11), rs.getDate(8));
+                    al = new Video(rs.getString(
+                            "owner"),
+                            rs.getString("path"),
+                            rs.getString("name"),
+                            rs.getString("serie_name"),
+                            (Integer) rs.getObject("season"),
+                            (Integer) rs.getObject("episode"),
+                            rs.getDate("release_date"));
+            }
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -131,7 +141,7 @@ public class MediaMap implements Map<String, Media> {
                     + user + "','"
                     + value.getRelease_date() + "')"
                     + "ON DUPLICATE KEY UPDATE "
-                    + "edited_by = '" + user + "'");
+                    + "categoria = '" + value.getCat() + "'");
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }
@@ -172,8 +182,9 @@ public class MediaMap implements Map<String, Media> {
                                     "episode) VALUES ('" + key + "','"
                                     + value.getPath().toString() + "','"
                                     + value.getOwner() + "','"
-                                    + value.getRelease_date() + "','"
-                                    + value.getSerie() + "',"
+                                    + value.getRelease_date() + "',"
+                                    + (value.getSerie() == null ? null :
+                                    "'" + value.getSerie() + "'") + ","
                                     + (value.getSeason() == null ? null :
                                      "'" + value.getSeason() + "'") + ","
                                     + (value.getEpisode() == null ? null :
@@ -236,14 +247,24 @@ public class MediaMap implements Map<String, Media> {
                     "Select * from Media where owner='" +
                     this.owner.getEmail() + "'");
             for (; rs.next(); ) {
-                if(rs.getString(6) != null)
-                    col.add(new Musica(rs.getString(1), rs.getString(2),
-                        rs.getString(3), rs.getString(5), rs.getString(6),
-                        rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                if (rs.getString("artista") != null)
+                    col.add(new Musica(rs.getString("name"),
+                                    rs.getString("path"),
+                                    rs.getString("owner"),
+                                    rs.getString("album"),
+                                    rs.getString("artista"),
+                                    (Integer) rs.getObject("faixa"),
+                                    rs.getDate("release_date"),
+                                    rs.getInt("categoria")));
                 else
-                    col.add(new Video(rs.getString(1), rs.getString(2),
-                            rs.getString(3), rs.getString(9), rs.getInt(10),
-                            rs.getInt(11), rs.getDate(8)));
+                    col.add(new Video(rs.getString(
+                            "owner"),
+                            rs.getString("path"),
+                            rs.getString("name"),
+                            rs.getString("serie_name"),
+                            (Integer) rs.getObject("season"),
+                            (Integer) rs.getObject("episode"),
+                            rs.getDate("release_date")));
             }
             return col;
         } catch (Exception e) {
@@ -260,17 +281,25 @@ public class MediaMap implements Map<String, Media> {
                 ResultSet rs = stm.executeQuery("SELECT * FROM Media " +
                         "where edited_by = '" + uid + "'");
                 for (; rs.next(); ) {
-                    if (rs.getString(6) != null) {
-                        col.put(rs.getString(1), new Musica(rs.getString(1),
-                                rs.getString(2),
-                                rs.getString(3), rs.getString(5), rs.getString(6),
-                                rs.getInt(7), rs.getDate(8), rs.getInt(12)));
-                    }
+                    if (rs.getString("artista") != null)
+                        col.put(rs.getString("name"),
+                                new Musica(rs.getString("name"),
+                                        rs.getString("path"),
+                                        rs.getString("owner"),
+                                        rs.getString("album"),
+                                        rs.getString("artista"),
+                                        (Integer) rs.getObject("faixa"),
+                                        rs.getDate("release_date"),
+                                        rs.getInt("categoria")));
                     else
-                        col.put(rs.getString(1), new Video(rs.getString(3),
-                                rs.getString(2),
-                                rs.getString(1), rs.getString(9), rs.getInt(10),
-                                rs.getInt(11), rs.getDate(8)));
+                        col.put(rs.getString("name"), new Video(rs.getString(
+                                "owner"),
+                                rs.getString("path"),
+                                rs.getString("name"),
+                                rs.getString("serie_name"),
+                                (Integer) rs.getObject("season"),
+                                (Integer) rs.getObject("episode"),
+                                rs.getDate("release_date")));
                 }
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
@@ -278,16 +307,25 @@ public class MediaMap implements Map<String, Media> {
                     "Select * from Media where owner='" +
                             this.owner.getEmail() + "' and edited_by is null");
             for (; rs.next(); ) {
-                if (rs.getString(6) != null)
-                    col.putIfAbsent(rs.getString(1), new Musica(rs.getString(1),
-                            rs.getString(2),
-                            rs.getString(3), rs.getString(5), rs.getString(6),
-                            rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                if (rs.getString("artista") != null)
+                    col.putIfAbsent(rs.getString("name"),
+                            new Musica(rs.getString("name"),
+                                    rs.getString("path"),
+                                    rs.getString("owner"),
+                                    rs.getString("album"),
+                                    rs.getString("artista"),
+                                    (Integer) rs.getObject("faixa"),
+                                    rs.getDate("release_date"),
+                                    rs.getInt("categoria")));
                 else
-                    col.putIfAbsent(rs.getString(1), new Video(rs.getString(3),
-                            rs.getString(2),
-                            rs.getString(1), rs.getString(9), rs.getInt(10),
-                            rs.getInt(11), rs.getDate(8)));
+                    col.putIfAbsent(rs.getString("name"),
+                            new Video(rs.getString("owner"),
+                            rs.getString("path"),
+                            rs.getString("name"),
+                            rs.getString("serie_name"),
+                            (Integer) rs.getObject("season"),
+                            (Integer) rs.getObject("episode"),
+                            rs.getDate("release_date")));
             }
             return col.values();
         } catch (Exception e) {
@@ -305,17 +343,25 @@ public class MediaMap implements Map<String, Media> {
                         "lower(name) regexp '" + s.toLowerCase() + "' and " +
                         "edited_by = '" + uid + "'");
                 for (; rs.next(); ) {
-                    if (rs.getString(6) != null)
-                        col.put(rs.getString(1), new Musica(rs.getString(1),
-                                rs.getString(2),
-                                rs.getString(3), rs.getString(5),
-                                rs.getString(6),
-                                rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                    if (rs.getString("artista") != null)
+                        col.put(rs.getString("name"),
+                                new Musica(rs.getString("name"),
+                                        rs.getString("path"),
+                                        rs.getString("owner"),
+                                        rs.getString("album"),
+                                        rs.getString("artista"),
+                                        (Integer) rs.getObject("faixa"),
+                                        rs.getDate("release_date"),
+                                        rs.getInt("categoria")));
                     else
-                        col.put(rs.getString(1), new Video(rs.getString(3),
-                                rs.getString(2),
-                                rs.getString(1), rs.getString(9), rs.getInt(10),
-                                rs.getInt(11), rs.getDate(8)));
+                        col.put(rs.getString("name"), new Video(rs.getString(
+                                "owner"),
+                                rs.getString("path"),
+                                rs.getString("name"),
+                                rs.getString("serie_name"),
+                                (Integer) rs.getObject("season"),
+                                (Integer) rs.getObject("episode"),
+                                rs.getDate("release_date")));
                 }
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
@@ -325,16 +371,25 @@ public class MediaMap implements Map<String, Media> {
                             this.owner.getEmail() + "' and lower(name) regexp" +
                             " '" + s.toLowerCase() + "' and edited_by is null");
             for (; rs.next(); ) {
-                if(rs.getString(6) != null)
-                    col.put(rs.getString(1), new Musica(rs.getString(1),
-                            rs.getString(2),
-                            rs.getString(3), rs.getString(5), rs.getString(6),
-                            rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                if (rs.getString("artista") != null)
+                    col.put(rs.getString("name"),
+                            new Musica(rs.getString("name"),
+                                    rs.getString("path"),
+                                    rs.getString("owner"),
+                                    rs.getString("album"),
+                                    rs.getString("artista"),
+                                    (Integer) rs.getObject("faixa"),
+                                    rs.getDate("release_date"),
+                                    rs.getInt("categoria")));
                 else
-                    col.put(rs.getString(1), new Video(rs.getString(3),
-                            rs.getString(2),
-                            rs.getString(1), rs.getString(9), rs.getInt(10),
-                            rs.getInt(11), rs.getDate(8)));
+                    col.put(rs.getString("name"), new Video(rs.getString(
+                            "owner"),
+                            rs.getString("path"),
+                            rs.getString("name"),
+                            rs.getString("serie_name"),
+                            (Integer) rs.getObject("season"),
+                            (Integer) rs.getObject("episode"),
+                            rs.getDate("release_date")));
             }
             return new ArrayList<>(col.values());
         } catch (Exception e) {
@@ -352,17 +407,25 @@ public class MediaMap implements Map<String, Media> {
                         "lower(artista) regexp '" + s.toLowerCase() + "' and " +
                         "edited_by = '" + uid + "'");
                 for (; rs.next(); ) {
-                    if (rs.getString(6) != null)
-                        col.put(rs.getString(1), new Musica(rs.getString(1),
-                                rs.getString(2),
-                                rs.getString(3), rs.getString(5),
-                                rs.getString(6),
-                                rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                    if (rs.getString("artista") != null)
+                        col.put(rs.getString("name"),
+                                new Musica(rs.getString("name"),
+                                        rs.getString("path"),
+                                        rs.getString("owner"),
+                                        rs.getString("album"),
+                                        rs.getString("artista"),
+                                        (Integer) rs.getObject("faixa"),
+                                        rs.getDate("release_date"),
+                                        rs.getInt("categoria")));
                     else
-                        col.put(rs.getString(1), new Video(rs.getString(3),
-                                rs.getString(2),
-                                rs.getString(1), rs.getString(9), rs.getInt(10),
-                                rs.getInt(11), rs.getDate(8)));
+                        col.put(rs.getString("name"), new Video(rs.getString(
+                                "owner"),
+                                rs.getString("path"),
+                                rs.getString("name"),
+                                rs.getString("serie_name"),
+                                (Integer) rs.getObject("season"),
+                                (Integer) rs.getObject("episode"),
+                                rs.getDate("release_date")));
                 }
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
@@ -372,16 +435,25 @@ public class MediaMap implements Map<String, Media> {
                             this.owner.getEmail() + "' and lower(artist) regexp" +
                             " '" + s.toLowerCase() + "' and edited_by is null");
             for (; rs.next(); ) {
-                if(rs.getString(6) != null)
-                    col.put(rs.getString(1), new Musica(rs.getString(1),
-                            rs.getString(2),
-                            rs.getString(3), rs.getString(5), rs.getString(6),
-                            rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                if (rs.getString("artista") != null)
+                    col.put(rs.getString("name"),
+                            new Musica(rs.getString("name"),
+                                    rs.getString("path"),
+                                    rs.getString("owner"),
+                                    rs.getString("album"),
+                                    rs.getString("artista"),
+                                    (Integer) rs.getObject("faixa"),
+                                    rs.getDate("release_date"),
+                                    rs.getInt("categoria")));
                 else
-                    col.put(rs.getString(1), new Video(rs.getString(3),
-                            rs.getString(2),
-                            rs.getString(1), rs.getString(9), rs.getInt(10),
-                            rs.getInt(11), rs.getDate(8)));
+                    col.put(rs.getString("name"), new Video(rs.getString(
+                            "owner"),
+                            rs.getString("path"),
+                            rs.getString("name"),
+                            rs.getString("serie_name"),
+                            (Integer) rs.getObject("season"),
+                            (Integer) rs.getObject("episode"),
+                            rs.getDate("release_date")));
             }
             return new ArrayList<>(col.values());
         } catch (Exception e) {
@@ -429,17 +501,25 @@ public class MediaMap implements Map<String, Media> {
                         "where lower(designacao) regexp '" + s.toLowerCase() + "' and " +
                         "edited_by = '" + uid + "'");
                 for (; rs.next(); ) {
-                    if (rs.getString(6) != null)
-                        col.put(rs.getString(1), new Musica(rs.getString(1),
-                                rs.getString(2),
-                                rs.getString(3), rs.getString(5),
-                                rs.getString(6),
-                                rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                    if (rs.getString("artista") != null)
+                        col.put(rs.getString("name"),
+                                new Musica(rs.getString("name"),
+                                        rs.getString("path"),
+                                        rs.getString("owner"),
+                                        rs.getString("album"),
+                                        rs.getString("artista"),
+                                        (Integer) rs.getObject("faixa"),
+                                        rs.getDate("release_date"),
+                                        rs.getInt("categoria")));
                     else
-                        col.put(rs.getString(1), new Video(rs.getString(3),
-                                rs.getString(2),
-                                rs.getString(1), rs.getString(9), rs.getInt(10),
-                                rs.getInt(11), rs.getDate(8)));
+                        col.put(rs.getString("name"), new Video(rs.getString(
+                                "owner"),
+                                rs.getString("path"),
+                                rs.getString("name"),
+                                rs.getString("serie_name"),
+                                (Integer) rs.getObject("season"),
+                                (Integer) rs.getObject("episode"),
+                                rs.getDate("release_date")));
                 }
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
@@ -450,16 +530,25 @@ public class MediaMap implements Map<String, Media> {
                             this.owner.getEmail() + "' and lower(artist) regexp" +
                             " '" + s.toLowerCase() + "' and edited_by is null");
             for (; rs.next(); ) {
-                if(rs.getString(6) != null)
-                    col.put(rs.getString(1), new Musica(rs.getString(1),
-                            rs.getString(2),
-                            rs.getString(3), rs.getString(5), rs.getString(6),
-                            rs.getInt(7), rs.getDate(8), rs.getInt(12)));
+                if (rs.getString("artista") != null)
+                    col.put(rs.getString("name"),
+                            new Musica(rs.getString("name"),
+                                    rs.getString("path"),
+                                    rs.getString("owner"),
+                                    rs.getString("album"),
+                                    rs.getString("artista"),
+                                    (Integer) rs.getObject("faixa"),
+                                    rs.getDate("release_date"),
+                                    rs.getInt("categoria")));
                 else
-                    col.put(rs.getString(1), new Video(rs.getString(3),
-                            rs.getString(2),
-                            rs.getString(1), rs.getString(9), rs.getInt(10),
-                            rs.getInt(11), rs.getDate(8)));
+                    col.put(rs.getString("name"), new Video(rs.getString(
+                            "owner"),
+                            rs.getString("path"),
+                            rs.getString("name"),
+                            rs.getString("serie_name"),
+                            (Integer) rs.getObject("season"),
+                            (Integer) rs.getObject("episode"),
+                            rs.getDate("release_date")));
             }
             return new ArrayList<>(col.values());
         } catch (Exception e) {
