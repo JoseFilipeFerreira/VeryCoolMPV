@@ -28,13 +28,14 @@ public abstract class Media {
     }
 
     void download(Utilizador u, Path dest) throws PermissionDeniedException {
-        if(!u.getEmail().equals(this.owner)) {
+        if (!u.getEmail().equals(this.owner)) {
             throw new PermissionDeniedException();
         }
         Path org = Paths.get(this.path);
         try {
             Files.copy(org, dest);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     String getName() {

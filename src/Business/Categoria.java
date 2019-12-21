@@ -11,11 +11,12 @@ import java.util.List;
 public class Categoria {
     private int pos;
 
-   public Categoria() {
+    public Categoria() {
         try {
             this.pos = this.cat_id("Other");
-        } catch (InvalidGenreException ignored) {}
-   }
+        } catch (InvalidGenreException ignored) {
+        }
+    }
 
     public Categoria(int pos) throws InvalidGenreException {
         if (!this.valid_cat(pos))
@@ -72,7 +73,8 @@ public class Categoria {
     public String toString() {
         try {
             return this.name(this.pos);
-        } catch (InvalidGenreException ignored) {}
+        } catch (InvalidGenreException ignored) {
+        }
         return null;
     }
 
@@ -82,7 +84,7 @@ public class Categoria {
             Statement stm = conn.createStatement();
             ResultSet res = stm.executeQuery("SELECT designacao from Categoria");
             List<String> r = new ArrayList<>();
-            while(res.next())
+            while (res.next())
                 r.add(res.getString(1));
             return r;
         } catch (Exception e) {

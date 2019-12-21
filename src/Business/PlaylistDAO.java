@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
-public class PlaylistMap implements Map<Integer, Playlist> {
+public class PlaylistDAO implements Map<Integer, Playlist> {
 
     public void clear() {
         Connection conn = DBConnect.connect();
@@ -14,6 +14,8 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             stm.executeUpdate("DELETE FROM Playlist");
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -27,6 +29,8 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             return rs.next();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -58,6 +62,8 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -73,6 +79,8 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             return !rs.next();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -88,17 +96,18 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             return res;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
     public Playlist put(Integer key, Playlist value) {
-        Connection conn;
+        Connection conn = DBConnect.connect();
         String owner = value.getOwner();
         List<String> media = value.getMedia();
         String title = value.getTitle();
         boolean shared = value.is_shared();
         try {
-            conn = DBConnect.connect();
             Statement stm = conn.createStatement();
             for (String media_name : media) {
                 stm.executeUpdate(
@@ -106,11 +115,13 @@ public class PlaylistMap implements Map<Integer, Playlist> {
                                 + media_name + "','"
                                 + key + "','"
                                 + shared + "','"
-                                + title +"')");
+                                + title + "')");
             }
             return value;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -129,6 +140,8 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             return media;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -143,6 +156,8 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             return i;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -154,18 +169,20 @@ public class PlaylistMap implements Map<Integer, Playlist> {
     }
 
     Map<Integer, Playlist> userPlaylists(String user_name) {
-       Connection conn = DBConnect.connect();
-       try {
-           Statement stm = conn.createStatement();
-           ResultSet rs = stm.executeQuery("select playlist_id from Playlist" +
-                   " where Utilizadores_email = '" + user_name + "'");
-           Map<Integer, Playlist> res = new HashMap<>();
-           while(rs.next())
-               res.put(rs.getInt(1), this.get(rs.getInt(1)));
-           return res;
-       } catch (Exception e) {
-           throw new NullPointerException(e.getMessage());
-       }
+        Connection conn = DBConnect.connect();
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("select playlist_id from Playlist" +
+                    " where Utilizadores_email = '" + user_name + "'");
+            Map<Integer, Playlist> res = new HashMap<>();
+            while (rs.next())
+                res.put(rs.getInt(1), this.get(rs.getInt(1)));
+            return res;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
+        }
     }
 
     Map<Integer, Playlist> sharedPlaylists() {
@@ -175,11 +192,13 @@ public class PlaylistMap implements Map<Integer, Playlist> {
             ResultSet rs = stm.executeQuery("select playlist_id from Playlist" +
                     " where is_shared = true");
             Map<Integer, Playlist> res = new HashMap<>();
-            while(rs.next())
+            while (rs.next())
                 res.put(rs.getInt(1), this.get(rs.getInt(1)));
             return res;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 }

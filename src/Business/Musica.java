@@ -12,22 +12,22 @@ public class Musica extends Media {
     String singer;
     int faixa;
 
-    Musica (Utilizador owner, Path path, int cat)
+    Musica(Utilizador owner, Path path, int cat)
             throws InvalidGenreException {
         super(owner, path);
         this.id_cat = cat;
     }
 
-    Musica (Utilizador owner, Path path) {
+    Musica(Utilizador owner, Path path) {
         super(owner, path);
         this.id_cat = -1;
     }
 
     public Musica(String name, String path, String owner, String album,
-           String singer, int faixa, Date release_date, String cat) throws
+                  String singer, int faixa, Date release_date, String cat) throws
             InvalidMusicException, InvalidGenreException {
         super(owner, path, name, release_date);
-        if(singer == null)
+        if (singer == null)
             throw new InvalidMusicException();
         this.album = album;
         this.singer = singer;
@@ -39,7 +39,7 @@ public class Musica extends Media {
                   String singer, int faixa, Date release_date, int cat) throws
             InvalidMusicException, InvalidGenreException {
         super(owner, path, name, release_date);
-        if(singer == null)
+        if (singer == null)
             throw new InvalidMusicException();
         this.singer = singer;
         this.faixa = faixa;
@@ -65,7 +65,7 @@ public class Musica extends Media {
     }
 
     public int getCat() {
-         return this.id_cat;
+        return this.id_cat;
     }
 
     void setCat(Categoria cat) {

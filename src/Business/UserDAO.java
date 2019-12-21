@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class UserMap implements Map<String, Utilizador> {
+public class UserDAO implements Map<String, Utilizador> {
 
     public void clear() {
         Connection conn = DBConnect.connect();
@@ -17,6 +17,8 @@ public class UserMap implements Map<String, Utilizador> {
             stm.executeUpdate("DELETE FROM Utilizadores");
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -30,6 +32,8 @@ public class UserMap implements Map<String, Utilizador> {
             return rs.next();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -53,15 +57,17 @@ public class UserMap implements Map<String, Utilizador> {
             String sql = "SELECT * FROM Utilizadores WHERE email='" + key + "'";
             ResultSet rs = stm.executeQuery(sql);
             if (rs.next())
-                if(rs.getBoolean(4))
+                if (rs.getBoolean(4))
                     al = new Administrador(rs.getString(1), rs.getString(2),
-                        rs.getString(3));
+                            rs.getString(3));
                 else
                     al = new Utilizador(rs.getString(1), rs.getString(2),
                             rs.getString(3));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -78,6 +84,8 @@ public class UserMap implements Map<String, Utilizador> {
             return !rs.next();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -86,12 +94,11 @@ public class UserMap implements Map<String, Utilizador> {
     }
 
     public Utilizador put(String key, Utilizador value) {
-        Connection conn;
+        Connection conn = DBConnect.connect();
         try {
-            conn = DBConnect.connect();
             Utilizador al = null;
             Statement stm = conn.createStatement();
-            if(this.containsKey(key)) {
+            if (this.containsKey(key)) {
                 stm.executeUpdate("UPDATE Utilizadores SET " +
                         "name = '" + value.getName() +
                         "', passwd = '" + value.getPasswd() +
@@ -114,6 +121,8 @@ public class UserMap implements Map<String, Utilizador> {
             return new Utilizador(value.getEmail(), value.getName(), value.getPasswd());
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -135,6 +144,8 @@ public class UserMap implements Map<String, Utilizador> {
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -148,6 +159,8 @@ public class UserMap implements Map<String, Utilizador> {
             return i;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -164,6 +177,8 @@ public class UserMap implements Map<String, Utilizador> {
             return col;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 }

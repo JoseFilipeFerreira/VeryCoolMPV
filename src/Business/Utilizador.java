@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Utilizador {
     private String name;
-    private MediaMap userMedia;
+    private MediaDAO userMedia;
     private String email;
     private String passwd;
     private boolean isLogged;
@@ -29,7 +29,7 @@ public class Utilizador {
         //Null passwd to force user to set it on first login
         //Better alternatives are welcome
         this.passwd = null;
-        this.userMedia = new MediaMap(this);
+        this.userMedia = new MediaDAO(this);
         this.friends = new ArrayList<>();
     }
 
@@ -38,7 +38,7 @@ public class Utilizador {
         this.name = name;
         this.isLogged = false;
         this.passwd = passwd;
-        this.userMedia = new MediaMap(this);
+        this.userMedia = new MediaDAO(this);
         this.friends = new ArrayList<>();
     }
 
@@ -52,9 +52,9 @@ public class Utilizador {
 
     void checkPasswd(String passwd)
             throws InvalidPasswordException, NonSettedPasswdException {
-        if(this.passwd == null)
+        if (this.passwd == null)
             throw new NonSettedPasswdException(this);
-        if(!this.passwd.equals(passwd))
+        if (!this.passwd.equals(passwd))
             throw new InvalidPasswordException();
     }
 
@@ -66,7 +66,7 @@ public class Utilizador {
     }
 
     void login() throws AlreadyLoggedInException {
-        if(this.isLogged)
+        if (this.isLogged)
             throw new AlreadyLoggedInException();
         this.isLogged = true;
     }
@@ -90,11 +90,11 @@ public class Utilizador {
     Media uploadMedia(Media media) throws IOException {
         Path old = media.getPath();
         Path newer = Paths.get(".media");
-        if(Files.notExists(newer)) {
+        if (Files.notExists(newer)) {
             Files.createDirectory(newer);
         }
         Path file = newer.resolve(old.getFileName());
-        if(Files.notExists(file))
+        if (Files.notExists(file))
             Files.copy(old, file);
         media.setPath(file.toString());
         this.userMedia.put(media.getName(), media);
@@ -109,7 +109,7 @@ public class Utilizador {
                 .delete();
     }
 
-    MediaMap getUserMedia() {
+    MediaDAO getUserMedia() {
         return userMedia;
     }
 

@@ -35,9 +35,9 @@ public class Video extends Media {
     public String toString() {
         StringBuilder s = new StringBuilder(this.getName());
         System.out.println(serie.equals("null"));
-        if(serie != null)
+        if (serie != null)
             s.append(" - ").append(serie);
-        if(episode != null && season != null)
+        if (episode != null && season != null)
             s.append(" (").append(episode).append("/").append(season).append(")");
         s.append("(").append(this.getRelease_date().toLocalDate().getYear()).append(")");
         s.append("(Video)");
