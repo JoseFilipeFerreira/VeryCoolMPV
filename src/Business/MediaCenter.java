@@ -19,6 +19,7 @@ public class MediaCenter {
         this.mainLibrary = new MediaMap();
         this.registedUsers = new UserMap();
         this.user = null;
+        this.player = new MediaPlayer();
     }
 
     public Utilizador createUser(String email, String name)
@@ -122,13 +123,11 @@ public class MediaCenter {
     }
 
     public void playMedia(Media m) {
-        List<Media> a = new ArrayList<>();
-        a.add(m);
-        new MediaPlayer(a);
+        this.player.play(m);
     }
 
     public void playMedia(List<Media> m) {
-        new MediaPlayer(m);
+        this.player.play(m);
     }
 
     public List<Media> searchByArtist(String artist) {
@@ -159,5 +158,20 @@ public class MediaCenter {
         return this.user
                 .getUserMedia()
                 .searchByCat(cat, this.user.getEmail());
+    }
+
+    public void togglePause() {
+        if(this.player != null)
+            this.player.togglePause();
+    }
+
+    public void next() {
+        if(this.player != null)
+            this.player.next();
+    }
+
+    public void prev() {
+        if(this.player != null)
+            this.player.previous();
     }
 }
