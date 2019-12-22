@@ -457,7 +457,7 @@ public class MediaDAO implements Map<String, Media> {
                     "SELECT * FROM Media where lower(artista) regexp '" + s.toLowerCase() +
                             "' and edited_by = owner" :
                     "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and lower(artist) regexp" +
+                            this.owner.getEmail() + "' and lower(artista) regexp" +
                             " '" + s.toLowerCase() + "' and edited_by = owner");
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
@@ -558,7 +558,7 @@ public class MediaDAO implements Map<String, Media> {
                             "where lower(designacao) regexp '" + s.toLowerCase() +
                             "' and edited_by = owner" :
                     "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and lower(artist) regexp" +
+                            this.owner.getEmail() + "' and lower(artista) regexp" +
                             " '" + s.toLowerCase() + "' and edited_by = owner");
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
