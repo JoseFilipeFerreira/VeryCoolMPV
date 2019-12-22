@@ -122,6 +122,16 @@ public class Main extends Application {
     }
 
     //Upload Media
+    public void removeMedia(ActionEvent ae) {
+        int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+        if (pos < 0) return;
+
+        Media m = getMyMediaDisplay().get(pos);
+        mediacenter.rmMedia(m);
+
+        updateList(getMyMediaDisplay());
+    }
+
     public void uploadVideo(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
         String nome = mediaName.getText();
