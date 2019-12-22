@@ -219,8 +219,7 @@ public class Main extends Application {
     public void playAllMusic(ActionEvent ae) {
         mediacenter.playMedia(getOurMediaDisplay());
     }
-
-
+    
     public void musicOnClick(MouseEvent me) {
         if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
