@@ -72,7 +72,6 @@ linkcolor=black}
 \pagebreak
 
 \chapter{Introdução}
-
 Este relatório tem como objetivo apresentar a toda a modelação e planeamento do projeto
 da Unidade Curricular de Desenvolvimento de Sistemas de Software.\\
 Ao longo deste relatório apresentamos as considerações tomadas pelo grupo
@@ -95,7 +94,7 @@ Por fim irá ser apresentado um Modelo Lógico da Base de Dados utilizada para
 esta aplicação.
 
 \chapter{Modelo de Domínio}
-O sistema a implementar deve suportar a gestão de media e utilização da mesma
+O sistema a implementar deve suportar a gestão e utilização de media
 numa residência onde esteja instalado.\\
 Neste capítulo são apresentados os requisitos do problema e uma proposta de 
 Modelo de Domínio.
@@ -110,9 +109,8 @@ adicionada ao sistema por um utilizador), Download/Upload de media, Conta,
 Conexões (de amizades entre utilizadores, ou seja, uma lista de Amigos).\\
 Com isto, foram definidas as relações entre os conceitos referidos em cima:
 \begin{itemize}
-    \item cada Utilizador só pode ter uma conta, só pode fazer download do
-        media que fez upload e só pode classificar o media e bibliotecas
-        que lhe pertencem;
+    \item cada Utilizador só pode ter uma conta e só pode fazer download do
+        media que fez upload;
     \item cada media/biblioteca de media pode ter uma ou mais classificações;
     \item cada conta tem só um email, nome e password associados;
     \item conta não é obrigatório para utilizar o sistema mas fica limitado 
