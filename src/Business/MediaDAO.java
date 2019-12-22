@@ -127,7 +127,7 @@ public class MediaDAO implements Map<String, Media> {
         try {
             Statement stm = con.createStatement();
             stm.executeUpdate("UPDATE Media set categoria = '" + cat_id + "' " +
-                    "where name = '" + key + "' and edited_by IS NULL");
+                    "where name = '" + key + "' and edited_by = owner");
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         } finally {

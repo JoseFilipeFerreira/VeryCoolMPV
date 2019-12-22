@@ -41,8 +41,7 @@ public class MediaPlayer implements Runnable {
             Process p = a.start();
             new PrintWriter(new BufferedOutputStream(p.getOutputStream()),
                     true).println("playlist-next");
-            p.waitFor();
-        } catch (InterruptedException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -53,8 +52,7 @@ public class MediaPlayer implements Runnable {
             Process p = a.start();
             new PrintWriter(new BufferedOutputStream(p.getOutputStream()),
                     true).println("playlist-prev");
-            p.waitFor();
-        } catch (InterruptedException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -64,8 +62,7 @@ public class MediaPlayer implements Runnable {
             ProcessBuilder a = new ProcessBuilder("./play.sh", m.getPath().toString());
             try {
                 Process p = a.start();
-                p.waitFor();
-            } catch (InterruptedException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -75,8 +72,7 @@ public class MediaPlayer implements Runnable {
         ProcessBuilder a = new ProcessBuilder("./play.sh", to_play.getPath().toString());
         try {
             Process p = a.start();
-            p.waitFor();
-        } catch (InterruptedException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -87,8 +83,7 @@ public class MediaPlayer implements Runnable {
             Process p = a.start();
             new PrintWriter(new BufferedOutputStream(p.getOutputStream()),
                     true).println("cycle pause");
-            p.waitFor();
-        } catch (InterruptedException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
