@@ -100,10 +100,13 @@ public class Main extends Application {
     }
 
     //Events
-    public void populateTableOnTyping(KeyEvent keyEvent) {
+    public void populateListOnTyping(KeyEvent keyEvent) {
         populateList(getOurMediaDisplay());
     }
 
+    public void populateTableOnClick(ActionEvent mouseEvent) {
+        populateList(getOurMediaDisplay());
+    }
     //Upload Media
     public void uploadVideo(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
@@ -114,8 +117,11 @@ public class Main extends Application {
         LocalDate date = datePicker.getValue();
 
         try {
-            Integer episode = (sEpisode.equals("")) ? null : Integer.parseInt(sEpisode);
-            Integer season = (sSeason.equals("")) ? null : Integer.parseInt(sEpisode);
+            Integer episode = (sEpisode.equals(""))? null : Integer.parseInt(sEpisode);
+            Integer season = (sSeason.equals(""))? null : Integer.parseInt(sEpisode);
+            if((episode != null && episode <= 0) || (season != null && season <= 0))
+                throw new NumberFormatException();
+
             if (path != null && !nome.equals("") && date != null) {
                 Video video = new Video(
                         mediacenter.getEmail(),
@@ -229,8 +235,7 @@ public class Main extends Application {
     }
 
     //Edit Users
-    public void setPassword(ActionEvent ae) throws IOException,
-            SettedPasswdException {
+    public void setPassword(ActionEvent ae) throws IOException, SettedPasswdException {
         String password = this.password.getText();
         if (!password.equals("")) {
             mediacenter.fstPasswd(password);
