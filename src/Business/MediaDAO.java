@@ -268,9 +268,9 @@ public class MediaDAO implements Map<String, Media> {
             Collection<Media> col = new HashSet<>();
             PreparedStatement stm;
             if(this.owner == null)
-                stm = conn.prepareStatement("SELECT name FROM Media");
+                stm = conn.prepareStatement("SELECT * FROM Media");
             else {
-                stm = conn.prepareStatement("Select name from Media where " +
+                stm = conn.prepareStatement("Select * from Media where " +
                         "owner = ?");
                 stm.setString(1, this.owner.getEmail());
             }
@@ -336,10 +336,10 @@ public class MediaDAO implements Map<String, Media> {
                 }
             }
             if(this.owner == null)
-                stm = conn.prepareStatement("SELECT name FROM Media where " +
+                stm = conn.prepareStatement("SELECT * FROM Media where " +
                         "edited_by = owner");
             else {
-                stm = conn.prepareStatement("Select name from Media where " +
+                stm = conn.prepareStatement("Select * from Media where " +
                         "owner = ? and edited_by = owner");
                 stm.setString(1, this.owner.getEmail());
             }
@@ -650,7 +650,7 @@ public class MediaDAO implements Map<String, Media> {
         try {
             List<String> ls = new ArrayList<>();
             PreparedStatement stm = conn.prepareStatement("SELECT distinct " +
-                    "album from Media where artista regexp '^' + ?");
+                    "album from Media where artista regexp concat('^', ?)");
             stm.setString(1, art);
             ResultSet rs = stm.executeQuery();
             while (rs.next())
