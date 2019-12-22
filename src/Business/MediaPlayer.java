@@ -9,10 +9,12 @@ import java.util.List;
 public class MediaPlayer implements Runnable {
     private List<Media> list;
     private boolean playing;
+    private Process mpv;
 
     MediaPlayer() {
         this.list = new ArrayList<>();
         this.playing = false;
+        this.mpv = null;
     }
 
     void play(Media to_play) {
@@ -88,6 +90,11 @@ public class MediaPlayer implements Runnable {
         }
     }
 
+    void stop() {
+        if(this.mpv != null)
+            this.mpv.destroy();
+    }
+
     public void run() {
         List<String> paths = new ArrayList<>();
         paths.add("mpv");
@@ -96,10 +103,11 @@ public class MediaPlayer implements Runnable {
         this.list.forEach(x -> paths.add(x.getPath().toString()));
         ProcessBuilder a = new ProcessBuilder(paths);
         try {
-            Process p = a.start();
-            p.waitFor();
+            this.mpv = a.start();
+            this.mpv.waitFor();
             this.playing = false;
             this.list.clear();
+            this.mpv = null;
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
