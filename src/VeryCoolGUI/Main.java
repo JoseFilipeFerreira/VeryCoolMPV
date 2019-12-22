@@ -32,6 +32,7 @@ public class Main extends Application {
 
     private static MediaCenter mediacenter;
     private static Stage stage;
+    public ChoiceBox selectedCategory;
 
     /* button */
     @FXML private Button exit, back, swap;
@@ -55,8 +56,7 @@ public class Main extends Application {
     @FXML private TextField musicAlbum, musicTrack, musicSinger;
     @FXML private TextField videoSerie, videoSeason, videoEpisode;
     @FXML private DatePicker datePicker;
-    @FXML private ChoiceBox dropDownMenu;
-    @FXML private ChoiceBox searchBy;
+    @FXML private ChoiceBox dropDownMenu,  searchBy;
 
     /* data display */
     @FXML private Label pathToFile;
@@ -77,13 +77,14 @@ public class Main extends Application {
     }
 
     //Events
-    public void populateListOnTyping(KeyEvent keyEvent) {
+    public void populateListOnTyping(KeyEvent ke) {
         populateList(getOurMediaDisplay());
     }
 
-    public void populateTableOnClick(ActionEvent event) {
+    public void populateTableOnClick(ActionEvent e) {
         populateList(getOurMediaDisplay());
     }
+
     //Upload Media
     public void uploadVideo(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
@@ -206,7 +207,34 @@ public class Main extends Application {
         mediacenter.playMedia(getOurMediaDisplay());
     }
 
-    public void playMusicClick(MouseEvent me) {
+    public void musicOnClick(MouseEvent me) {
+        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
+            int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+            if (pos < 0) return;
+
+            Media m = getOurMediaDisplay().get(pos);
+
+            switch (me.getClickCount()){
+                case 1:
+                    if (m instanceof Musica) {
+                        selectedCategory.getItems().addAll(new Categoria().getAllGenres().stream().sorted().collect(Collectors.toList()));
+                        try {
+                            selectedCategory.setValue(new Categoria(((Musica) m).getCat()).toString());
+                        } catch (InvalidGenreException e) {
+                            System.out.println("This should never happen");
+                        }
+                    }
+                    else {
+                        selectedCategory.getItems().clear();
+                        selectedCategory.setValue(null);
+                    }
+                    break;
+                case 2:
+                    mediacenter.playMedia(m);
+                    break;
+            }
+        }
+
         if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
             if (pos >= 0)
