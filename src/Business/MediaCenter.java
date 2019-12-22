@@ -106,8 +106,8 @@ public class MediaCenter {
         return this.mainLibrary.searchByName(name, this.user.getEmail());
     }
 
-    void rmMedia(String media_id) {
-        user.removeMedia(media_id);
+    public void rmMedia(Media media) {
+        user.removeMedia(media.getName());
     }
 
     public void chCat(Musica m, String cat) throws
