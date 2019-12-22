@@ -156,10 +156,11 @@ public class MediaMap implements Map<String, Media> {
             if(valuer instanceof Musica) {
                 Musica value = (Musica) valuer;
                     String sql =
-                            "INSERT INTO Media (name, path, owner, album, artista, " +
-                                    "faixa, categoria, release_date) VALUES " +
+                            "INSERT INTO Media (name, path, owner, edited_by," +
+                                    " album, artista, faixa, categoria, release_date) VALUES " +
                                     "('" + key + "','"
                                     + value.getPath().toString() + "','"
+                                    + value.getOwner() + "','"
                                     + value.getOwner() + "','"
                                     + value.getAlbum() + "','"
                                     + value.getSinger() + "','"
@@ -178,9 +179,10 @@ public class MediaMap implements Map<String, Media> {
                 Video value = (Video) valuer;
                     String sql =
                             "INSERT INTO Media (name, path, owner, " +
-                                    "release_date, serie_name, season, " +
-                                    "episode) VALUES ('" + key + "','"
+                                    "edited_by, release_date, serie_name, " +
+                                    "season, episode) VALUES ('" + key + "','"
                                     + value.getPath().toString() + "','"
+                                    + value.getOwner() + "','"
                                     + value.getOwner() + "','"
                                     + value.getRelease_date() + "',"
                                     + (value.getSerie() == null ? null :
@@ -303,9 +305,9 @@ public class MediaMap implements Map<String, Media> {
                 }
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media where edited_by is null" :
+                    "SELECT * FROM Media where edited_by = owner" :
                     "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and edited_by is null");
+                            this.owner.getEmail() + "' and edited_by = owner");
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
                     col.putIfAbsent(rs.getString("name"),
@@ -366,13 +368,13 @@ public class MediaMap implements Map<String, Media> {
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
                     "SELECT * FROM Media where lower(name) regexp '" + s.toLowerCase() +
-                            "' and edited_by is null" :
+                            "' and edited_by = owner" :
                     "Select * from Media where owner='" +
                             this.owner.getEmail() + "' and lower(name) regexp" +
-                            " '" + s.toLowerCase() + "' and edited_by is null");
+                            " '" + s.toLowerCase() + "' and edited_by = owner");
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
-                    col.put(rs.getString("name"),
+                    col.putIfAbsent(rs.getString("name"),
                             new Musica(rs.getString("name"),
                                     rs.getString("path"),
                                     rs.getString("owner"),
@@ -382,7 +384,7 @@ public class MediaMap implements Map<String, Media> {
                                     rs.getDate("release_date"),
                                     rs.getInt("categoria")));
                 else
-                    col.put(rs.getString("name"), new Video(rs.getString(
+                    col.putIfAbsent(rs.getString("name"), new Video(rs.getString(
                             "owner"),
                             rs.getString("path"),
                             rs.getString("name"),
@@ -430,13 +432,13 @@ public class MediaMap implements Map<String, Media> {
             }
             ResultSet rs = stm.executeQuery(this.owner == null ?
                     "SELECT * FROM Media where lower(artista) regexp '" + s.toLowerCase() +
-                            "' and edited_by is null" :
+                            "' and edited_by = owner" :
                     "Select * from Media where owner='" +
                             this.owner.getEmail() + "' and lower(artist) regexp" +
-                            " '" + s.toLowerCase() + "' and edited_by is null");
+                            " '" + s.toLowerCase() + "' and edited_by = owner");
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
-                    col.put(rs.getString("name"),
+                    col.putIfAbsent(rs.getString("name"),
                             new Musica(rs.getString("name"),
                                     rs.getString("path"),
                                     rs.getString("owner"),
@@ -446,7 +448,7 @@ public class MediaMap implements Map<String, Media> {
                                     rs.getDate("release_date"),
                                     rs.getInt("categoria")));
                 else
-                    col.put(rs.getString("name"), new Video(rs.getString(
+                    col.putIfAbsent(rs.getString("name"), new Video(rs.getString(
                             "owner"),
                             rs.getString("path"),
                             rs.getString("name"),
@@ -525,13 +527,13 @@ public class MediaMap implements Map<String, Media> {
             ResultSet rs = stm.executeQuery(this.owner == null ?
                     "SELECT * FROM Media join Categoria C on Media.categoria = C.idCategoria " +
                             "where lower(designacao) regexp '" + s.toLowerCase() +
-                            "' and edited_by is null" :
+                            "' and edited_by = owner" :
                     "Select * from Media where owner='" +
                             this.owner.getEmail() + "' and lower(artist) regexp" +
-                            " '" + s.toLowerCase() + "' and edited_by is null");
+                            " '" + s.toLowerCase() + "' and edited_by = owner");
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
-                    col.put(rs.getString("name"),
+                    col.putIfAbsent(rs.getString("name"),
                             new Musica(rs.getString("name"),
                                     rs.getString("path"),
                                     rs.getString("owner"),
@@ -541,7 +543,7 @@ public class MediaMap implements Map<String, Media> {
                                     rs.getDate("release_date"),
                                     rs.getInt("categoria")));
                 else
-                    col.put(rs.getString("name"), new Video(rs.getString(
+                    col.putIfAbsent(rs.getString("name"), new Video(rs.getString(
                             "owner"),
                             rs.getString("path"),
                             rs.getString("name"),

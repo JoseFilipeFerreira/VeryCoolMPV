@@ -34,7 +34,6 @@ public class Video extends Media {
 
     public String toString() {
         StringBuilder s = new StringBuilder(this.getName());
-        System.out.println(serie.equals("null"));
         if(serie != null)
             s.append(" - ").append(serie);
         if(episode != null && season != null)
