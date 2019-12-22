@@ -38,6 +38,8 @@ public class Categoria {
             return res.getString(1);
         } catch (Exception e) {
             throw new InvalidGenreException();
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -51,6 +53,8 @@ public class Categoria {
             return res.getInt(1);
         } catch (Exception e) {
             throw new InvalidGenreException();
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -63,6 +67,8 @@ public class Categoria {
             return res.next();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 
@@ -89,6 +95,8 @@ public class Categoria {
             return r;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
+        } finally {
+            DBConnect.close(conn);
         }
     }
 

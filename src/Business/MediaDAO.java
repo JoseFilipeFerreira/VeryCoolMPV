@@ -544,7 +544,7 @@ public class MediaDAO implements Map<String, Media> {
         try {
             List<String> ls = new ArrayList<>();
             PreparedStatement stm = conn.prepareStatement("SELECT distinct artista from Media" +
-                    " where artista regexp '^' + ?");
+                    " where artista regexp concat('^', ?)");
             stm.setString(1, name);
             ResultSet rs = stm.executeQuery();
             while (rs.next())
