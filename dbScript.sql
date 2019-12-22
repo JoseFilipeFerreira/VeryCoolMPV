@@ -26,9 +26,9 @@ USE `DSS` ;
 -- Table `DSS`.`Utilizadores`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS`.`Utilizadores` (
-  `email` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `passwd` VARCHAR(45) NULL DEFAULT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `passwd` VARCHAR(255) NULL DEFAULT NULL,
   `admin` TINYINT(4) NOT NULL,
   `login` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`email`))
@@ -42,7 +42,7 @@ COLLATE = utf8mb4_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS`.`Categoria` (
   `idCategoria` INT NOT NULL,
-  `designacao` VARCHAR(45) NOT NULL,
+  `designacao` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB;
 
@@ -51,15 +51,15 @@ ENGINE = InnoDB;
 -- Table `DSS`.`Media`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS`.`Media` (
-  `name` VARCHAR(45) NOT NULL,
-  `path` VARCHAR(100) NOT NULL,
-  `owner` VARCHAR(45) NOT NULL,
-  `edited_by` VARCHAR(45) NOT NULL,
-  `album` VARCHAR(45) NULL DEFAULT NULL,
-  `artista` VARCHAR(45) NULL DEFAULT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `path` VARCHAR(300) NOT NULL,
+  `owner` VARCHAR(255) NOT NULL,
+  `edited_by` VARCHAR(255) NOT NULL,
+  `album` VARCHAR(255) NULL DEFAULT NULL,
+  `artista` VARCHAR(255) NULL DEFAULT NULL,
   `faixa` INT(11) NULL DEFAULT NULL,
   `release_date` DATE NOT NULL,
-  `serie_name` VARCHAR(45) NULL DEFAULT NULL,
+  `serie_name` VARCHAR(255) NULL DEFAULT NULL,
   `season` INT(11) NULL DEFAULT NULL,
   `episode` INT(11) NULL DEFAULT NULL,
   `categoria` INT NULL DEFAULT NULL,
@@ -87,8 +87,8 @@ COLLATE = utf8mb4_unicode_ci;
 -- Table `DSS`.`Playlist`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS`.`Playlist` (
-  `Utilizadores_email` VARCHAR(45) NOT NULL,
-  `Media_name` VARCHAR(45) NOT NULL,
+  `Utilizadores_email` VARCHAR(255) NOT NULL,
+  `Media_name` VARCHAR(255) NOT NULL,
   `playlist_id` INT(11) NOT NULL,
   `is_shared` TINYINT(4) NOT NULL DEFAULT 0,
   `title` VARCHAR(45) NULL DEFAULT NULL,
@@ -109,8 +109,8 @@ COLLATE = utf8mb4_unicode_ci;
 -- Table `DSS`.`Amigos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS`.`Amigos` (
-  `amigo` VARCHAR(45) NOT NULL,
-  `amigo1` VARCHAR(45) NOT NULL,
+  `amigo` VARCHAR(255) NOT NULL,
+  `amigo1` VARCHAR(255) NOT NULL,
   `pending` TINYINT NULL DEFAULT 1,
   PRIMARY KEY (`amigo`, `amigo1`),
   INDEX `fk_Utilizadores_has_Utilizadores_Utilizadores2_idx` (`amigo1` ASC) VISIBLE,
