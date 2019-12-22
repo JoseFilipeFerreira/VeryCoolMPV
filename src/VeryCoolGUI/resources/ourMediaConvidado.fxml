@@ -54,7 +54,7 @@
          </effect>
       </Button>
       <ListView fx:id="listViewMedia" layoutX="169.0" layoutY="64.0" onMouseClicked="#musicOnClick" prefHeight="275.0" prefWidth="420.0" style="-fx-background-color: #2b2b2f; -fx-control-inner-background: #2b2b2f;" />
-      <ChoiceBox fx:id="searchBy" layoutX="170.0" layoutY="26.0" onAction="#populateTableOnClick" prefHeight="26.0" prefWidth="112.0" value="NOME">
+      <ChoiceBox fx:id="searchBy" layoutX="170.0" layoutY="26.0" onAction="#populateListOnClick" prefHeight="26.0" prefWidth="112.0" value="NOME">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="NOME" />

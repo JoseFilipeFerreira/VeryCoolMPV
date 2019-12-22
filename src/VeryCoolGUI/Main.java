@@ -84,7 +84,7 @@ public class Main extends Application {
         populateList(getOurMediaDisplay());
     }
 
-    public void populateTableOnClick(ActionEvent e) {
+    public void populateListOnClick(ActionEvent e) {
         populateList(getOurMediaDisplay());
     }
 
@@ -96,11 +96,32 @@ public class Main extends Application {
         if (!(m instanceof Musica)) return;
 
         String cat = (String) selectedCategory.getValue();
-        System.out.println(cat);
         if (cat != null)
             mediacenter.chCat((Musica) m, cat);
 
         updateList(getOurMediaDisplay());
+    }
+
+    public void populateMyListOnTyping(KeyEvent ke) {
+        populateList(getMyMediaDisplay());
+    }
+
+    public void populateMyListOnClick(ActionEvent e) {
+        populateList(getMyMediaDisplay());
+    }
+
+    public void changeMyCatOnClick(ActionEvent ae) throws InvalidGenreException {
+        int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+        if (pos < 0) return;
+
+        Media m = getMyMediaDisplay().get(pos);
+        if (!(m instanceof Musica)) return;
+
+        String cat = (String) selectedCategory.getValue();
+        if (cat != null)
+            mediacenter.chCat((Musica) m, cat);
+
+        updateList(getMyMediaDisplay());
     }
 
     //Upload Media
@@ -222,12 +243,47 @@ public class Main extends Application {
         mediacenter.playMedia(getOurMediaDisplay());
     }
 
+    public void playAllMyMusic(ActionEvent ae) {
+        mediacenter.playMedia(getMyMediaDisplay());
+    }
+
     public void musicOnClick(MouseEvent me) throws InvalidGenreException {
         if(me.getButton() == MouseButton.PRIMARY) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
             if (pos < 0) return;
 
             Media m = getOurMediaDisplay().get(pos);
+
+            switch (me.getClickCount()){
+                case 1:
+                    if (m instanceof Musica) {
+                        selectedCategory.getItems().addAll(new Categoria().getAllGenres().stream().sorted().collect(Collectors.toList()));
+                        selectedCategory.setValue(new Categoria(((Musica) m).getCat()).toString());
+                    }
+                    else {
+                        selectedCategory.getItems().clear();
+                        selectedCategory.setValue(null);
+                    }
+                    break;
+                case 2:
+                    mediacenter.playMedia(m);
+                    break;
+            }
+        }
+
+        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
+            int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+            if (pos >= 0)
+                mediacenter.playMedia(getOurMediaDisplay().get(pos));
+        }
+    }
+
+    public void myMusicOnClick(MouseEvent me) throws InvalidGenreException {
+        if(me.getButton() == MouseButton.PRIMARY) {
+            int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+            if (pos < 0) return;
+
+            Media m = getMyMediaDisplay().get(pos);
 
             switch (me.getClickCount()){
                 case 1:
@@ -353,9 +409,11 @@ public class Main extends Application {
     public void logout(ActionEvent ae) throws IOException {
         swapFxml(ae, "resources/login.fxml");
         mediacenter.logout();
+        mediacenter.stop();
     }
 
     public void exitProgram(ActionEvent ae) {
+        mediacenter.stop();
         System.exit(1);
     }
 
@@ -423,6 +481,21 @@ public class Main extends Application {
                     return mediacenter.searchByCat(q);
             }
             return mediacenter.searchByName(q);
+        }
+    }
+
+    public List<Media> getMyMediaDisplay() {
+        String q = search.getText();
+        if (q.equals(""))
+            return new ArrayList<>(mediacenter.allMediaUser());
+        else {
+            switch (searchBy.getValue().toString()) {
+                case "ARTISTA":
+                    return mediacenter.searchByArtistUser(q);
+                case "CATEGORIA":
+                    return mediacenter.searchByCatUser(q);
+            }
+            return mediacenter.searchByNameUser(q);
         }
     }
 
