@@ -372,6 +372,64 @@ OLED ou AMOLED, um menor consumo de energia.
     \caption{Menu para classificar um ou mais media}
 \end{figure}
 
+\chapter{Diagramas de Máquina Estado}
+
+Para uma melhor demonstração e planeamento dos estados da aplicação são criados os
+diagramas de Máquina Estado. A modelação destes é muito importante pois permite
+mostrar todos os estados possíveis que podem ser tomados. Para isso foram modelados
+4 diagramas:
+
+\section{Diagrama de Máquina Estado Principal - Login}
+
+Este diagrama demonstra o primeiro passo que cada user terá que tomar antes de 
+interagir com o sistema. Quando é realizado o Login o utilizador tem ou não de 
+inserir as suas credenciai, podendo ser tomados estados
+diferentes. O primeiro estado acontece quando o ator que está a interagir
+com o sistema não possui conta mas pretende utiliza-lo, então entra como
+convidado. O segundo estado acontece quando o ator possui conta e o terceiro
+quando o ator que inseriu as credenciais para fazer login tem privilégios de 
+administrador.
+
+\section{Diagrama de Máquina Estado Convidado}
+
+Um convidado pode aceder ao media presente no sistema e pode reproduzi-lo.
+
+\section{Diagrama de Máquina Estado Utilizador}
+
+Um utilizador é um Convidado mas com funcionalidades a mais. Além
+de conseguir só reproduzir media, pode fazer upload/download do mesmo, criar
+playlists e alterar as suas credenciais.
+
+\section{Diagrama de Máquina Estado Administrador}
+
+Um administrador é idêntico a um utilizador mas com mais duas funcionalidades:
+criação e remoção de contas atráves do email.
+
+\chapter{Diagrama de Packages}
+
+Na criação dos packages tivemos em mente dois grupos: o que agrupa as classes que 
+interajem com os atores do sistema e o que agrupa as classes relacionadas com o media.
+Assim o manuseamento será muito mais "fácil" quando for necessário tratar de um use case
+especifico.
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/packages.png}  
+    \caption{Diagrama de Packages}
+\end{figure}
+
+\chapter{Diagrama de Classes}
+
+Com base no modelo de Dominio decidimos criar as classes apresentadas na figura abaixo,
+exceto uma (MediaCenter) que foi acrescida por decisão nossa para melhor manutenção
+da aplicação e serve como a classe "principal" do projeto.
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/classdiagram.png}  
+    \caption{Diagrama de Classes}
+\end{figure}
+
 \chapter{Diagrama de Sequência de Sistemas}
 
 Com base nos use cases e nas suas especificações foram construidos diagramas de sequência
@@ -504,64 +562,6 @@ si.
 	\centering 
     \includegraphics[width=\textwidth]{images/edituserSeq.png}  
     \caption{Diagrama de sequência do Editar Utilizador}
-\end{figure}
-
-\chapter{Diagramas de Máquina Estado}
-
-Para uma melhor demonstração e planeamento dos estados da aplicação são criados os
-diagramas de Máquina Estado. A modelação destes é muito importante pois permite
-mostrar todos os estados possíveis que podem ser tomados. Para isso foram modelados
-4 diagramas:
-
-\section{Diagrama de Máquina Estado Principal - Login}
-
-Este diagrama demonstra o primeiro passo que cada user terá que tomar antes de 
-interagir com o sistema. Quando é realizado o Login o utilizador tem ou não de 
-inserir as suas credenciai, podendo ser tomados estados
-diferentes. O primeiro estado acontece quando o ator que está a interagir
-com o sistema não possui conta mas pretende utiliza-lo, então entra como
-convidado. O segundo estado acontece quando o ator possui conta e o terceiro
-quando o ator que inseriu as credenciais para fazer login tem privilégios de 
-administrador.
-
-\section{Diagrama de Máquina Estado Convidado}
-
-Um convidado pode aceder ao media presente no sistema e pode reproduzi-lo.
-
-\section{Diagrama de Máquina Estado Utilizador}
-
-Um utilizador é um Convidado mas com funcionalidades a mais. Além
-de conseguir só reproduzir media, pode fazer upload/download do mesmo, criar
-playlists e alterar as suas credenciais.
-
-\section{Diagrama de Máquina Estado Administrador}
-
-Um administrador é idêntico a um utilizador mas com mais duas funcionalidades:
-criação e remoção de contas atráves do email.
-
-\chapter{Diagrama de Classes}
-
-Com base no modelo de Dominio decidimos criar as classes apresentadas na figura abaixo,
-exceto uma (MediaCenter) que foi acrescida por decisão nossa para melhor manutenção
-da aplicação e serve como a classe "principal" do projeto.
-
-\begin{figure}[H]
-	\centering 
-    \includegraphics[width=\textwidth]{images/classdiagram.png}  
-    \caption{Diagrama de Classes}
-\end{figure}
-
-\chapter{Diagrama de Packages}
-
-Na criação dos packages tivemos em mente dois grupos: o que agrupa as classes que 
-interajem com os atores do sistema e o que agrupa as classes relacionadas com o media.
-Assim o manuseamento será muito mais "fácil" quando for necessário tratar de um use case
-especifico.
-
-\begin{figure}[H]
-	\centering 
-    \includegraphics[width=\textwidth]{images/packages.png}  
-    \caption{Diagrama de Packages}
 \end{figure}
 
 \chapter{Diagramas de Sequência de Sistemas}
@@ -716,6 +716,12 @@ nesta última fase do projeto.
 
 \section{Logout}
 
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/logoutImp.png}  
+    \caption{Diagrama de sequência de implementação do Logout}
+\end{figure}
+
 \section{Upload}
 
 \begin{figure}[H]
@@ -726,9 +732,27 @@ nesta última fase do projeto.
 
 \section{Remover Conteúdo}
 
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/remContImp.png}  
+    \caption{Diagrama de sequência de implementação do Remover Conteúdo}
+\end{figure}
+
 \section{Alterar Categoria}
 
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/altcategoriaImp.png}  
+    \caption{Diagrama de sequência de implementação do Alterar Categoria}
+\end{figure}
+
 \section{Reproduzir Conteúdo}
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/repConteudoImp.png}  
+    \caption{Diagrama de sequência de implementação do Reproduzir Conteúdo}
+\end{figure}
 
 \section{Registar Utilizador}
 
@@ -771,4 +795,25 @@ que será indispensável para o armazenamento das informações para um bom func
 do nosso software.
 Na figura seguinte é possível vizualizar o modelo lógico da base de dados.
 
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/db.png}  
+    \caption{Modelo Lógico da Base de Dados}
+\end{figure}
+
+\chapter{Conclusão e Trabalho Futuro}
+
+Através da realização deste trabalho conseguimos perceber que um planeamento e modelação
+de uma aplicação é tão importante quanto a escrita do código, dando a possibilidade de 
+possuirmos tudo organizado e planeado antes do desenvolvimento da aplicação.\\
+Modelando o diagrama de dominio somos capazes de traduzir o problema que nos foi dado,
+o diagrama de use cases facilitou a escolha e desenvolvimento das funcionalidades para cada
+tipo de utilizador, o diagrama de classes serviu como um mapa do sistema em si e os diagramas
+de sequência ajudaram a implementar cada use case.\\
+No geral, podemos dizer que os use cases/requisitos principais que nos foram propostos foram 
+alcançados com sucesso. Existiram use cases definidos por nós que não foram totalmente
+implementados, algo que no futuro com um pouco mais de trabalho seria implementado. No entanto,
+na parte gráfica da aplicação fizemos como se tudo estivesse implementado e o resultado final
+ficou como o esperado.
+ 
 \end{document}
