@@ -74,6 +74,10 @@ public class MediaCenter {
         this.user = log;
     }
 
+    public void guestLogin() {
+        this.user = new Convidado();
+    }
+
     public void logout() {
         this.user = null;
     }
