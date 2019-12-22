@@ -73,8 +73,8 @@ linkcolor=black}
 
 \chapter{Introdução}
 
-Este relatório tem como objetivo apresentar a fase inicial do projeto da Unidade
-Curricular de Desenvolvimento de Sistemas de Software.\\
+Este relatório tem como objetivo apresentar a toda a modelação e planeamento do projeto
+da Unidade Curricular de Desenvolvimento de Sistemas de Software.\\
 Ao longo deste relatório apresentamos as considerações tidas em conta pelo grupo
 ao longo da elaboração e formulação dos vário modelos e diagramas propostos:
 \begin{enumerate}
@@ -83,8 +83,16 @@ ao longo da elaboração e formulação dos vário modelos e diagramas propostos
     \item Use Cases, apresentar os atores do sistema e as suas tarefas;
     \item Diagrama de Use Cases;
     \item Especificações dos mesmos.
+    \item Mockups desenvolvidos na fase 1 do projeto
+    \item Diagramas de Máquina Estado
+    \item Diagrama de Packages
+    \item Diagrama de Classes
+    \item Diagramas de Sequência
+    \item Diagramas de Sequência de Sistemas
+    \item Diagramas de Sequência de Implementação
 \end{enumerate}
-Por fim irá ser apresentado um \textit{mockup} do produto final.
+Por fim irá ser apresentado um Modelo Lógico da Base de Dados utilizada para
+esta aplicação.
 
 \chapter{Modelo de Domínio}
 
@@ -390,9 +398,21 @@ convidado. O segundo estado acontece quando o ator possui conta e o terceiro
 quando o ator que inseriu as credenciais para fazer login tem privilégios de 
 administrador.
 
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/maqLogin.png}  
+    \caption{Máquina Estado Login}
+\end{figure}
+
 \section{Diagrama de Máquina Estado Convidado}
 
 Um convidado pode aceder ao media presente no sistema e pode reproduzi-lo.
+
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/maqConvidado.png}  
+    \caption{Máquina Estado Convidado}
+\end{figure}
 
 \section{Diagrama de Máquina Estado Utilizador}
 
@@ -400,15 +420,28 @@ Um utilizador é um Convidado mas com funcionalidades a mais. Além
 de conseguir só reproduzir media, pode fazer upload/download do mesmo, criar
 playlists e alterar as suas credenciais.
 
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/maqUser.png}  
+    \caption{Máquina Estado Utilizador}
+\end{figure}
+
 \section{Diagrama de Máquina Estado Administrador}
 
 Um administrador é idêntico a um utilizador mas com mais duas funcionalidades:
 criação e remoção de contas atráves do email.
 
+\begin{figure}[H]
+	\centering 
+    \includegraphics[width=\textwidth]{images/maqAdmin.png}  
+    \caption{Máquina Estado Administrador}
+\end{figure}
+
 \chapter{Diagrama de Packages}
 
-Na criação dos packages tivemos em mente dois grupos: o que agrupa as classes que 
-interajem com os atores do sistema e o que agrupa as classes relacionadas com o media.
+Na criação dos packages tivemos em mente quatro grupos: o que agrupa as classes que 
+interajem com os atores do sistema, o que agrupa as classes relacionadas com a
+parte gráfica, o qe agrupa as exceções e por último o que contém funções úteis.
 Assim o manuseamento será muito mais "fácil" quando for necessário tratar de um use case
 especifico.
 
@@ -564,11 +597,13 @@ si.
     \caption{Diagrama de sequência do Editar Utilizador}
 \end{figure}
 
-\chapter{Diagramas de Sequência de Sistemas}
+\chapter{Diagramas de Sequência de Subsistemas}
 
-No capitulo anterior foi apresentado como o sistema está estruturado relativamente aos
-packages, e com isso foi nos dado a oportunidade de voltar a analisar cada um
-dos use cases mas desta vez com base nos subsistemas criados: Media e Users.
+No capítulo anterior foi apresentado os diagramas de cada use case mas apenas
+com a interação entre ator e sistema, com isso apresentamos agora o mesmo estilo
+de diagramas mas com mais 2 grupos distintos: media e users. Estes diagramas
+ajudam a perceber como é feita a intereção do sistema com a parte que acede e
+gere a Media e o mesmo para os Users.
 
 \section{Login}
 
@@ -701,7 +736,7 @@ dos use cases mas desta vez com base nos subsistemas criados: Media e Users.
 \chapter{Diagramas de Sequência de Implementação}
 
 Com os diagramas de sequência de subsistemas modulados no capítulo anterior,
-agora desenvolvemos os de implementação. Estes são mais detalhades e contém
+agora desenvolvemos os de implementação. Estes são mais detalhados e contém
 mais informações que os anteriores pois já fazem referência às classes e
 funções que são utilizadas no código. Os diagramas seguintes foram implementados
 nesta última fase do projeto.
