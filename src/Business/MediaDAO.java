@@ -558,8 +558,9 @@ public class MediaDAO implements Map<String, Media> {
                             "where lower(designacao) regexp '" + s.toLowerCase() +
                             "' and edited_by = owner" :
                     "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and lower(artista) regexp" +
-                            " '" + s.toLowerCase() + "' and edited_by = owner");
+                            this.owner.getEmail() + "' and lower(designacao) " +
+                            "regexp '" + s.toLowerCase() + "' and edited_by =" +
+                            " owner");
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
                     col.putIfAbsent(rs.getString("name"),
