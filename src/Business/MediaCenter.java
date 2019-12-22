@@ -7,25 +7,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//TODO fix the guest login
-
 public class MediaCenter {
-    private MediaMap mainLibrary;
-    private UserMap registedUsers;
+    private MediaDAO mainLibrary;
+    private UserDAO registedUsers;
     private Utilizador user;
     private MediaPlayer player;
 
     public MediaCenter() {
-        this.mainLibrary = new MediaMap();
-        this.registedUsers = new UserMap();
+        this.mainLibrary = new MediaDAO();
+        this.registedUsers = new UserDAO();
         this.user = null;
         this.player = new MediaPlayer();
     }
 
     public Utilizador createUser(String email, String name)
             throws PermissionDeniedException, UserExistsException {
-        if(user.isAdmin()) {
-            if(this.registedUsers.containsKey(email))
+        if (user.isAdmin()) {
+            if (this.registedUsers.containsKey(email))
                 throw new UserExistsException();
             Utilizador novo = new Utilizador(email, name);
             this.registedUsers.put(email, novo);
@@ -54,16 +52,15 @@ public class MediaCenter {
 
     public void rmUser(String to_rm)
             throws PermissionDeniedException {
-        if(!user.isAdmin())
+        if (!user.isAdmin())
             throw new PermissionDeniedException();
         this.registedUsers.remove(to_rm);
     }
 
     public void login(String user, String passwd)
             throws NonExistentUserException, InvalidPasswordException,
-            AlreadyLoggedInException, NonSettedPasswdException
-    {
-        if(!this.registedUsers.containsKey(user)) {
+            AlreadyLoggedInException, NonSettedPasswdException {
+        if (!this.registedUsers.containsKey(user)) {
             throw new NonExistentUserException();
         }
         Utilizador log = this.registedUsers.get(user);
@@ -92,12 +89,13 @@ public class MediaCenter {
     public void uploadMedia(Media path) {
         try {
             user.uploadMedia(path);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     List<Media> listAllMedia() {
-       return new ArrayList<>(this.mainLibrary
-               .values());
+        return new ArrayList<>(this.mainLibrary
+                .values());
     }
 
     public List<Media> searchByName(String name) {
@@ -112,7 +110,7 @@ public class MediaCenter {
             InvalidGenreException {
         Categoria n = new Categoria(cat);
         m.setCat(n);
-        if(m.getOwner().equals(user.getEmail()))
+        if (m.getOwner().equals(user.getEmail()))
             mainLibrary.updateCat(m.getCat(), m.getName());
         else
             mainLibrary.updateCat(m, user.getEmail());
@@ -161,17 +159,17 @@ public class MediaCenter {
     }
 
     public void togglePause() {
-        if(this.player != null)
+        if (this.player != null)
             this.player.togglePause();
     }
 
     public void next() {
-        if(this.player != null)
+        if (this.player != null)
             this.player.next();
     }
 
     public void prev() {
-        if(this.player != null)
+        if (this.player != null)
             this.player.previous();
     }
 }

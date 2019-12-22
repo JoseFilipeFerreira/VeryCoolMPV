@@ -30,10 +30,10 @@ public class Metadata {
             while ((s = stdError.readLine()) != null) {
                 output.add(s);
             }
+        } catch (IOException ignored) {
         }
-        catch (IOException ignored){}
 
-        for(String line : output){
+        for (String line : output) {
             if (Pattern.matches("\\s*title\\s*:.*", line))
                 this.nome = line.split(":")[1].trim();
             else if (Pattern.matches("\\s*artist\\s*:.*", line))
@@ -50,19 +50,19 @@ public class Metadata {
     }
 
     public String getNome() {
-        return nome == null? "" : nome;
+        return nome == null ? "" : nome;
     }
 
     public String getAuthor() {
-        return author == null? "" : author;
+        return author == null ? "" : author;
     }
 
     public String getAlbum() {
-        return album == null? "" : album;
+        return album == null ? "" : album;
     }
 
     public String getFaixa() {
-        return faixa == null? "" : String.valueOf(faixa);
+        return faixa == null ? "" : String.valueOf(faixa);
     }
 
     public LocalDate getData() {
@@ -70,7 +70,7 @@ public class Metadata {
     }
 
     public String getCategoria() {
-        try{
+        try {
             return new Categoria(this.categoria).toString();
         } catch (InvalidGenreException e) {
             return null;
