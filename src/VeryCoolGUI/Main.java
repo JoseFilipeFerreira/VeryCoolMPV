@@ -97,6 +97,7 @@ public class Main extends Application {
             mediacenter.chCat((Musica) m, cat);
 
         updateList(getOurMediaDisplay());
+        listViewMedia.getSelectionModel().select(pos);
     }
 
     public void populateMyListOnTyping(KeyEvent ke) {
@@ -119,6 +120,7 @@ public class Main extends Application {
             mediacenter.chCat((Musica) m, cat);
 
         updateList(getMyMediaDisplay());
+        listViewMedia.getSelectionModel().select(pos);
     }
 
     //Upload Media
