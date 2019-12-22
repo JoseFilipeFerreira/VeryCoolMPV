@@ -61,7 +61,10 @@ public class MediaPlayer implements Runnable {
 
     private void queue(List<Media> to_play) {
         for (Media m : to_play) {
-            ProcessBuilder a = new ProcessBuilder("./play.sh", m.getPath().toString());
+            String cmd = "echo '{ \"command\": [\"loadfile\", \"" + m.getPath() + "\", \"append\"]}' "
+                         + "| socat - /tmp/mpvsocket "
+                         + "| jq --raw-output .error";
+            ProcessBuilder a = new ProcessBuilder("bash", "-c", cmd);
             try {
                 Process p = a.start();
             } catch (IOException e) {
