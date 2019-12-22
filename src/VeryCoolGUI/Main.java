@@ -93,14 +93,14 @@ public class Main extends Application {
     }
 
     //Events
-    public void populateListOnTyping(KeyEvent ke) {
+
+    public void populateListOnTyping(KeyEvent keyEvent) {
         populateList(getOurMediaDisplay());
     }
 
-    public void populateTableOnClick(ActionEvent e) {
+    public void populateTableOnClick(ActionEvent mouseEvent) {
         populateList(getOurMediaDisplay());
     }
-
     //Upload Media
     public void uploadVideo(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
