@@ -162,6 +162,18 @@ public class MediaCenter {
                 .searchByCat(cat, this.user.getEmail());
     }
 
+    public Collection<Media> allMediaUser() {
+        return this.user
+                .getUserMedia()
+                .values(user.getEmail());
+    }
+
+    public List<Media> searchByNameUser(String name) {
+        return this.user
+                .getUserMedia()
+                .searchByName(name, this.user.getEmail());
+    }
+
     public void togglePause() {
         if (this.player != null)
             this.player.togglePause();
