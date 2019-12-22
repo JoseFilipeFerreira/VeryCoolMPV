@@ -113,13 +113,5 @@
             <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
          </effect>
       </Button>
-      <Button fx:id="myMediaClassificar" layoutX="28.0" layoutY="231.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="CLASSIFICAR" textFill="WHITE">
-         <font>
-            <Font name="Novecento sans UltraBold" size="12.0" />
-         </font>
-         <effect>
-            <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
-         </effect>
-      </Button>
    </children>
 </Pane>

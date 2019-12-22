@@ -33,12 +33,6 @@ public class Main extends Application {
     private static MediaCenter mediacenter;
     private static Stage stage;
 
-
-    public Button nextMusic;
-    public Button previousMusic;
-    public Button toggleMusic;
-    public Button playAllList;
-
     /* button */
     @FXML private Button exit, back, swap;
     @FXML private Button create, remove;
@@ -52,7 +46,7 @@ public class Main extends Application {
     @FXML private Button editProfile;
     @FXML private Button editAcount;
     @FXML private Button myMediaRemove;
-    @FXML private Button myMediaClassificar;
+    @FXML private Button nextMusic, previousMusic, toggleMusic, playAllList;
 
     /* user input fields */
 
