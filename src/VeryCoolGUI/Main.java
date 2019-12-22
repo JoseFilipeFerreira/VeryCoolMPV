@@ -32,35 +32,21 @@ public class Main extends Application {
 
     private static MediaCenter mediacenter;
     private static Stage stage;
-    public ChoiceBox selectedCategory;
 
     /* button */
-    @FXML
-    private Button exit, back, swap;
-    @FXML
-    private Button create, remove;
-    @FXML
-    private Button confirm, select;
-    @FXML
-    private Button login, logout;
-    @FXML
-    private Button playPause, stop;
-    @FXML
-    private Button upload, download;
-    @FXML
-    private Button criarBiblioteca;
-    @FXML
-    private Button myMedia;
-    @FXML
-    private Button friends;
-    @FXML
-    private Button editProfile;
-    @FXML
-    private Button editAcount;
-    @FXML
-    private Button myMediaRemove;
-    @FXML
-    private Button myMediaClassificar;
+    @FXML private Button exit, back, swap;
+    @FXML private Button create, remove;
+    @FXML private Button confirm, select;
+    @FXML private Button login, logout;
+    @FXML private Button playPause, stop;
+    @FXML private Button upload, download;
+    @FXML private Button criarBiblioteca;
+    @FXML private Button myMedia;
+    @FXML private Button friends;
+    @FXML private Button editProfile;
+    @FXML private Button editAcount;
+    @FXML private Button myMediaRemove;
+    @FXML private Button myMediaClassificar;
 
     /* user input fields */
 
@@ -71,6 +57,7 @@ public class Main extends Application {
     @FXML private TextField videoSerie, videoSeason, videoEpisode;
     @FXML private DatePicker datePicker;
     @FXML private ChoiceBox dropDownMenu,  searchBy;
+    @FXML private ChoiceBox selectedCategory;
 
     /* data display */
     @FXML
@@ -219,7 +206,7 @@ public class Main extends Application {
     public void playAllMusic(ActionEvent ae) {
         mediacenter.playMedia(getOurMediaDisplay());
     }
-    
+
     public void musicOnClick(MouseEvent me) {
         if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
@@ -418,6 +405,6 @@ public class Main extends Application {
     public void populateList(List<Media> m) {
         listViewMedia.setItems(FXCollections.observableList(
                 m.stream().map(Media::toString).collect(Collectors.toList())
-                                                           ));
+        ));
     }
 }
