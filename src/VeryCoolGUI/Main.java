@@ -80,12 +80,7 @@ public class Main extends Application {
     }
 
     //Events
-<<<<<<< HEAD
-
-    public void populateListOnTyping(KeyEvent keyEvent) {
-=======
     public void populateListOnTyping(KeyEvent ke) {
->>>>>>> rebase here i go
         populateList(getOurMediaDisplay());
     }
 
