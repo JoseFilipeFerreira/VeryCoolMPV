@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.*?>
-<?import java.lang.String?>
+<?import javafx.scene.text.Font?>
+
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
    <children>
-      <Button fx:id="playPause" layoutX="475.0" layoutY="341.0" mnemonicParsing="false" onAction="#playAllMusic" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="PLAY" textFill="WHITE">
+      <Button fx:id="playAllList" layoutX="406.0" layoutY="349.0" mnemonicParsing="false" onAction="#playAllMusic" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="PLAY ALL" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
@@ -64,7 +70,7 @@
             <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
          </effect>
       </Button>
-      <Button fx:id="stop" layoutX="536.0" layoutY="341.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="STOP" textFill="WHITE">
+      <Button fx:id="toggleMusic" layoutX="489.0" layoutY="349.0" mnemonicParsing="false" onAction="#playPauseMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="&gt;||" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
@@ -72,16 +78,16 @@
             <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
          </effect>
       </Button>
-      <Button fx:id="criarBiblioteca" layoutX="176.0" layoutY="341.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="129.0" style="-fx-background-color: #2b2b2f;" text="CRIAR BIBLIOTECA" textFill="WHITE">
+      <Button fx:id="criarBiblioteca" layoutX="288.0" layoutY="349.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="112.0" style="-fx-background-color: #2b2b2f;" text="CRIAR BIBLIOTECA" textFill="WHITE">
          <font>
-            <Font name="Novecento sans UltraBold" size="13.0" />
+            <Font name="Novecento sans UltraBold" size="11.0" />
          </font>
          <effect>
             <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
          </effect>
       </Button>
-      <ListView fx:id="listViewMedia" layoutX="176.0" layoutY="64.0" onMouseClicked="#musicOnClick" prefHeight="259.0" prefWidth="413.0" style="-fx-background-color: #2b2b2f; -fx-control-inner-background: #2b2b2f;" />
-      <ChoiceBox fx:id="searchBy" layoutX="176.0" layoutY="26.0" prefHeight="26.0" prefWidth="112.0" value="NOME">
+      <ListView fx:id="listViewMedia" layoutX="169.0" layoutY="64.0" onMouseClicked="#musicOnClick" prefHeight="275.0" prefWidth="420.0" style="-fx-background-color: #2b2b2f; -fx-control-inner-background: #2b2b2f;" />
+      <ChoiceBox fx:id="searchBy" layoutX="170.0" layoutY="26.0" onAction="#populateTableOnClick" prefHeight="26.0" prefWidth="112.0" value="NOME">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="NOME" />
@@ -90,5 +96,22 @@
             </FXCollections>
          </items>
       </ChoiceBox>
+      <ComboBox fx:id="selectedCategory" layoutX="170.0" layoutY="351.0" onAction="#changeCatOnClick" prefHeight="26.0" prefWidth="112.0" />
+      <Button fx:id="nextMusic" layoutX="562.0" layoutY="349.0" mnemonicParsing="false" onAction="#nextMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="&gt;" textFill="WHITE">
+         <font>
+            <Font name="Novecento sans UltraBold" size="13.0" />
+         </font>
+         <effect>
+            <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+         </effect>
+      </Button>
+      <Button fx:id="previousMusic" layoutX="529.0" layoutY="349.0" mnemonicParsing="false" onAction="#previousMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" style="-fx-background-color: #2b2b2f;" text="&lt;" textFill="WHITE">
+         <font>
+            <Font name="Novecento sans UltraBold" size="13.0" />
+         </font>
+         <effect>
+            <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
+         </effect>
+      </Button>
    </children>
 </Pane>

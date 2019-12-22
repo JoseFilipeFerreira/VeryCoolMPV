@@ -33,6 +33,12 @@ public class Main extends Application {
     private static MediaCenter mediacenter;
     private static Stage stage;
 
+
+    public Button nextMusic;
+    public Button previousMusic;
+    public Button toggleMusic;
+    public Button playAllList;
+
     /* button */
     @FXML private Button exit, back, swap;
     @FXML private Button create, remove;
@@ -86,6 +92,21 @@ public class Main extends Application {
 
     public void populateTableOnClick(ActionEvent e) {
         populateList(getOurMediaDisplay());
+    }
+
+    public void changeCatOnClick(ActionEvent ae) throws InvalidGenreException {
+        int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+        if (pos < 0) return;
+
+        Media m = getOurMediaDisplay().get(pos);
+        if (!(m instanceof Musica)) return;
+
+        String cat = (String) selectedCategory.getValue();
+        System.out.println(cat);
+        if (cat != null)
+            mediacenter.chCat((Musica) m, cat);
+
+        updateList(getOurMediaDisplay());
     }
 
     //Upload Media
@@ -238,8 +259,16 @@ public class Main extends Application {
         }
     }
 
-    public void stopMusic(ActionEvent actionEvent) {
-        //TODO implement stop
+    public void playPauseMedia(ActionEvent ae) {
+        mediacenter.togglePause();
+    }
+
+    public void nextMedia(ActionEvent actionEvent) {
+        mediacenter.next();
+    }
+
+    public void previousMedia(ActionEvent actionEvent) {
+        mediacenter.prev();
     }
 
     //Edit Users
@@ -404,6 +433,12 @@ public class Main extends Application {
     }
 
     public void populateList(List<Media> m) {
+        updateList(m);
+        selectedCategory.getItems().clear();
+        selectedCategory.setValue(null);
+    }
+
+    public void updateList(List<Media> m) {
         listViewMedia.setItems(FXCollections.observableList(
                 m.stream().map(Media::toString).collect(Collectors.toList())
         ));
