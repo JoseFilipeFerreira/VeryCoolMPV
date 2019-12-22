@@ -97,6 +97,7 @@ public class Main extends Application {
             mediacenter.chCat((Musica) m, cat);
 
         updateList(getOurMediaDisplay());
+        listViewMedia.getSelectionModel().select(pos);
     }
 
     public void populateMyListOnTyping(KeyEvent ke) {
@@ -119,9 +120,20 @@ public class Main extends Application {
             mediacenter.chCat((Musica) m, cat);
 
         updateList(getMyMediaDisplay());
+        listViewMedia.getSelectionModel().select(pos);
     }
 
     //Upload Media
+    public void removeMedia(ActionEvent ae) {
+        int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+        if (pos < 0) return;
+
+        Media m = getMyMediaDisplay().get(pos);
+        mediacenter.rmMedia(m);
+
+        updateList(getMyMediaDisplay());
+    }
+
     public void uploadVideo(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
         String nome = mediaName.getText();
