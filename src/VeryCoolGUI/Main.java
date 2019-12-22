@@ -49,7 +49,6 @@ public class Main extends Application {
     @FXML private Button nextMusic, previousMusic, toggleMusic, playAllList;
 
     /* user input fields */
-
     @FXML private TextField search;
     @FXML private TextField name, email, password, oldPasswd;
     @FXML private TextField mediaName;
@@ -60,10 +59,8 @@ public class Main extends Application {
     @FXML private ComboBox dropDownMenu, selectedCategory;
 
     /* data display */
-    @FXML
-    private Label pathToFile;
-    @FXML
-    private ListView<String> listViewMedia;
+    @FXML private Label pathToFile;
+    @FXML private ListView<String> listViewMedia;
 
     public static void main(String[] args) {
         launch(args);
@@ -256,13 +253,15 @@ public class Main extends Application {
 
             switch (me.getClickCount()){
                 case 1:
-                    if (m instanceof Musica) {
-                        selectedCategory.getItems().addAll(new Categoria().getAllGenres().stream().sorted().collect(Collectors.toList()));
-                        selectedCategory.setValue(new Categoria(((Musica) m).getCat()).toString());
-                    }
-                    else {
-                        selectedCategory.getItems().clear();
-                        selectedCategory.setValue(null);
+                    if (selectedCategory != null) {
+                        if (m instanceof Musica) {
+                            selectedCategory.getItems().addAll(
+                                    new Categoria().getAllGenres().stream().sorted().collect(Collectors.toList()));
+                            selectedCategory.setValue(new Categoria(((Musica) m).getCat()).toString());
+                        } else {
+                            selectedCategory.getItems().clear();
+                            selectedCategory.setValue(null);
+                        }
                     }
                     break;
                 case 2:
@@ -313,11 +312,11 @@ public class Main extends Application {
         mediacenter.togglePause();
     }
 
-    public void nextMedia(ActionEvent actionEvent) {
+    public void nextMedia(ActionEvent ae) {
         mediacenter.next();
     }
 
-    public void previousMedia(ActionEvent actionEvent) {
+    public void previousMedia(ActionEvent ae) {
         mediacenter.prev();
     }
 
@@ -501,8 +500,10 @@ public class Main extends Application {
 
     public void populateList(List<Media> m) {
         updateList(m);
-        selectedCategory.getItems().clear();
-        selectedCategory.setValue(null);
+        if (selectedCategory != null) {
+            selectedCategory.getItems().clear();
+            selectedCategory.setValue(null);
+        }
     }
 
     public void updateList(List<Media> m) {
