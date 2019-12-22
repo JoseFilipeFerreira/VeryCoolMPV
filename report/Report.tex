@@ -75,7 +75,7 @@ linkcolor=black}
 
 Este relatório tem como objetivo apresentar a toda a modelação e planeamento do projeto
 da Unidade Curricular de Desenvolvimento de Sistemas de Software.\\
-Ao longo deste relatório apresentamos as considerações tidas em conta pelo grupo
+Ao longo deste relatório apresentamos as considerações tomadas pelo grupo
 ao longo da elaboração e formulação dos vário modelos e diagramas propostos:
 \begin{enumerate}
     \item Modelo de Domínio, modelo conceptual que contém os
@@ -95,14 +95,12 @@ Por fim irá ser apresentado um Modelo Lógico da Base de Dados utilizada para
 esta aplicação.
 
 \chapter{Modelo de Domínio}
-
 O sistema a implementar deve suportar a gestão de media e utilização da mesma
 numa residência onde esteja instalado.\\
 Neste capítulo são apresentados os requisitos do problema e uma proposta de 
 Modelo de Domínio.
 
 \section{Descrição do Modelo de Domínio}
-
 O problema em questão consiste em desenvolver um sistema de gestão e streaming
 de media.\\
 Após analisar o enunciado disponibilizado, concluímos que era necessário a
@@ -126,16 +124,13 @@ uma conta sem password para mais tarde o utilizador da conta em questão a
 defina.
 
 \section{Modelo de Domínio}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Dominio.png}  
     \caption{Modelo de Domínio}
 \end{figure}
 
-
 \chapter{Use Cases}
-
 O Diagrama de Use Cases representa os atores do sistema e as tarefas de cada um
 deles. No nosso caso existem 4 atores:
 \begin{itemize}
@@ -158,13 +153,11 @@ deles. No nosso caso existem 4 atores:
 \pagebreak
 
 \section{Especificações dos Use Cases}
-
 Nesta parte optamos por ordenar os use cases por permissões, ou seja, começamos
 por apresentar os de um utilizador normal, seguido de um utilizador sem
 password, utilizador com password e utilizador com permissões de administrador.
 
 \subsection{Entrar como convidado}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Entrar_como_convidado.png}  
@@ -172,7 +165,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Reproduzir Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Media_Control.png}  
@@ -180,7 +172,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Editar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Definir_Password.png}  
@@ -188,7 +179,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Login}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Login.png}  
@@ -196,7 +186,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Logout}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Logout.png}  
@@ -204,7 +193,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Download}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Download.png}  
@@ -212,7 +200,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Upload}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/upload.png}  
@@ -220,7 +207,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Remover Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Eliminar_media.png}  
@@ -228,7 +214,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Alterar Categoria}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Classificar.png}  
@@ -236,7 +221,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Criar Playlist}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Criar_Biblioteca.png}  
@@ -244,7 +228,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Remover Playlist}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Eliminar_Biblioteca.png}  
@@ -252,7 +235,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Fazer convite}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Adicionar_Amigo.png}  
@@ -260,7 +242,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Responder convite}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Responder_Convite.png}  
@@ -268,7 +249,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Remover amigo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Remover_Amigo.png}  
@@ -276,7 +256,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Registar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Criar_Conta.png}  
@@ -284,7 +263,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \subsection{Eliminar utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Remover_Conta.png}  
@@ -292,7 +270,6 @@ password, utilizador com password e utilizador com permissões de administrador.
 \end{figure}
 
 \chapter{Mockups}
-
 \textit{Mockups} é o nome dado aos protótipos de interface.\\
 Como o próprio nome indica é uma demonstração de como a aplicação final vai
 ser.\\
@@ -305,7 +282,6 @@ menor fadiga ocular, e caso o ecrã onde o conteúdo esteja a ser visualizado se
 OLED ou AMOLED, um menor consumo de energia.
 
 \section{Sem sessão iniciada}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Inicio_Menu.png}  
@@ -331,7 +307,6 @@ OLED ou AMOLED, um menor consumo de energia.
 \end{figure}
 
 \section{Com sessão iniciada}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/Principal_Menu.png}  
@@ -381,14 +356,12 @@ OLED ou AMOLED, um menor consumo de energia.
 \end{figure}
 
 \chapter{Diagramas de Máquina Estado}
-
 Para uma melhor demonstração e planeamento dos estados da aplicação são criados os
 diagramas de Máquina Estado. A modelação destes é muito importante pois permite
 mostrar todos os estados possíveis que podem ser tomados. Para isso foram modelados
 4 diagramas:
 
 \section{Diagrama de Máquina Estado Principal - Login}
-
 Este diagrama demonstra o primeiro passo que cada user terá que tomar antes de 
 interagir com o sistema. Quando é realizado o Login o utilizador tem ou não de 
 inserir as suas credenciai, podendo ser tomados estados
@@ -405,7 +378,6 @@ administrador.
 \end{figure}
 
 \section{Diagrama de Máquina Estado Convidado}
-
 Um convidado pode aceder ao media presente no sistema e pode reproduzi-lo.
 
 \begin{figure}[H]
@@ -415,7 +387,6 @@ Um convidado pode aceder ao media presente no sistema e pode reproduzi-lo.
 \end{figure}
 
 \section{Diagrama de Máquina Estado Utilizador}
-
 Um utilizador é um Convidado mas com funcionalidades a mais. Além
 de conseguir só reproduzir media, pode fazer upload/download do mesmo, criar
 playlists e alterar as suas credenciais.
@@ -427,7 +398,6 @@ playlists e alterar as suas credenciais.
 \end{figure}
 
 \section{Diagrama de Máquina Estado Administrador}
-
 Um administrador é idêntico a um utilizador mas com mais duas funcionalidades:
 criação e remoção de contas através do email.
 
@@ -438,7 +408,6 @@ criação e remoção de contas através do email.
 \end{figure}
 
 \chapter{Diagrama de Packages}
-
 Na criação dos packages tivemos em mente quatro grupos: o que agrupa as classes que 
 interagem com os atores do sistema, o que agrupa as classes relacionadas com a
 parte gráfica, o que agrupa as exceções e por último o que contém funções úteis.
@@ -452,7 +421,6 @@ especifico.
 \end{figure}
 
 \chapter{Diagrama de Classes}
-
 Com base no modelo de Domínio decidimos criar as classes apresentadas na figura abaixo,
 exceto uma (MediaCenter) que foi acrescida por decisão nossa para melhor manutenção
 da aplicação e serve como a classe "principal" do projeto.
@@ -464,13 +432,11 @@ da aplicação e serve como a classe "principal" do projeto.
 \end{figure}
 
 \chapter{Diagrama de Sequência de Sistemas}
-
 Com base nos use cases e nas suas especificações foram construídos diagramas de sequência
 para cada use case que nos ajudam a interpretar como o sistema e o ator interagem entre
 si.
 
 \section{Login}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/loginSeq.png}  
@@ -478,7 +444,6 @@ si.
 \end{figure}
 
 \section{Logout}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/logoutSeq.png}  
@@ -486,7 +451,6 @@ si.
 \end{figure}
 
 \section{Entrar como convidado}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/convidadoSeq.png}  
@@ -494,7 +458,6 @@ si.
 \end{figure}
 
 \section{Upload}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/uploadSeq.png}  
@@ -502,7 +465,6 @@ si.
 \end{figure}
 
 \section{Download}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/downloadSeq.png}  
@@ -510,7 +472,6 @@ si.
 \end{figure}
 
 \section{Remover Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remconteudoSeq.png}  
@@ -518,7 +479,6 @@ si.
 \end{figure}
 
 \section{Alterar Categoria}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/altcategoriaSeq.png}  
@@ -526,7 +486,6 @@ si.
 \end{figure}
 
 \section{Criar Playlist}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/criarplaylistSeq.png}  
@@ -534,7 +493,6 @@ si.
 \end{figure}
 
 \section{Remover Playlist}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remplaylistSeq.png}  
@@ -542,7 +500,6 @@ si.
 \end{figure}
 
 \section{Reproduzir Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/repconteudoSeq.png}  
@@ -550,7 +507,6 @@ si.
 \end{figure}
 
 \section{Registar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/reguserSeq.png}  
@@ -558,7 +514,6 @@ si.
 \end{figure}
 
 \section{Eliminar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/elemuserSeq.png}  
@@ -566,7 +521,6 @@ si.
 \end{figure}
 
 \section{Fazer Convite}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/fazerconviteSeq.png}  
@@ -574,7 +528,6 @@ si.
 \end{figure}
 
 \section{Responder a convite}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/respconviteSeq.png}  
@@ -582,7 +535,6 @@ si.
 \end{figure}
 
 \section{Remover Amigo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remamigoSeq.png}  
@@ -590,7 +542,6 @@ si.
 \end{figure}
 
 \section{Editar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/edituserSeq.png}  
@@ -598,7 +549,6 @@ si.
 \end{figure}
 
 \chapter{Diagramas de Sequência de Subsistemas}
-
 No capítulo anterior foi apresentado os diagramas de cada use case mas apenas
 com a interação entre ator e sistema, com isso apresentamos agora o mesmo estilo
 de diagramas mas com mais 2 grupos distintos: media e users. Estes diagramas
@@ -606,7 +556,6 @@ ajudam a perceber como é feita a interação do sistema com a parte que acede e
 gere a Media e o mesmo para os Users.
 
 \section{Login}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/loginSub.png}  
@@ -614,7 +563,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Logout}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/logoutSub.png}  
@@ -622,7 +570,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Entrar como convidado}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/convidadoSub.png}  
@@ -630,7 +577,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Upload}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/uploadSub.png}  
@@ -638,7 +584,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Download}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/downloadSub.png}  
@@ -646,7 +591,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Remover Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remconteudoSub.png}  
@@ -654,7 +598,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Alterar Categoria}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/altcategoriaSub.png}  
@@ -662,7 +605,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Criar Playlist}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/criarplaylistSub.png}  
@@ -670,7 +612,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Remover Playlist}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remplaylistSub.png}  
@@ -678,7 +619,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Reproduzir Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/repconteudoSub.png}  
@@ -686,7 +626,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Registar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/reguserSub.png}  
@@ -694,7 +633,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Eliminar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/elemuserSub.png}  
@@ -702,7 +640,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Fazer Convite}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/fazerconviteSub.png}  
@@ -710,7 +647,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Responder a convite}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/respconviteSub.png}  
@@ -718,7 +654,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Remover Amigo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remamigoSub.png}  
@@ -726,7 +661,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \section{Editar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/edituserSub.png}  
@@ -734,7 +668,6 @@ gere a Media e o mesmo para os Users.
 \end{figure}
 
 \chapter{Diagramas de Sequência de Implementação}
-
 Com os diagramas de sequência de subsistemas modulados no capítulo anterior,
 agora desenvolvemos os de implementação. Estes são mais detalhados e contém
 mais informações que os anteriores pois já fazem referência às classes e
@@ -742,7 +675,6 @@ funções que são utilizadas no código. Os diagramas seguintes foram implement
 nesta última fase do projeto.
 
 \section{Login}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/loginImp.png}  
@@ -750,7 +682,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Logout}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/logoutImp.png}  
@@ -758,7 +689,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Upload}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/uploadImp.png}  
@@ -766,7 +696,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Remover Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remContImp.png}  
@@ -774,7 +703,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Alterar Categoria}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/altcategoriaImp.png}  
@@ -782,7 +710,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Reproduzir Conteúdo}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/repConteudoImp.png}  
@@ -790,7 +717,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Registar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/criarUserImp.png}  
@@ -798,7 +724,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Eliminar Utilizador}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/remUserImp.png}  
@@ -806,9 +731,7 @@ nesta última fase do projeto.
 \end{figure}
 
 \section{Editar Utilizador}
-
 \subsection{Nome}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/editUserNameImp.png}  
@@ -816,7 +739,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \subsection{Password}
-
 \begin{figure}[H]
 	\centering 
     \includegraphics[width=\textwidth]{images/editUserPassImp.png}  
@@ -824,7 +746,6 @@ nesta última fase do projeto.
 \end{figure}
 
 \chapter{Base de Dados}
-
 De modo a deixarmos de guardar os dados em memória construímos uma base de dados
 que será indispensável para o armazenamento das informações para um bom funcionamento
 do nosso software.
@@ -837,7 +758,6 @@ Na figura seguinte é possível visualizar o modelo lógico da base de dados.
 \end{figure}
 
 \chapter{Conclusão e Trabalho Futuro}
-
 Através da realização deste trabalho conseguimos perceber que um planeamento e modelação
 de uma aplicação é tão importante quanto a escrita do código, dando a possibilidade de 
 possuirmos tudo organizado e planeado antes do desenvolvimento da aplicação.\\
