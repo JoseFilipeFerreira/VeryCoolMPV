@@ -1,6 +1,7 @@
 package Business;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
@@ -224,12 +225,13 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             Media al = this.get(key);
-            Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Playlist where (`Media_name` = '"
-                    + key + "');");
-            String sql = "DELETE FROM Media WHERE (`name` = " +
-                    "'" + key + "');";
-            int i = stm.executeUpdate(sql);
+            PreparedStatement stm = conn.prepareStatement("DELETE FROM " +
+                            "Playlist where `Media_name` = ?");
+            stm.setString(1, key.toString());
+            stm.executeUpdate();
+            stm = conn.prepareStatement("DELETE FROM Media WHERE (`name` = ?)");
+            stm.setString(1, key.toString());
+            stm.executeUpdate();
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -242,11 +244,15 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             int i = 0;
-            Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT name FROM Media" :
-                    "Select name from Media where owner ='"
-                            + this.owner.getEmail() + "'");
+            PreparedStatement stm;
+            if(this.owner == null)
+                stm = conn.prepareStatement("SELECT name FROM Media");
+            else {
+                stm = conn.prepareStatement("Select name from Media where " +
+                        "owner = ?");
+                stm.setString(1, this.owner.getEmail());
+            }
+            ResultSet rs = stm.executeQuery();
             for (; rs.next(); i++) ;
             return i;
         } catch (Exception e) {
@@ -260,11 +266,15 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             Collection<Media> col = new HashSet<>();
-            Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media" :
-                    "Select * from Media where owner='" +
-                            this.owner.getEmail() + "'");
+            PreparedStatement stm;
+            if(this.owner == null)
+                stm = conn.prepareStatement("SELECT * FROM Media");
+            else {
+                stm = conn.prepareStatement("Select * from Media where " +
+                        "owner = ?");
+                stm.setString(1, this.owner.getEmail());
+            }
+            ResultSet rs = stm.executeQuery();
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
                     col.add(new Musica(rs.getString("name"),
@@ -297,10 +307,12 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             Map<String, Media> col = new HashMap<>();
-            Statement stm = conn.createStatement();
+            PreparedStatement stm;
             if (this.owner == null) {
-                ResultSet rs = stm.executeQuery("SELECT * FROM Media " +
-                        "where edited_by = '" + uid + "'");
+                stm = conn.prepareStatement("SELECT * FROM Media " +
+                        "where edited_by = ?");
+                stm.setString(1, uid);
+                ResultSet rs = stm.executeQuery();
                 for (; rs.next(); ) {
                     if (rs.getString("artista") != null)
                         col.put(rs.getString("name"),
@@ -323,10 +335,15 @@ public class MediaDAO implements Map<String, Media> {
                                 rs.getDate("release_date")));
                 }
             }
-            ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media where edited_by = owner" :
-                    "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and edited_by = owner");
+            if(this.owner == null)
+                stm = conn.prepareStatement("SELECT * FROM Media where " +
+                        "edited_by = owner");
+            else {
+                stm = conn.prepareStatement("Select * from Media where " +
+                        "owner = ? and edited_by = owner");
+                stm.setString(1, this.owner.getEmail());
+            }
+            ResultSet rs = stm.executeQuery();
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
                     col.putIfAbsent(rs.getString("name"),
@@ -360,11 +377,13 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             Map<String, Media> col = new HashMap<>();
-            Statement stm = conn.createStatement();
+            PreparedStatement stm;
             if (this.owner == null) {
-                ResultSet rs = stm.executeQuery("SELECT * FROM Media where " +
-                        "lower(name) regexp '" + s.toLowerCase() + "' and " +
-                        "edited_by = '" + uid + "'");
+                stm = conn.prepareStatement("SELECT * FROM Media " +
+                        "where edited_by = ? and lower(name) regexp ?");
+                stm.setString(1, uid);
+                stm.setString(2, s.toLowerCase());
+                ResultSet rs = stm.executeQuery();
                 for (; rs.next(); ) {
                     if (rs.getString("artista") != null)
                         col.put(rs.getString("name"),
@@ -387,12 +406,19 @@ public class MediaDAO implements Map<String, Media> {
                                 rs.getDate("release_date")));
                 }
             }
-            ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media where lower(name) regexp '" + s.toLowerCase() +
-                            "' and edited_by = owner" :
-                    "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and lower(name) regexp" +
-                            " '" + s.toLowerCase() + "' and edited_by = owner");
+            if(this.owner == null) {
+                stm = conn.prepareStatement("SELECT * FROM Media where " +
+                        "edited_by = owner and lower(name) regexp ?");
+                stm.setString(1, s.toLowerCase());
+            }
+            else {
+                stm = conn.prepareStatement("Select * from Media where " +
+                        "owner = ? and edited_by = owner and lower(name) " +
+                        "regexp ?");
+                stm.setString(1, this.owner.getEmail());
+                stm.setString(2, s.toLowerCase());
+            }
+            ResultSet rs = stm.executeQuery();
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
                     col.putIfAbsent(rs.getString("name"),
@@ -426,11 +452,13 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             Map<String, Media> col = new HashMap<>();
-            Statement stm = conn.createStatement();
+            PreparedStatement stm;
             if (this.owner == null) {
-                ResultSet rs = stm.executeQuery("SELECT * FROM Media where " +
-                        "lower(artista) regexp '" + s.toLowerCase() + "' and " +
-                        "edited_by = '" + uid + "'");
+                stm = conn.prepareStatement("SELECT * FROM Media " +
+                        "where edited_by = ? and lower(artista) regexp ?");
+                stm.setString(1, uid);
+                stm.setString(2, s.toLowerCase());
+                ResultSet rs = stm.executeQuery();
                 for (; rs.next(); ) {
                     if (rs.getString("artista") != null)
                         col.put(rs.getString("name"),
@@ -453,12 +481,19 @@ public class MediaDAO implements Map<String, Media> {
                                 rs.getDate("release_date")));
                 }
             }
-            ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media where lower(artista) regexp '" + s.toLowerCase() +
-                            "' and edited_by = owner" :
-                    "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and lower(artista) regexp" +
-                            " '" + s.toLowerCase() + "' and edited_by = owner");
+            if(this.owner == null) {
+                stm = conn.prepareStatement("SELECT * FROM Media where " +
+                        "edited_by = owner and lower(artista) regexp ?");
+                stm.setString(1, s.toLowerCase());
+            }
+            else {
+                stm = conn.prepareStatement("Select * from Media where " +
+                        "owner = ? and edited_by = owner and lower(artista) " +
+                        "regexp ?");
+                stm.setString(1, this.owner.getEmail());
+                stm.setString(2, s.toLowerCase());
+            }
+            ResultSet rs = stm.executeQuery();
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
                     col.putIfAbsent(rs.getString("name"),
@@ -508,9 +543,10 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             List<String> ls = new ArrayList<>();
-            Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT distinct artista from Media" +
-                    " where artista regexp '^" + name + "'");
+            PreparedStatement stm = conn.prepareStatement("SELECT distinct artista from Media" +
+                    " where artista regexp '^' + ?");
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
             while (rs.next())
                 ls.add(rs.getString(1));
             return ls;
@@ -525,12 +561,14 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             Map<String, Media> col = new HashMap<>();
-            Statement stm = conn.createStatement();
+            PreparedStatement stm;
             if (this.owner == null) {
-                ResultSet rs = stm.executeQuery("SELECT * FROM Media " +
-                        "join Categoria C on Media.categoria = C.idCategoria " +
-                        "where lower(designacao) regexp '" + s.toLowerCase() + "' and " +
-                        "edited_by = '" + uid + "'");
+                stm = conn.prepareStatement("SELECT * FROM Media " +
+                        "join Categoria C on Media.categoria = C.idCategoria" +
+                        " where edited_by = ? and lower(designacao) regexp ?");
+                stm.setString(1, uid);
+                stm.setString(2, s.toLowerCase());
+                ResultSet rs = stm.executeQuery();
                 for (; rs.next(); ) {
                     if (rs.getString("artista") != null)
                         col.put(rs.getString("name"),
@@ -553,14 +591,20 @@ public class MediaDAO implements Map<String, Media> {
                                 rs.getDate("release_date")));
                 }
             }
-            ResultSet rs = stm.executeQuery(this.owner == null ?
-                    "SELECT * FROM Media join Categoria C on Media.categoria = C.idCategoria " +
-                            "where lower(designacao) regexp '" + s.toLowerCase() +
-                            "' and edited_by = owner" :
-                    "Select * from Media where owner='" +
-                            this.owner.getEmail() + "' and lower(designacao) " +
-                            "regexp '" + s.toLowerCase() + "' and edited_by =" +
-                            " owner");
+            if(this.owner == null) {
+                stm = conn.prepareStatement("SELECT * FROM Media " +
+                        "join Categoria C on Media.categoria = C.idCategoria     where " +
+                        "edited_by = owner and lower(designacao) regexp ?");
+                stm.setString(1, s.toLowerCase());
+            }
+            else {
+                stm = conn.prepareStatement("Select * from Media join Categoria C on Media.categoria = C.idCategoria where " +
+                        "owner = ? and edited_by = owner and lower(designacao) " +
+                        "regexp ?");
+                stm.setString(1, this.owner.getEmail());
+                stm.setString(2, s.toLowerCase());
+            }
+            ResultSet rs = stm.executeQuery();
             for (; rs.next(); ) {
                 if (rs.getString("artista") != null)
                     col.putIfAbsent(rs.getString("name"),
@@ -605,9 +649,10 @@ public class MediaDAO implements Map<String, Media> {
         Connection conn = DBConnect.connect();
         try {
             List<String> ls = new ArrayList<>();
-            Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT distinct album from Media" +
-                    " where artista = '" + art + "'");
+            PreparedStatement stm = conn.prepareStatement("SELECT distinct " +
+                    "album from Media where artista regexp concat('^', ?)");
+            stm.setString(1, art);
+            ResultSet rs = stm.executeQuery();
             while (rs.next())
                 ls.add(rs.getString(1));
             return ls;
