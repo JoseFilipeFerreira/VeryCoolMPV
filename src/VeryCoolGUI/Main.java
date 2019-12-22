@@ -98,7 +98,7 @@ public class Main extends Application {
         populateList(getOurMediaDisplay());
     }
 
-    public void populateTableOnClick(ActionEvent mouseEvent) {
+    public void populateTableOnClick(ActionEvent event) {
         populateList(getOurMediaDisplay());
     }
     //Upload Media
