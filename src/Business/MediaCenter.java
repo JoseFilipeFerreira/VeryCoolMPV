@@ -176,4 +176,9 @@ public class MediaCenter {
         if (this.player != null)
             this.player.previous();
     }
+
+    public void stop() {
+        if (this.player != null)
+            this.player.stop();
+    }
 }
