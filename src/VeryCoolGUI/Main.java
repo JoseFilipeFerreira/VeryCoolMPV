@@ -93,14 +93,19 @@ public class Main extends Application {
     }
 
     //Events
+<<<<<<< HEAD
 
     public void populateListOnTyping(KeyEvent keyEvent) {
+=======
+    public void populateListOnTyping(KeyEvent ke) {
+>>>>>>> rebase here i go
         populateList(getOurMediaDisplay());
     }
 
-    public void populateTableOnClick(ActionEvent event) {
+    public void populateTableOnClick(ActionEvent e) {
         populateList(getOurMediaDisplay());
     }
+
     //Upload Media
     public void uploadVideo(ActionEvent ae) throws IOException {
         String path = pathToFile.getText();
@@ -219,8 +224,7 @@ public class Main extends Application {
     public void playAllMusic(ActionEvent ae) {
         mediacenter.playMedia(getOurMediaDisplay());
     }
-
-
+    
     public void musicOnClick(MouseEvent me) {
         if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
