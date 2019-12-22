@@ -33,51 +33,37 @@ public class Main extends Application {
     private static MediaCenter mediacenter;
     private static Stage stage;
 
+
+    public Button nextMusic;
+    public Button previousMusic;
+    public Button toggleMusic;
+    public Button playAllList;
+
     /* button */
-    @FXML
-    private Button exit, back, swap;
-    @FXML
-    private Button create, remove;
-    @FXML
-    private Button confirm, select;
-    @FXML
-    private Button login, logout;
-    @FXML
-    private Button playPause, stop;
-    @FXML
-    private Button upload, download;
-    @FXML
-    private Button criarBiblioteca;
-    @FXML
-    private Button myMedia;
-    @FXML
-    private Button friends;
-    @FXML
-    private Button editProfile;
-    @FXML
-    private Button editAcount;
-    @FXML
-    private Button myMediaRemove;
-    @FXML
-    private Button myMediaClassificar;
+    @FXML private Button exit, back, swap;
+    @FXML private Button create, remove;
+    @FXML private Button confirm, select;
+    @FXML private Button login, logout;
+    @FXML private Button playPause, stop;
+    @FXML private Button upload, download;
+    @FXML private Button criarBiblioteca;
+    @FXML private Button myMedia;
+    @FXML private Button friends;
+    @FXML private Button editProfile;
+    @FXML private Button editAcount;
+    @FXML private Button myMediaRemove;
+    @FXML private Button myMediaClassificar;
 
     /* user input fields */
-    @FXML
-    private TextField search;
-    @FXML
-    private TextField name, email, password, oldPasswd;
-    @FXML
-    private TextField mediaName;
-    @FXML
-    private TextField musicAlbum, musicTrack, musicSinger;
-    @FXML
-    private TextField videoSerie, videoSeason, videoEpisode;
-    @FXML
-    private DatePicker datePicker;
-    @FXML
-    private ChoiceBox dropDownMenu;
-    @FXML
-    private ChoiceBox searchBy;
+
+    @FXML private TextField search;
+    @FXML private TextField name, email, password, oldPasswd;
+    @FXML private TextField mediaName;
+    @FXML private TextField musicAlbum, musicTrack, musicSinger;
+    @FXML private TextField videoSerie, videoSeason, videoEpisode;
+    @FXML private DatePicker datePicker;
+    @FXML private ChoiceBox searchBy;
+    @FXML private ComboBox dropDownMenu, selectedCategory;
 
     /* data display */
     @FXML
@@ -100,8 +86,27 @@ public class Main extends Application {
     }
 
     //Events
-    public void populateTableOnTyping(KeyEvent keyEvent) {
+    public void populateListOnTyping(KeyEvent ke) {
         populateList(getOurMediaDisplay());
+    }
+
+    public void populateTableOnClick(ActionEvent e) {
+        populateList(getOurMediaDisplay());
+    }
+
+    public void changeCatOnClick(ActionEvent ae) throws InvalidGenreException {
+        int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+        if (pos < 0) return;
+
+        Media m = getOurMediaDisplay().get(pos);
+        if (!(m instanceof Musica)) return;
+
+        String cat = (String) selectedCategory.getValue();
+        System.out.println(cat);
+        if (cat != null)
+            mediacenter.chCat((Musica) m, cat);
+
+        updateList(getOurMediaDisplay());
     }
 
     //Upload Media
@@ -114,8 +119,11 @@ public class Main extends Application {
         LocalDate date = datePicker.getValue();
 
         try {
-            Integer episode = (sEpisode.equals("")) ? null : Integer.parseInt(sEpisode);
-            Integer season = (sSeason.equals("")) ? null : Integer.parseInt(sEpisode);
+            Integer episode = (sEpisode.equals(""))? null : Integer.parseInt(sEpisode);
+            Integer season = (sSeason.equals(""))? null : Integer.parseInt(sEpisode);
+            if((episode != null && episode <= 0) || (season != null && season <= 0))
+                throw new NumberFormatException();
+
             if (path != null && !nome.equals("") && date != null) {
                 Video video = new Video(
                         mediacenter.getEmail(),
@@ -220,17 +228,51 @@ public class Main extends Application {
         mediacenter.playMedia(getOurMediaDisplay());
     }
 
-    public void playMusicClick(MouseEvent me) {
-        if (me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
+    public void musicOnClick(MouseEvent me) throws InvalidGenreException {
+        if(me.getButton() == MouseButton.PRIMARY) {
+            int pos = listViewMedia.getSelectionModel().getSelectedIndex();
+            if (pos < 0) return;
+
+            Media m = getOurMediaDisplay().get(pos);
+
+            switch (me.getClickCount()){
+                case 1:
+                    if (m instanceof Musica) {
+                        selectedCategory.getItems().addAll(new Categoria().getAllGenres().stream().sorted().collect(Collectors.toList()));
+                        selectedCategory.setValue(new Categoria(((Musica) m).getCat()).toString());
+                    }
+                    else {
+                        selectedCategory.getItems().clear();
+                        selectedCategory.setValue(null);
+                    }
+                    break;
+                case 2:
+                    mediacenter.playMedia(m);
+                    break;
+            }
+        }
+
+        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
             if (pos >= 0)
                 mediacenter.playMedia(getOurMediaDisplay().get(pos));
         }
     }
 
+    public void playPauseMedia(ActionEvent ae) {
+        mediacenter.togglePause();
+    }
+
+    public void nextMedia(ActionEvent actionEvent) {
+        mediacenter.next();
+    }
+
+    public void previousMedia(ActionEvent actionEvent) {
+        mediacenter.prev();
+    }
+
     //Edit Users
-    public void setPassword(ActionEvent ae) throws IOException,
-            SettedPasswdException {
+    public void setPassword(ActionEvent ae) throws IOException, SettedPasswdException {
         String password = this.password.getText();
         if (!password.equals("")) {
             mediacenter.fstPasswd(password);
@@ -324,6 +366,7 @@ public class Main extends Application {
     }
 
     public void loginConvidado(ActionEvent ae) throws IOException {
+        mediacenter.guestLogin();
         swapFxml(ae, "resources/ourMediaConvidado.fxml");
     }
 
@@ -390,8 +433,14 @@ public class Main extends Application {
     }
 
     public void populateList(List<Media> m) {
+        updateList(m);
+        selectedCategory.getItems().clear();
+        selectedCategory.setValue(null);
+    }
+
+    public void updateList(List<Media> m) {
         listViewMedia.setItems(FXCollections.observableList(
                 m.stream().map(Media::toString).collect(Collectors.toList())
-                                                           ));
+        ));
     }
 }
