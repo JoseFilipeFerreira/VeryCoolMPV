@@ -1,123 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.*?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VeryCoolGUI.Main">
     <children>
-        <Button fx:id="confirm" layoutX="515.0" layoutY="325.0" mnemonicParsing="false" onAction="#uploadMusic"
-                onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="71.0"
-                style="-fx-background-color: #2b2b2f;" text="UPLOAD" textFill="WHITE">
+        <Button fx:id="confirm" layoutX="515.0" layoutY="325.0" mnemonicParsing="false" onAction="#uploadMusic" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #2b2b2f;" text="UPLOAD" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
             <effect>
-                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0"/>
+                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
             </effect>
         </Button>
         <Label layoutX="208.0" layoutY="73.0" text="NOME" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
         </Label>
-        <TextField fx:id="mediaName" layoutX="209.0" layoutY="92.0" prefHeight="29.0" prefWidth="185.0"
-                   style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
+        <TextField fx:id="mediaName" layoutX="209.0" layoutY="92.0" prefHeight="29.0" prefWidth="185.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
             <font>
-                <Font name="Novecento sans Normal" size="13.0"/>
+                <Font name="Novecento sans Normal" size="13.0" />
             </font>
         </TextField>
-        <Button fx:id="back" layoutX="53.0" layoutY="186.0" mnemonicParsing="false" onAction="#changeMyMedia"
-                onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="109.0"
-                style="-fx-background-color: #2b2b2f;" text="VOLTAR" textFill="WHITE">
+        <Button fx:id="back" layoutX="53.0" layoutY="186.0" mnemonicParsing="false" onAction="#changeMyMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="109.0" style="-fx-background-color: #2b2b2f;" text="VOLTAR" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
             <effect>
-                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0"/>
+                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
             </effect>
         </Button>
-        <Line endY="223.0" layoutX="185.0" layoutY="75.0" startY="-12.0" stroke="#2b2b2f" strokeWidth="3.0"/>
-        <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <Line endY="223.0" layoutX="185.0" layoutY="75.0" startY="-12.0" stroke="#2b2b2f" strokeWidth="3.0" />
+        <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="3.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@icon.png"/>
+                <Image url="@icon.png" />
             </image>
         </ImageView>
-        <TextField fx:id="musicSinger" layoutX="402.0" layoutY="92.0" prefHeight="29.0" prefWidth="185.0"
-                   style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
+        <TextField fx:id="musicSinger" layoutX="402.0" layoutY="92.0" prefHeight="29.0" prefWidth="185.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
             <font>
-                <Font name="Novecento sans Normal" size="13.0"/>
+                <Font name="Novecento sans Normal" size="13.0" />
             </font>
         </TextField>
         <Label layoutX="402.0" layoutY="73.0" text="CANTOR" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
         </Label>
         <Label layoutX="205.0" layoutY="255.0" text="DATA DE LANÇAMENTO" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
         </Label>
-        <DatePicker fx:id="datePicker" layoutX="205.0" layoutY="274.0" prefHeight="26.0" prefWidth="185.0"/>
+        <DatePicker fx:id="datePicker" layoutX="205.0" layoutY="274.0" prefHeight="26.0" prefWidth="185.0" />
         <Label fx:id="pathToFile" layoutX="316.0" layoutY="28.0" prefHeight="19.0" prefWidth="298.0" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
         </Label>
-        <Button fx:id="select" layoutX="207.0" layoutY="23.0" mnemonicParsing="false" onAction="#selectMusicUpload"
-                onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="109.0"
-                style="-fx-background-color: #2b2b2f;" text="SELECT MUSIC" textFill="WHITE">
+        <Button fx:id="select" layoutX="207.0" layoutY="23.0" mnemonicParsing="false" onAction="#selectMusicUpload" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="109.0" style="-fx-background-color: #2b2b2f;" text="SELECT MUSIC" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
             <effect>
-                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0"/>
+                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
             </effect>
         </Button>
         <Label layoutX="208.0" layoutY="200.0" text="CATEGORIA" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
         </Label>
-        <Button fx:id="swap" layoutX="53.0" layoutY="145.0" mnemonicParsing="false" onAction="#changeUploadVideo"
-                onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="109.0"
-                style="-fx-background-color: #2b2b2f;" text="UPLOAD VIDEO" textFill="WHITE">
+        <Button fx:id="swap" layoutX="53.0" layoutY="145.0" mnemonicParsing="false" onAction="#changeUploadVideo" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="109.0" style="-fx-background-color: #2b2b2f;" text="UPLOAD VIDEO" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
             <effect>
-                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0"/>
+                <DropShadow color="#000000bf" height="1.0" offsetY="2.0" radius="0.0" width="0.0" />
             </effect>
         </Button>
-        <TextField fx:id="musicAlbum" layoutX="208.0" layoutY="155.0" prefHeight="29.0" prefWidth="185.0"
-                   style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
+        <TextField fx:id="musicAlbum" layoutX="208.0" layoutY="155.0" prefHeight="29.0" prefWidth="185.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
             <font>
-                <Font name="Novecento sans Normal" size="13.0"/>
+                <Font name="Novecento sans Normal" size="13.0" />
             </font>
         </TextField>
         <Label layoutX="208.0" layoutY="136.0" text="ALBUM" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
         </Label>
-        <TextField fx:id="musicTrack" layoutX="402.0" layoutY="155.0" prefHeight="29.0" prefWidth="185.0"
-                   style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
+        <TextField fx:id="musicTrack" layoutX="402.0" layoutY="155.0" prefHeight="29.0" prefWidth="185.0" style="-fx-background-color: #2b2b2f; -fx-text-fill: #ffffff;">
             <font>
-                <Font name="Novecento sans Normal" size="13.0"/>
+                <Font name="Novecento sans Normal" size="13.0" />
             </font>
         </TextField>
         <Label layoutX="402.0" layoutY="136.0" text="FAIXA" textFill="WHITE">
             <font>
-                <Font name="Novecento sans UltraBold" size="13.0"/>
+                <Font name="Novecento sans UltraBold" size="13.0" />
             </font>
         </Label>
-        <ChoiceBox fx:id="dropDownMenu" layoutX="205.0" layoutY="219.0" prefHeight="26.0" prefWidth="185.0"/>
+      <ComboBox fx:id="dropDownMenu" layoutX="204.0" layoutY="219.0" prefHeight="26.0" prefWidth="185.0" />
     </children>
 </Pane>
