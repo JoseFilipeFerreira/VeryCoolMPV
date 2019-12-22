@@ -56,8 +56,8 @@ public class Main extends Application {
     @FXML private TextField musicAlbum, musicTrack, musicSinger;
     @FXML private TextField videoSerie, videoSeason, videoEpisode;
     @FXML private DatePicker datePicker;
-    @FXML private ChoiceBox dropDownMenu,  searchBy;
-    @FXML private ChoiceBox selectedCategory;
+    @FXML private ChoiceBox searchBy;
+    @FXML private ComboBox dropDownMenu, selectedCategory;
 
     /* data display */
     @FXML
@@ -207,8 +207,8 @@ public class Main extends Application {
         mediacenter.playMedia(getOurMediaDisplay());
     }
 
-    public void musicOnClick(MouseEvent me) {
-        if(me.getButton() == MouseButton.PRIMARY && me.getClickCount() == 2) {
+    public void musicOnClick(MouseEvent me) throws InvalidGenreException {
+        if(me.getButton() == MouseButton.PRIMARY) {
             int pos = listViewMedia.getSelectionModel().getSelectedIndex();
             if (pos < 0) return;
 
@@ -218,11 +218,7 @@ public class Main extends Application {
                 case 1:
                     if (m instanceof Musica) {
                         selectedCategory.getItems().addAll(new Categoria().getAllGenres().stream().sorted().collect(Collectors.toList()));
-                        try {
-                            selectedCategory.setValue(new Categoria(((Musica) m).getCat()).toString());
-                        } catch (InvalidGenreException e) {
-                            System.out.println("This should never happen");
-                        }
+                        selectedCategory.setValue(new Categoria(((Musica) m).getCat()).toString());
                     }
                     else {
                         selectedCategory.getItems().clear();
@@ -240,6 +236,10 @@ public class Main extends Application {
             if (pos >= 0)
                 mediacenter.playMedia(getOurMediaDisplay().get(pos));
         }
+    }
+
+    public void stopMusic(ActionEvent actionEvent) {
+        //TODO implement stop
     }
 
     //Edit Users
@@ -337,6 +337,7 @@ public class Main extends Application {
     }
 
     public void loginConvidado(ActionEvent ae) throws IOException {
+        mediacenter.guestLogin();
         swapFxml(ae, "resources/ourMediaConvidado.fxml");
     }
 
