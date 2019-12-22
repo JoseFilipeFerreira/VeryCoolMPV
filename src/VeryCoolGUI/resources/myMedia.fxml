@@ -32,7 +32,7 @@
          <font>
             <Font name="Novecento sans Normal" size="13.0" />
          </font></TextField>
-      <Button fx:id="myMediaRemove" layoutX="28.0" layoutY="194.0" mnemonicParsing="false" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="REMOVER" textFill="WHITE">
+      <Button fx:id="myMediaRemove" layoutX="28.0" layoutY="194.0" mnemonicParsing="false" onAction="#removeMedia" onMouseEntered="#mouseHover" onMouseExited="#mouseUnhover" prefHeight="29.0" prefWidth="91.0" style="-fx-background-color: #2b2b2f;" text="REMOVER" textFill="WHITE">
          <font>
             <Font name="Novecento sans UltraBold" size="13.0" />
          </font>
