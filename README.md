@@ -1,5 +1,9 @@
 # DSS-1920
+
 Media Center (Software Systems Depelopment assignement)
+
+![](report/images/Inicio_Menu.png)
+![](report/images/Principal_Menu.png)
 
 ## Authors
 * [João Teixeira](https://github.com/jtexeira)
